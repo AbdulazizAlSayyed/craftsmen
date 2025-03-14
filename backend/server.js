@@ -21,9 +21,9 @@ app.get("/log-in.html", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "pages", "log-in.html"));
 });
 
-app.get("/dashboard.html", (req, res) => {
+app.get("/dashborad.html", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "dashboard.html")
+    path.join(__dirname, "..", "frontend", "pages", "dashborad.html")
   );
 });
 
@@ -43,7 +43,7 @@ app.get("/job.html", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "pages", "job.html"));
 });
 
-app.get("/  Notification.html", (req, res) => {
+app.get("/Notification.html", (req, res) => {
   res.sendFile(
     path.join(__dirname, "..", "frontend", "pages", "Notification.html")
   );
