@@ -10,7 +10,7 @@
 
     <title>Galileo Design</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
+    <script src="../js/seemorejob.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body>
@@ -164,11 +164,12 @@
                 Hire the best freelancers for any job, online
               </p>
             </div>
+
             <div class="px-4 py-3">
               <label class="flex flex-col min-w-40 h-12 w-full">
                 <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
                   <div
-                    class="text-[#897361] flex border-none bg-[#f4f2f0] items-center justify-center pl-4 rounded-l-xl border-r-0"
+                    class="text-[#637588] flex border-none bg-[#f0f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0"
                     data-icon="MagnifyingGlass"
                     data-size="24px"
                     data-weight="regular"
@@ -187,7 +188,7 @@
                   </div>
                   <input
                     placeholder="What do you need done?"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f4f2f0] focus:border-none h-full placeholder:text-[#897361] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                     value=""
                   />
                 </div>
@@ -195,17 +196,14 @@
             </div>
             <div class="flex justify-stretch">
               <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-end">
-                <button
+                <a href="post.html">
+                  <button
                   class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#ec7113] text-white text-sm font-bold leading-normal tracking-[0.015em]"
                 >
                   <span class="truncate">Post a Job</span>
                 </button>
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]"
-                >
-                  <span class="truncate">Browse Jobs</span>
-                </button>
               </div>
+            </a>
             </div>
 
             <h2
@@ -213,9 +211,13 @@
             >
               Featured Portfolios
             </h2>
+
+            <!-- Portfolio Grid -->
             <div
+              id="portfolio-container"
               class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
             >
+              <!-- First 5 portfolios (Visible by default) -->
               <div class="flex flex-col gap-3 pb-3">
                 <div
                   class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
@@ -234,6 +236,7 @@
                   </p>
                 </div>
               </div>
+
               <div class="flex flex-col gap-3 pb-3">
                 <div
                   class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
@@ -252,6 +255,7 @@
                   </p>
                 </div>
               </div>
+
               <div class="flex flex-col gap-3 pb-3">
                 <div
                   class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
@@ -270,6 +274,7 @@
                   </p>
                 </div>
               </div>
+
               <div class="flex flex-col gap-3 pb-3">
                 <div
                   class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
@@ -288,6 +293,7 @@
                   </p>
                 </div>
               </div>
+
               <div class="flex flex-col gap-3 pb-3">
                 <div
                   class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
@@ -306,7 +312,9 @@
                   </p>
                 </div>
               </div>
-              <div class="flex flex-col gap-3 pb-3">
+
+              <!-- Additional 5 portfolios (Hidden initially) -->
+              <div class="flex flex-col gap-3 pb-3 hidden">
                 <div
                   class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
                   style="
@@ -324,8 +332,93 @@
                   </p>
                 </div>
               </div>
+
+              <div class="flex flex-col gap-3 pb-3 hidden">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style="
+                    background-image: url('https://cdn.usegalileo.ai/sdxl10/f940e847-bd6c-49e7-bbe7-c25e950f8c9a.png');
+                  "
+                ></div>
+                <div>
+                  <p
+                    class="text-[#1b150d] text-base font-medium leading-normal"
+                  >
+                    Wood Carving
+                  </p>
+                  <p class="text-[#637588] text-sm font-normal leading-normal">
+                    75k followers
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-3 pb-3 hidden">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style="
+                    background-image: url('https://cdn.usegalileo.ai/sdxl10/cc3d5b4a-7c48-42af-93a6-bd780fe4c7ad.png');
+                  "
+                ></div>
+                <div>
+                  <p
+                    class="text-[#1b150d] text-base font-medium leading-normal"
+                  >
+                    Blacksmithing
+                  </p>
+                  <p class="text-[#637588] text-sm font-normal leading-normal">
+                    68k followers
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-3 pb-3 hidden">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style="
+                    background-image: url('https://cdn.usegalileo.ai/sdxl10/bd1f4d3c-47a3-48eb-a6dc-8169f23f9648.png');
+                  "
+                ></div>
+                <div>
+                  <p
+                    class="text-[#1b150d] text-base font-medium leading-normal"
+                  >
+                    Stone Carving
+                  </p>
+                  <p class="text-[#637588] text-sm font-normal leading-normal">
+                    58k followers
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-3 pb-3 hidden">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style="
+                    background-image: url('https://cdn.usegalileo.ai/sdxl10/fe7d0d79-3a35-48b6-b9de-9820a65e6bdf.png');
+                  "
+                ></div>
+                <div>
+                  <p
+                    class="text-[#1b150d] text-base font-medium leading-normal"
+                  >
+                    Weaving
+                  </p>
+                  <p class="text-[#637588] text-sm font-normal leading-normal">
+                    55k followers
+                  </p>
+                </div>
+              </div>
             </div>
 
+            <!-- See More Button -->
+            <div class="text-center mt-6">
+              <button
+                id="seeMoreBtn"
+                class="bg-[#ec7113] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#D16210] transition duration-200"
+              >
+                See More
+              </button>
+            </div>
             <h2
               class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
             >
@@ -394,5 +487,16 @@
         </div>
       </div>
     </div>
+    <script>
+      document
+        .getElementById("seeMoreBtn")
+        .addEventListener("click", function () {
+          let hiddenItems = document.querySelectorAll(
+            "#portfolio-container .hidden"
+          );
+          hiddenItems.forEach((item) => item.classList.remove("hidden"));
+          this.style.display = "none"; // Hide button after revealing items
+        });
+    </script>
   </body>
 </html>
