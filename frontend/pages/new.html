@@ -1,0 +1,738 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Galileo Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+      style="font-family: Inter, 'Noto Sans', sans-serif"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
+        >
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-[#1b150d]">
+              <div class="size-4">
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <h2
+                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
+              >
+                Craftsman
+              </h2>
+            </div>
+            <div class="flex items-center gap-9">
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="dashborad.html"
+                >Dashboard</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="job.html"
+                >Jobs</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="myjob.html"
+                >My Jobs</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="proposal.html"
+                >Proposals</a
+              >
+            </div>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex gap-2">
+              <a href="Notification.html">
+                <button
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                >
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="Bell"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20px"
+                      height="20px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+              </a>
+              <a href="chat.html">
+                <button
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                >
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="ChatCircleDots"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20px"
+                      height="20px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+              </a>
+              <a href="Setting.html">
+                <!-- Settings Button -->
+                <button
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                >
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="Settings"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20px"
+                      height="20px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M224,136a8,8,0,0,1-8,8H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16H128a32,32,0,0,1,64,0h24A8,8,0,0,1,224,136ZM128,96a32,32,0,0,1,64,0h24a8,8,0,0,1,0,16H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+              </a>
+            </div>
+            <a href="profile.html">
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                style="
+                  background-image: url('https://cdn.usegalileo.ai/sdxl10/f440dfe7-c1cd-439b-8f43-9bae8adc21c6.png');
+                "
+              ></div>
+            </a>
+          </div>
+        </header>
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col w-80">
+            <div
+              class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4"
+            >
+              <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                  <div
+                    class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0f2f4]"
+                  >
+                    <div
+                      class="text-[#111418]"
+                      data-icon="House"
+                      data-size="24px"
+                      data-weight="fill"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class="text-[#111418] text-sm font-medium leading-normal"
+                    >
+                      Overview
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-3 px-3 py-2">
+                    <div
+                      class="text-[#111418]"
+                      data-icon="Hammer"
+                      data-size="24px"
+                      data-weight="regular"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class="text-[#111418] text-sm font-medium leading-normal"
+                    >
+                      Jobs
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-3 px-3 py-2">
+                    <div
+                      class="text-[#111418]"
+                      data-icon="File"
+                      data-size="24px"
+                      data-weight="regular"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class="text-[#111418] text-sm font-medium leading-normal"
+                    >
+                      Proposals
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-3 px-3 py-2">
+                    <div
+                      class="text-[#111418]"
+                      data-icon="ChatCircleDots"
+                      data-size="24px"
+                      data-weight="regular"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class="text-[#111418] text-sm font-medium leading-normal"
+                    >
+                      Messages
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-3 px-3 py-2">
+                    <div
+                      class="text-[#111418]"
+                      data-icon="List"
+                      data-size="24px"
+                      data-weight="regular"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class="text-[#111418] text-sm font-medium leading-normal"
+                    >
+                      Tasks
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Post a job</span>
+              </button>
+            </div>
+          </div>
+          <div
+            class="layout-content-container flex flex-col max-w-[960px] flex-1"
+          >
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <p
+                class="text-[#111418] tracking-light text-[32px] font-bold leading-tight min-w-72"
+              >
+                Welcome to your dashboard, Thomas.
+              </p>
+            </div>
+            <div class="flex p-4 @container">
+              <div
+                class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center"
+              >
+                <div class="flex gap-4">
+                  <div
+                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
+                    style="
+                      background-image: url('https://cdn.usegalileo.ai/sdxl10/64f49b85-694c-4044-9bac-61c550d6125c.png');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center">
+                    <p
+                      class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em]"
+                    >
+                      Thomas D.
+                    </p>
+                    <p
+                      class="text-[#637588] text-base font-normal leading-normal"
+                    >
+                      Los Angeles, CA
+                    </p>
+                  </div>
+                </div>
+                <div class="flex w-full max-w-[480px] gap-3 @[480px]:w-auto">
+                  <button
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto"
+                  >
+                    <span class="truncate">View Profile</span>
+                  </button>
+                  <button
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto"
+                  >
+                    <span class="truncate">Edit Profile</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+            >
+              Quick Actions
+            </h3>
+            <div
+              class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+            >
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Post a job
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="File"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Create a proposal
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="ChatCircleDots"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Start a chat
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="List"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Create a task
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Plus"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  New Task
+                </h2>
+              </div>
+            </div>
+            <h3
+              class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+            >
+              Your Jobs
+            </h3>
+            <div
+              class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+            >
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Build a custom bookshelf
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Paint a mural
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Install a new light fixture
+                </h2>
+              </div>
+            </div>
+            <h3
+              class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+            >
+              Your Proposals
+            </h3>
+            <div
+              class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+            >
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Build a custom bookshelf
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Paint a mural
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Install a new light fixture
+                </h2>
+              </div>
+            </div>
+            <h3
+              class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+            >
+              Your Tasks
+            </h3>
+            <div
+              class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+            >
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Build a custom bookshelf
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Paint a mural
+                </h2>
+              </div>
+              <div
+                class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center"
+              >
+                <div
+                  class="text-[#111418]"
+                  data-icon="Hammer"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24px"
+                    height="24px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M251.34,112,183.88,44.08a96.1,96.1,0,0,0-135.77,0l-.09.09L34.25,58.4A8,8,0,0,0,45.74,69.53L59.47,55.35a79.92,79.92,0,0,1,18.71-13.9L124.68,88l-96,96a16,16,0,0,0,0,22.63l20.69,20.69a16,16,0,0,0,22.63,0l96-96,14.34,14.34h0L200,163.3a16,16,0,0,0,22.63,0l28.69-28.69A16,16,0,0,0,251.34,112ZM60.68,216,40,195.31l68-68L128.68,148ZM162.34,114.32,140,136.67,119.31,116l22.35-22.35a8,8,0,0,0,0-11.32L94.32,35a80,80,0,0,1,78.23,20.41l44.22,44.51L188,128.66l-14.34-14.34A8,8,0,0,0,162.34,114.32Zm49,37.66-12-12L228,111.25l12,12Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-[#111418] text-base font-bold leading-tight">
+                  Install a new light fixture
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

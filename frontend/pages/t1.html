@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find a Craftsman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#FAF6F2] text-[#181411] font-sans">
+    <!-- Header -->
+    <header
+      class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
+    >
+      <div class="flex items-center gap-8">
+        <div class="flex items-center gap-4 text-[#1b150d]">
+          <div class="size-4">
+            <svg
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+          <h2
+            class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
+          >
+            Craftsman
+          </h2>
+        </div>
+        <div class="flex items-center gap-9">
+          <a
+            class="text-[#1b150d] text-sm font-medium leading-normal"
+            href="dashborad.html"
+            >Dashboard</a
+          >
+          <a
+            class="text-[#1b150d] text-sm font-medium leading-normal"
+            href="job.html"
+            >Jobs</a
+          >
+          <a
+            class="text-[#1b150d] text-sm font-medium leading-normal"
+            href="myjob.html"
+            >My Jobs</a
+          >
+          <a
+            class="text-[#1b150d] text-sm font-medium leading-normal"
+            href="proposal.html"
+            >Proposals</a
+          >
+        </div>
+      </div>
+      <div class="flex flex-1 justify-end gap-8">
+        <div class="flex gap-2">
+          <a href="Notification.html">
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div
+                class="text-[#1b150d]"
+                data-icon="Bell"
+                data-size="20px"
+                data-weight="regular"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20px"
+                  height="20px"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </a>
+          <a href="chat.html">
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div
+                class="text-[#1b150d]"
+                data-icon="ChatCircleDots"
+                data-size="20px"
+                data-weight="regular"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20px"
+                  height="20px"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </a>
+          <a href="Setting.html">
+            <!-- Settings Button -->
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div
+                class="text-[#1b150d]"
+                data-icon="Settings"
+                data-size="20px"
+                data-weight="regular"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20px"
+                  height="20px"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    d="M224,136a8,8,0,0,1-8,8H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16H128a32,32,0,0,1,64,0h24A8,8,0,0,1,224,136ZM128,96a32,32,0,0,1,64,0h24a8,8,0,0,1,0,16H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </a>
+        </div>
+        <a href="profile.html">
+          <div
+            class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+            style="
+              background-image: url('https://cdn.usegalileo.ai/sdxl10/f440dfe7-c1cd-439b-8f43-9bae8adc21c6.png');
+            "
+          ></div>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-16 py-10">
+      <h1 class="text-3xl font-bold mb-6">Find a Craftsman</h1>
+
+      <!-- Filters -->
+      <div class="flex gap-4 mb-6">
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300"
+        >
+          Plumber
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300"
+        >
+          Electrician
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300"
+        >
+          Painter
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300"
+        >
+          Handyman
+        </button>
+      </div>
+
+      <!-- Featured Craftsmen -->
+      <h2 class="text-2xl font-semibold mb-4">Featured</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <img
+            src="https://via.placeholder.com/150"
+            alt=""
+            class="rounded-lg mb-2"
+          />
+          <p class="font-semibold">Chris's Painting</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <img
+            src="https://via.placeholder.com/150"
+            alt=""
+            class="rounded-lg mb-2"
+          />
+          <p class="font-semibold">Eli's Electrical</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <img
+            src="https://via.placeholder.com/150"
+            alt=""
+            class="rounded-lg mb-2"
+          />
+          <p class="font-semibold">Alex's Plumbing</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <img
+            src="https://via.placeholder.com/150"
+            alt=""
+            class="rounded-lg mb-2"
+          />
+          <p class="font-semibold">John's Handyman</p>
+        </div>
+      </div>
+
+      <!-- Most Popular -->
+      <h2 class="text-2xl font-semibold mt-8 mb-4">Most Popular</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <p class="font-semibold">
+            Chris's Painting <span class="text-sm text-gray-500">(5.0)</span>
+          </p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <p class="font-semibold">
+            Eli's Electrical <span class="text-sm text-gray-500">(4.9)</span>
+          </p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <p class="font-semibold">
+            Alex's Plumbing <span class="text-sm text-gray-500">(4.8)</span>
+          </p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-4">
+          <p class="font-semibold">
+            John's Handyman <span class="text-sm text-gray-500">(4.7)</span>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-500">© 2025 Craftsmen</footer>
+  </body>
+</html>
