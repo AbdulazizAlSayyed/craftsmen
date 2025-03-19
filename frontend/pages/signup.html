@@ -69,7 +69,7 @@
 
         <div class="px-40 flex flex-1 justify-center py-5">
           <div
-            class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1"
+            class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] py-5flex-1"
           >
             <h3
               class="text-[#111418] tracking-light text-2xl font-bold leading-tight px-4 text-left pb-2 pt-5"
@@ -152,6 +152,91 @@
                 </select>
               </label>
             </div>
+            <!-- Skills Selection with Checkboxes -->
+            <label class="flex flex-col px-4 py-3">
+              <p class="text-base font-medium pb-2">Select your skills</p>
+              <div class="grid grid-cols-2 gap-2">
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="No skills"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >No skills</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Woodworking"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Woodworking</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Metalworking"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Metalworking</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Painting"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Painting</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Plumbing"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Plumbing</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Electrical Work"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Electrical Work</span
+                  >
+                </label>
+              </div>
+            </label>
+
             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
               <label class="flex flex-col min-w-40 flex-1">
                 <p
@@ -183,7 +268,7 @@
               <label class="flex gap-x-3 py-3 flex-row">
                 <input
                   type="checkbox"
-                  class="h-5 w-5 rounded border-[#dce0e5] border-2 bg-transparent text-[#1980e6] checked:bg-[#1980e6] checked:border-[#1980e6] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dce0e5] focus:outline-none"
+                  class="h-5 w-5 rounded border-[#ee7f2b] border-2 bg-transparent text-[#1980e6] checked:bg-[#ee7f2b] checked:border-bg-[#ee7f2b] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dce0e5] focus:outline-none"
                 />
                 <p class="text-[#111418] text-base font-normal leading-normal">
                   Yes, I'd like to receive more information from Craftsmen
@@ -192,11 +277,38 @@
             </div>
             <div class="flex px-4 py-3">
               <a href="verification-email.html">
-                <button
-                  class="flex min-w-[200px] max-w-[600px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em]"
-                >
-                  <span class="truncate">Get started</span>
-                </button>
+                <button onclick="registerUser()"
+  class="flex min-w-[200px] max-w-[600px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#ee7f2b] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+  <span class="truncate">Get started</span>
+</button>
+
+<script>
+  async function registerUser() {
+    const fullName = document.querySelector("input[placeholder='Full name']").value;
+    const email = document.querySelector("input[placeholder='Email']").value;
+    const phoneNumber = document.querySelector("input[placeholder='Phone number']").value;
+    const password = document.querySelector("input[placeholder='Password']").value;
+    const role = document.querySelector("select").value;
+    const skills = Array.from(document.querySelectorAll("input[name='skills']:checked")).map(el => el.value);
+    const bio = document.querySelector("textarea").value;
+    const location = document.querySelector("input[placeholder='Where are you based?']").value;
+    const newsletterSubscribed = document.querySelector("input[type='checkbox']").checked;
+
+    const response = await fetch("http://localhost:5000/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fullName, email, phoneNumber, password, role, skills, bio, location, newsletterSubscribed })
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Account created successfully!");
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Error: " + data.message);
+    }
+  }
+</script>
               </a>
             </div>
           </div>
