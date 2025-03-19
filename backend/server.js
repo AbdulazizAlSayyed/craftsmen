@@ -1,113 +1,68 @@
 const express = require("express");
 const path = require("path");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config(); // ✅ Load environment variables
+
 const app = express();
+const PORT = process.env.PORT || 5001;
 
-const PORT = 5000;
+// ✅ Middleware
+app.use(express.json()); // Parse JSON requests
+app.use(cors()); // Allow frontend to access API
+app.use(express.static(path.join(__dirname, "..", "frontend"))); // Serve frontend files
 
-// ✅ Serve static files (CSS, JS, images)
-app.use(express.static(path.join(__dirname, "..", "frontend")));
+// ✅ MongoDB Connection (Fixed: Removed Deprecated Options)
+mongoose
+  .connect(process.env.MONGODB_URI) // ✅ No deprecated options
+  .then(() => console.log("✅ MongoDB connected!"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// ✅ Serve guest.html when visiting "/"
+// ✅ API Routes
+app.use("/api/auth", require("./routes/auth")); // Authentication Routes
+app.use("/api/users", require("./routes/userRoutes")); // User Management Routes
+
+// ✅ Serve Frontend Pages
+const pages = [
+  "signup.html",
+  "log-in.html",
+  "dashborad.html",
+  "Explore.html",
+  "profile.html",
+  "Profile2.html",
+  "job.html",
+  "Notification.html",
+  "chat.html",
+  "myjob.html",
+  "new.html",
+  "proposal.html",
+  "proposalFinal.html",
+  "post.html",
+  "Reset-your-password.html",
+  "Setting.html",
+  "t1.html",
+  "Forgot-your-password.html",
+  "verification-email.html",
+];
+
+pages.forEach((page) => {
+  app.get(`/${page}`, (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "frontend", "pages", page));
+  });
+});
+
+// ✅ Default Route (Serve Home Page)
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "pages", "guest.html"));
 });
 
-// ✅ Serve all pages manually
-app.get("/signup.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "signup.html"));
-});
-
-app.get("/log-in.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "log-in.html"));
-});
-
-app.get("/dashborad.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "dashborad.html")
-  );
-});
-
-app.get("/Explore.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "Explore.html"));
-});
-
-app.get("/profile.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "profile.html"));
-});
-app.get("/Profile2.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "Profile2.html")
-  );
-});
-app.get("/job.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "job.html"));
-});
-
-app.get("/Notification.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "Notification.html")
-  );
-});
-
-app.get("/chat.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "chat.html"));
-});
-
-app.get("/myjob.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "myjob.html"));
-});
-
-app.get("/new.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "new.html"));
-});
-
-app.get("/proposal.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "proposal.html")
-  );
-});
-
-app.get("/proposalFinal.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "proposalFinal.html")
-  );
-});
-
-app.get("/post.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "post.html"));
-});
-
-app.get("/Reset-your-password.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "Reset-your-password.html")
-  );
-});
-
-app.get("/Setting.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "Setting.html"));
-});
-
-app.get("/t1.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "pages", "t1.html"));
-});
-app.get("/Forgot-your-password.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "Forgot-your-password.html")
-  );
-});
-
-app.get("/verification-email.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "pages", "verification-email.html")
-  );
-});
-
-// ✅ Handle 404 errors
+// ✅ Handle 404 Errors
 app.use((req, res) => {
   res.status(404).send("Page not found!");
 });
 
-// Start the server
+// ✅ Start the Server (MUST BE LAST)
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
+  console.log("🔍 MongoDB URI from .env:", process.env.MONGODB_URI);
 });
