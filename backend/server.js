@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config(); // ✅ Load environment variables
+const jobRoutes = require("./routes/jobRoutes"); // Import the job routes
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -21,6 +22,7 @@ mongoose
 // ✅ API Routes
 app.use("/api/auth", require("./routes/auth")); // Authentication Routes
 app.use("/api/users", require("./routes/userRoutes")); // User Management Routes
+app.use("/api/jobs", require("./routes/jobRoutes")); // Connect job routes
 
 // ✅ Serve Frontend Pages
 const pages = [
