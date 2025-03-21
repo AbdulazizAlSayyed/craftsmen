@@ -3,8 +3,9 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config(); // ✅ Load environment variables
-const jobRoutes = require("./routes/jobRoutes"); // Import the job routes
-
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/userRoutes");
+const jobRoutes = require("./routes/jobRoutes");
 const app = express();
 const PORT = process.env.PORT || 5001;
 

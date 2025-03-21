@@ -1,7 +1,7 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+require("dotenv").config();
 
 const router = express.Router();
 
@@ -24,16 +24,12 @@ router.post("/signup", async (req, res) => {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "User already exists" });
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create user
+    // Create user with plain text password (⚠️ Insecure)
     user = new User({
       fullName,
       email,
       phoneNumber,
-      password: hashedPassword,
+      password, // no hashing
       role,
       skills,
       bio,
@@ -59,26 +55,41 @@ router.post("/signup", async (req, res) => {
 // ✅ User Login
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { emailOrUsername, password } = req.body;
+    console.log("Received login request:", { emailOrUsername, password });
 
-    // Check if user exists
-    let user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    // 🔍 Check if user exists by email OR fullName
+    let user = await User.findOne({
+      $or: [{ email: emailOrUsername }, { fullName: emailOrUsername }],
+    });
 
-    // Check password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid credentials" });
+    console.log("User found in DB:", user); // 🔍 Debugging
 
-    // Generate token
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Invalid credentials (User not found)" });
+    }
+
+    // Plain text password comparison (⚠️ Insecure)
+    console.log("Entered password:", password);
+    console.log("Stored password:", user.password);
+    if (user.password !== password) {
+      return res
+        .status(400)
+        .json({ message: "Invalid credentials (Wrong password)" });
+    }
+
+    /* Generate token
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
-    );
+    ); */
 
-    res.json({ message: "Login successful", token });
+    res.json({ message: "Login successful" });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ message: "Server Error", error });
   }
 });
