@@ -301,14 +301,73 @@
             </div>
             <div class="flex px-4 py-3">
               <button
+                id="postJobButton"
                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 bg-[#ee7f2b] text-[#1b130d] text-base font-bold leading-normal tracking-[0.015em]"
               >
-                <span class="truncate">Continue</span>
+                <span class="truncate" id="postJobButton">Continue</span>
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const continueButton = document.getElementById("postJobButton"); // Use ID
+        if (continueButton) {
+          continueButton.addEventListener("click", async () => {
+            const title = document.querySelector(
+              "input[placeholder='What do you need help with?']"
+            ).value;
+            const description = document.querySelector("textarea").value;
+            const budget = parseFloat(
+              document.querySelector("input[placeholder='$500']").value
+            );
+            const deadline = document.querySelector(
+              "input[placeholder='1 week']"
+            ).value;
+            const categories = ["Web Development", "ReactJS", "JavaScript"]; // Example categories
+            const milestonesEnabled = document.querySelector(
+              "input[type='checkbox']"
+            ).checked;
+            const userId = "65fbc1234abcd56789ef0123"; // Replace with logged-in user ID
+
+            const jobData = {
+              title,
+              description,
+              budget,
+              deadline,
+              categories,
+              milestonesEnabled,
+              userId,
+            };
+
+            console.log("Sending job data:", jobData); // Debugging
+
+            try {
+              const response = await fetch("http://localhost:5001/api/jobs", {
+                // No "/create"
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(jobData),
+              });
+
+              const data = await response.json();
+              if (response.ok) {
+                alert("Job posted successfully!");
+              } else {
+                alert("Error: " + data.message);
+              }
+            } catch (error) {
+              console.error("Error posting job:", error);
+            }
+          });
+        } else {
+          console.error("Post job button not found!");
+        }
+      });
+    </script>
   </body>
 </html>

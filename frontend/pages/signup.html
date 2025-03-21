@@ -276,40 +276,69 @@
               </label>
             </div>
             <div class="flex px-4 py-3">
-              <a href="verification-email.html">
-                <button onclick="registerUser()"
-  class="flex min-w-[200px] max-w-[600px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#ee7f2b] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-  <span class="truncate">Get started</span>
-</button>
+              <button
+                onclick="registerUser()"
+                class="flex min-w-[200px] max-w-[600px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#ee7f2b] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Get started</span>
+              </button>
 
-<script>
-  async function registerUser() {
-    const fullName = document.querySelector("input[placeholder='Full name']").value;
-    const email = document.querySelector("input[placeholder='Email']").value;
-    const phoneNumber = document.querySelector("input[placeholder='Phone number']").value;
-    const password = document.querySelector("input[placeholder='Password']").value;
-    const role = document.querySelector("select").value;
-    const skills = Array.from(document.querySelectorAll("input[name='skills']:checked")).map(el => el.value);
-    const bio = document.querySelector("textarea").value;
-    const location = document.querySelector("input[placeholder='Where are you based?']").value;
-    const newsletterSubscribed = document.querySelector("input[type='checkbox']").checked;
+              <script>
+                async function registerUser() {
+                  const fullName = document.querySelector(
+                    "input[placeholder='Full name']"
+                  ).value;
+                  const email = document.querySelector(
+                    "input[placeholder='Email']"
+                  ).value;
+                  const phoneNumber = document.querySelector(
+                    "input[placeholder='Phone number']"
+                  ).value;
+                  const password = document.querySelector(
+                    "input[placeholder='Password']"
+                  ).value;
+                  const role = document.querySelector("select").value;
+                  const skills = Array.from(
+                    document.querySelectorAll("input[name='skills']:checked")
+                  ).map((el) => el.value);
+                  const bio = document.querySelector("textarea").value;
+                  const location = document.querySelector(
+                    "input[placeholder='Where are you based?']"
+                  ).value;
+                  const newsletterSubscribed = document.querySelector(
+                    "input[type='checkbox']"
+                  ).checked;
 
-    const response = await fetch("http://localhost:5000/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName, email, phoneNumber, password, role, skills, bio, location, newsletterSubscribed })
-    });
+                  const response = await fetch(
+                    "http://localhost:5001/api/auth/signup",
+                    {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        fullName,
+                        email,
+                        phoneNumber,
+                        password,
+                        role,
+                        skills,
+                        bio,
+                        location,
+                        newsletterSubscribed,
+                      }),
+                    }
+                  );
 
-    const data = await response.json();
-    if (response.ok) {
-      alert("Account created successfully!");
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Error: " + data.message);
-    }
-  }
-</script>
-              </a>
+                  const data = await response.json();
+                  console.log("🔍 Server response:", data); // ✅ Debugging
+
+                  if (response.ok) {
+                    alert("Account created successfully!");
+                    window.location.href = "dashboard.html";
+                  } else {
+                    alert("Error: " + data.message);
+                  }
+                }
+              </script>
             </div>
           </div>
         </div>
