@@ -31,7 +31,13 @@ const UserSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   verificationCode: { type: String },
 
+  // for resend cide
   verificationCodeSentAt: { type: Date },
+
+  //for Forgot
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+
   createdAt: { type: Date, default: Date.now }, // Timestamp for account creation
 });
 
