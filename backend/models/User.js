@@ -26,6 +26,12 @@ const UserSchema = new mongoose.Schema({
   bio: { type: String }, // Bio field
   location: { type: String }, // Location field
   newsletterSubscribed: { type: Boolean, default: false }, // Checkbox for newsletter
+
+  // ✅ Add these two lines below:
+  isVerified: { type: Boolean, default: false },
+  verificationCode: { type: String },
+
+  verificationCodeSentAt: { type: Date },
   createdAt: { type: Date, default: Date.now }, // Timestamp for account creation
 });
 
