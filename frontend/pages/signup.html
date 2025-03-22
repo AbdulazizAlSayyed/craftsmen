@@ -147,8 +147,8 @@
                 <select
                   class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 placeholder:text-[#637588] p-4 text-base font-normal leading-normal"
                 >
-                  <option value="one">Client</option>
-                  <option value="two">Craftman</option>
+                  <option value="client">Client</option>
+                  <option value="craftsman">Craftman</option>
                 </select>
               </label>
             </div>
@@ -332,8 +332,15 @@
                   console.log("🔍 Server response:", data); // ✅ Debugging
 
                   if (response.ok) {
-                    alert("Account created successfully!");
-                    window.location.href = "dashboard.html";
+                    alert(
+                      "Account created successfully! Please verify your email."
+                    );
+
+                    // 🔐 Save email for verification page
+                    localStorage.setItem("emailToVerify", email);
+
+                    // Redirect to your verification page
+                    window.location.href = "verification-email.html"; // or whatever your page is called
                   } else {
                     alert("Error: " + data.message);
                   }
