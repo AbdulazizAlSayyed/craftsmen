@@ -1,15 +1,14 @@
 const mongoose = require("mongoose");
-
 const UserSchema = new mongoose.Schema({
-  fullName: { type: String, required: true }, // Full Name field
-  email: { type: String, unique: true, required: true }, // Email field
-  phoneNumber: { type: String }, // Phone Number field
-  password: { type: String, required: true }, // Password field
+  fullName: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
+  phoneNumber: { type: String },
+  password: { type: String, required: true },
   role: {
     type: String,
     enum: ["client", "craftsman", "admin"],
     default: "client",
-  }, // User role selection
+  },
   skills: [
     {
       type: String,
@@ -22,23 +21,19 @@ const UserSchema = new mongoose.Schema({
         "Electrical Work",
       ],
     },
-  ], // Multi-select skills
-  bio: { type: String }, // Bio field
-  location: { type: String }, // Location field
-  newsletterSubscribed: { type: Boolean, default: false }, // Checkbox for newsletter
+  ],
+  bio: { type: String },
+  location: { type: String },
+  newsletterSubscribed: { type: Boolean, default: false },
 
-  // ✅ Add these two lines below:
+  // ✅ Add this line:
+  profileImage: { type: String, default: "" },
+
   isVerified: { type: Boolean, default: false },
   verificationCode: { type: String },
-
-  // for resend cide
   verificationCodeSentAt: { type: Date },
-
-  //for Forgot
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-
-  createdAt: { type: Date, default: Date.now }, // Timestamp for account creation
+  createdAt: { type: Date, default: Date.now },
 });
-
 module.exports = mongoose.model("User", UserSchema);

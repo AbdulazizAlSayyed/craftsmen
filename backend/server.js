@@ -6,13 +6,30 @@ require("dotenv").config(); // ✅ Load environment variables
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
+
+const http = require("http");
+const { Server } = require("socket.io");
+const Message = require("./models/message"); // add at top
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// ✅ Middleware
+// ✅ Middleware (first!)
+app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON requests
-app.use(cors()); // Allow frontend to access API
-app.use(express.static(path.join(__dirname, "..", "frontend"))); // Serve frontend files
+app.use(express.static(path.join(__dirname, "..", "frontend"))); // Serve frontend
+
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/jobs", require("./routes/jobRoutes"));
+app.use("/api/conversations", require("./routes/conversationRoutes"));
+app.use("/api/messages", require("./routes/messages"));
+
+app.use("/api/auth", authRoutes); // ✅ good
+app.use("/api/conversations", require("./routes/conversationRoutes"));
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+app.use("/api/users", require("./routes/userRoutes"));
 
 // ✅ MongoDB Connection (Fixed: Removed Deprecated Options)
 mongoose
@@ -24,6 +41,7 @@ mongoose
 app.use("/api/auth", require("./routes/auth")); // Authentication Routes
 app.use("/api/users", require("./routes/userRoutes")); // User Management Routes
 app.use("/api/jobs", require("./routes/jobRoutes")); // Connect job routes
+app.use("/api/messages", require("./routes/messages"));
 
 // ✅ Serve Frontend Pages
 const pages = [
@@ -65,7 +83,33 @@ app.use((req, res) => {
 });
 
 // ✅ Start the Server (MUST BE LAST)
-app.listen(PORT, () => {
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
+// Real-time chat with Socket.IO
+io.on("connection", (socket) => {
+  console.log("🔌 New user connected:", socket.id);
+
+  socket.on("sendMessage", async (data) => {
+    try {
+      const newMsg = new Message(data);
+      await newMsg.save();
+      io.emit("receiveMessage", newMsg);
+    } catch (err) {
+      console.error("❌ Message save error:", err);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("❌ User disconnected:", socket.id);
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
-  console.log("🔍 MongoDB URI from .env:", process.env.MONGODB_URI);
 });

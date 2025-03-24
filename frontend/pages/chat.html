@@ -11,6 +11,8 @@
     <title>Galileo Design</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body>
@@ -155,248 +157,180 @@
         </header>
 
         <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <!-- LEFT: Conversation List -->
           <div class="layout-content-container flex flex-col w-80">
-            <h2
-              class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
-            >
-              Conversations
-            </h2>
-            <div
-              class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/8d574618-c8f5-43a4-bf0d-71b9b9182f43.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#181411] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Chloe, Age 30
-                  </p>
-                  <p
-                    class="text-[#897361] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    Hi, I'm interested in your service
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#897361] text-sm font-normal leading-normal">
-                  3d
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/0c4fc18b-6dfc-4082-b337-b8dc06a6f80c.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#181411] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Liam, Age 35
-                  </p>
-                  <p
-                    class="text-[#897361] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    I'm thinking of renovating my kitchen
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#897361] text-sm font-normal leading-normal">
-                  4d
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/b7978c8f-958f-417a-a7f0-407859de7c2d.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#181411] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Natalie, Age 28
-                  </p>
-                  <p
-                    class="text-[#897361] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    Do you have experience in carpentry?
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#897361] text-sm font-normal leading-normal">
-                  5d
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/0dcbec67-e4bf-4700-97bb-65216523105b.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#181411] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Evan, Age 32
-                  </p>
-                  <p
-                    class="text-[#897361] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    Can you provide a quote for this project?
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#897361] text-sm font-normal leading-normal">
-                  1w
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/e9e9efae-59fe-45cf-bbd5-64bbdd0c9339.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#181411] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Ava, Age 29
-                  </p>
-                  <p
-                    class="text-[#897361] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    I need help with a custom furniture design
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#897361] text-sm font-normal leading-normal">
-                  2w
-                </p>
-              </div>
-            </div>
+            <h2>Conversations</h2>
+            <div id="conversation-list"></div>
           </div>
+          <!-- RIGHT CHAT AREA -->
           <div
             class="layout-content-container flex flex-col max-w-[960px] flex-1"
           >
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <div class="flex min-w-72 flex-col gap-3">
                 <p
+                  id="conversation-title"
                   class="text-[#181411] tracking-light text-[32px] font-bold leading-tight"
                 >
-                  Hi, I'm interested in your service
-                </p>
-                <p class="text-[#897361] text-sm font-normal leading-normal">
-                  Chloe, Age 30
+                  Select a conversation
                 </p>
               </div>
             </div>
-            <div class="flex items-end gap-3 p-4">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/e402a40e-afc5-463c-8b87-f225926b77f3.png');
-                "
-              ></div>
-              <div class="flex flex-1 flex-col gap-1 items-start">
-                <p
-                  class="text-[#897361] text-[13px] font-normal leading-normal max-w-[360px]"
-                >
-                  Chloe, Age 30
-                </p>
-                <p
-                  class="text-base font-normal leading-normal flex max-w-[360px] rounded-xl px-4 py-3 bg-[#f4f2f0] text-[#181411]"
-                >
-                  Hi, I saw your profile and I'm interested in your service. Can
-                  you tell me more about your experience and what type of
-                  projects you've worked on before?
-                </p>
-              </div>
+
+            <!-- Chat messages -->
+            <div
+              id="chat-box"
+              class="flex flex-col gap-2 px-4 py-4 overflow-y-auto max-h-[500px]"
+            >
+              <!-- Messages will render here -->
             </div>
-            <div class="flex items-center px-4 py-3 gap-3 @container">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/a245309c-1e3c-4d2e-ab37-e62e455b4346.png');
-                "
-              ></div>
-              <label class="flex flex-col min-w-40 h-12 flex-1">
-                <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-                  <input
-                    placeholder="Type a message"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f4f2f0] focus:border-none h-full placeholder:text-[#897361] px-4 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
-                    value=""
-                  />
-                  <div
-                    class="flex border-none bg-[#f4f2f0] items-center justify-center pr-4 rounded-r-xl border-l-0 !pr-2"
-                  >
-                    <div class="flex items-center gap-4 justify-end">
-                      <div class="flex items-center gap-1">
-                        <button class="flex items-center justify-center p-1.5">
-                          <div
-                            class="text-[#897361]"
-                            data-icon="Image"
-                            data-size="20px"
-                            data-weight="regular"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20px"
-                              height="20px"
-                              fill="currentColor"
-                              viewBox="0 0 256 256"
-                            >
-                              <path
-                                d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"
-                              ></path>
-                            </svg>
-                          </div>
-                        </button>
-                      </div>
-                      <button
-                        class="min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec7113] text-white text-sm font-medium leading-normal hidden @[480px]:block"
-                      >
-                        <span class="truncate">Send</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </label>
+
+            <!-- Message input -->
+            <div class="flex items-center px-4 py-3 gap-3">
+              <input
+                id="message-input"
+                placeholder="Type a message"
+                class="form-input flex flex-1 resize-none overflow-hidden rounded-xl bg-[#f4f2f0] text-[#181411] px-4 py-2 text-base"
+              />
+              <button
+                id="send-button"
+                class="px-4 py-2 rounded-xl bg-[#ec7113] text-white text-sm font-medium"
+              >
+                Send
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const socket = io("http://localhost:5001");
+
+        function getQueryParam(param) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(param);
+        }
+
+        const conversationId = getQueryParam("conversationId");
+        const userId = localStorage.getItem("userId");
+        const receiverId = getQueryParam("receiverId");
+
+        const sendButton = document.getElementById("send-button");
+        const input = document.getElementById("message-input");
+        const chatBox = document.getElementById("chat-box");
+
+        function renderMessage(msg) {
+          const isMe = msg.sender === userId;
+          const alignment = isMe ? "justify-end" : "justify-start";
+          const bubbleColor = isMe
+            ? "bg-[#ec7113] text-white"
+            : "bg-[#f4f2f0] text-[#181411]";
+          const msgDiv = document.createElement("div");
+          msgDiv.className = `flex ${alignment} gap-3 p-2`;
+          msgDiv.innerHTML = `<div class="${bubbleColor} rounded-xl px-4 py-2 max-w-[360px] text-sm">${msg.text}</div>`;
+          chatBox.appendChild(msgDiv);
+        }
+
+        async function loadMessages() {
+          try {
+            const res = await fetch(`/api/messages/${conversationId}`);
+            const messages = await res.json();
+            messages.forEach(renderMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+          } catch (err) {
+            console.error("❌ Failed to load messages:", err);
+          }
+        }
+
+        if (conversationId) {
+          loadMessages();
+        }
+
+        sendButton.addEventListener("click", () => {
+          if (!input.value.trim()) return;
+          const message = {
+            sender: userId,
+            receiver: receiverId,
+            text: input.value,
+            conversationId,
+          };
+          socket.emit("sendMessage", message);
+          input.value = "";
+        });
+
+        socket.on("receiveMessage", (msg) => {
+          renderMessage(msg);
+          chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        async function loadConversations(userId) {
+          try {
+            const res = await fetch(`/api/conversations/${userId}`);
+            const conversations = await res.json();
+            const container = document.getElementById("conversation-list");
+            const selectedConversationId = getQueryParam("conversationId");
+
+            container.innerHTML = "";
+
+            conversations
+              .sort((a, b) => new Date(b.lastTime) - new Date(a.lastTime))
+              .forEach((conv) => {
+                const partner = conv.participants.find((p) => p._id !== userId);
+                const div = document.createElement("div");
+                div.className =
+                  "flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100";
+
+                div.onclick = () => {
+                  window.location.href = `chat.html?userId=${userId}&receiverId=${partner._id}&conversationId=${conv._id}`;
+                };
+
+                // ✅ Set header if this is the selected conversation
+                if (conv._id === selectedConversationId && partner?.fullName) {
+                  const header = document.getElementById("conversation-title");
+                  if (header) {
+                    header.textContent = `Chatting with ${partner.fullName}`;
+                  }
+                }
+
+                div.innerHTML = `
+          <div class="flex items-center gap-4">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
+              style="background-image: url('${
+                partner.profileImage
+                  ? partner.profileImage
+                  : "/uploads/default.png"
+              }');">
+            </div>
+            <div class="flex flex-col justify-center">
+              <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
+                partner.fullName
+              }</p>
+              <p class="text-[#897361] text-sm font-normal leading-normal line-clamp-2">${
+                conv.lastMessage || "No messages yet..."
+              }</p>
+            </div>
+          </div>
+          <div class="shrink-0">
+            <p class="text-[#897361] text-sm font-normal leading-normal">
+              ${new Date(conv.lastTime).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+          </div>`;
+                container.appendChild(div);
+              });
+          } catch (err) {
+            console.error("❌ Failed to load conversations:", err);
+          }
+        }
+
+        if (userId) {
+          loadConversations(userId);
+        }
+      });
+    </script>
   </body>
 </html>
