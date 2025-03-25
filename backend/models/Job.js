@@ -3,11 +3,23 @@ const mongoose = require("mongoose");
 const jobSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
-  budget: { type: Number, required: true }, // Changed from payment to budget
-  deadline: { type: String, required: true }, // Changed to String to match "1 week" format
-  categories: [{ type: String }], // Added for job tags like "Web Development", "ReactJS"
-  milestonesEnabled: { type: Boolean, default: false }, // New field for milestone payments checkbox
+  budget: { type: Number, required: true },
+  deadline: { type: Date, required: true },
+  categories: [{ type: String }],
+  milestonesEnabled: { type: Boolean, default: false },
+  status: {
+    type: String,
+    enum: ["open", "in progress", "completed", "cancelled"],
+    default: "open",
+  },
+  skillsRequired: [{ type: String }],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  ratings: { type: Number, default: 0 },
+  jobRank: {
+    type: String,
+    enum: ["Beginner", "Intermediate", "Advanced", "Expert"],
+    default: "Beginner", // Default rank could be "Beginner"
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
