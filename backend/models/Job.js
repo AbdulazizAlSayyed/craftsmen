@@ -14,6 +14,8 @@ const jobSchema = new mongoose.Schema({
   },
   skillsRequired: [{ type: String }],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  craftsmanId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // ✅ Craftsman who completed the job
+
   ratings: { type: Number, default: 0 },
   jobRank: {
     type: String,

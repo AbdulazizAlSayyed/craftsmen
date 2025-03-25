@@ -46,5 +46,31 @@ router.get("/", async (req, res) => {
       .json({ message: "Error fetching jobs", error: error.message });
   }
 });
+router.get("/completed/:craftsmanId/:skillName", async (req, res) => {
+  try {
+    const { craftsmanId, skillName } = req.params;
+
+    console.log(
+      `🔍 Fetching completed jobs for CraftsmanID: ${craftsmanId}, Skill: ${skillName}`
+    );
+
+    const completedJobs = await Job.find({
+      craftsmanId: craftsmanId, // ✅ Ensure craftsmanId is used correctly
+      status: "completed",
+      categories: { $in: [skillName] }, // ✅ Ensure category filter
+    }).lean();
+
+    if (!completedJobs.length) {
+      return res
+        .status(404)
+        .json({ message: `No completed jobs found for ${skillName}` });
+    }
+
+    res.json(completedJobs);
+  } catch (error) {
+    console.error("❌ Error fetching completed jobs:", error);
+    res.status(500).json({ message: "Error fetching completed jobs", error });
+  }
+});
 
 module.exports = router;
