@@ -156,6 +156,7 @@
             <label class="flex flex-col px-4 py-3">
               <p class="text-base font-medium pb-2">Select your skills</p>
               <div class="grid grid-cols-2 gap-2">
+                <!-- Existing options -->
                 <label
                   class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
                 >
@@ -234,6 +235,125 @@
                     >Electrical Work</span
                   >
                 </label>
+
+                <!-- New options from the image -->
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Carpentry"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Carpentry</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Pottery"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Pottery</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Leathercraft"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Leathercraft</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Glassblowing"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Glassblowing</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Ceramics"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Ceramics</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Wood Carving"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Wood Carving</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Blacksmithing"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Blacksmithing</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Stone Carving"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Stone Carving</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Weaving"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Weaving</span
+                  >
+                </label>
               </div>
             </label>
 
@@ -298,16 +418,33 @@
                     "input[placeholder='Password']"
                   ).value;
                   const role = document.querySelector("select").value;
-                  const skills = Array.from(
-                    document.querySelectorAll("input[name='skills']:checked")
-                  ).map((el) => el.value);
                   const bio = document.querySelector("textarea").value;
                   const location = document.querySelector(
                     "input[placeholder='Where are you based?']"
                   ).value;
-                  const newsletterSubscribed = document.querySelector(
-                    "input[type='checkbox']"
-                  ).checked;
+                  const newsletterSubscribed =
+                    document.querySelectorAll("input[type='checkbox']")[1]
+                      ?.checked ?? false;
+
+                  const selectedSkillElements = Array.from(
+                    document.querySelectorAll("input[name='skills']:checked")
+                  );
+                  const selectedSkillNames = selectedSkillElements.map(
+                    (el) => el.value
+                  );
+
+                  let skills = [];
+
+                  if (!selectedSkillNames.includes("No skills")) {
+                    skills = selectedSkillNames.map((name) => ({
+                      name,
+                      rank: "Beginner",
+                      experience: 0,
+                      rating: 0,
+                      numberOfJobs: 0,
+                      numberOfRatedJobs: 0,
+                    }));
+                  }
 
                   const response = await fetch(
                     "http://localhost:5001/api/auth/signup",
@@ -335,16 +472,73 @@
                     alert(
                       "Account created successfully! Please verify your email."
                     );
-
-                    // 🔐 Save email for verification page
                     localStorage.setItem("emailToVerify", email);
-
-                    // Redirect to your verification page
-                    window.location.href = "verification-email.html"; // or whatever your page is called
+                    window.location.href = "verification-email.html";
                   } else {
                     alert("Error: " + data.message);
                   }
                 }
+                document.addEventListener("DOMContentLoaded", () => {
+                  const noSkillsCheckbox = document.querySelector(
+                    "input[value='No skills']"
+                  );
+                  const allSkillCheckboxes = Array.from(
+                    document.querySelectorAll("input[name='skills']")
+                  );
+                  const otherSkills = allSkillCheckboxes.filter(
+                    (cb) => cb.value !== "No skills"
+                  );
+                  const roleSelect = document.querySelector("select");
+
+                  // 👉 When "No skills" is clicked
+                  noSkillsCheckbox.addEventListener("change", () => {
+                    if (noSkillsCheckbox.checked) {
+                      otherSkills.forEach((cb) => {
+                        cb.checked = false;
+                      });
+                    }
+                  });
+
+                  // 👉 When any other skill is clicked
+                  otherSkills.forEach((cb) => {
+                    cb.addEventListener("change", () => {
+                      if (cb.checked) {
+                        noSkillsCheckbox.checked = false;
+                      }
+                    });
+                  });
+
+                  // 👉 Role logic: When role is changed
+                  roleSelect.addEventListener("change", () => {
+                    const role = roleSelect.value;
+
+                    if (role === "client") {
+                      // Select "No skills" and disable other checkboxes
+                      noSkillsCheckbox.checked = true;
+                      otherSkills.forEach((cb) => {
+                        cb.checked = false;
+                        cb.disabled = true;
+                        cb.parentElement.classList.add(
+                          "opacity-50",
+                          "pointer-events-none"
+                        ); // Optional: visual feedback
+                      });
+                    } else if (role === "craftsman") {
+                      // Enable all skills
+                      noSkillsCheckbox.checked = false;
+                      otherSkills.forEach((cb) => {
+                        cb.disabled = false;
+                        cb.parentElement.classList.remove(
+                          "opacity-50",
+                          "pointer-events-none"
+                        );
+                      });
+                    }
+                  });
+
+                  // Initial check on page load in case "client" is pre-selected
+                  roleSelect.dispatchEvent(new Event("change"));
+                });
               </script>
             </div>
           </div>
