@@ -47,7 +47,7 @@
             <div class="flex items-center gap-9">
               <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="dashboard.html"
+                href="dashborad.html"
                 >Dashboard</a
               >
               <a
@@ -148,10 +148,12 @@
                 </button>
               </a>
             </div>
-            <a href="#" id="profile-link">
+            <a href="Profile2.html">
               <div
-                id="profile-pic"
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                style="
+                  background-image: url('https://cdn.usegalileo.ai/sdxl10/f440dfe7-c1cd-439b-8f43-9bae8adc21c6.png');
+                "
               ></div>
             </a>
           </div>
@@ -362,13 +364,13 @@
 
             </div>
    
-            <!-- See More Button -->
+            <!-- View More Button -->
             <div class="text-center mt-6">
               <button
                 id="seeMoreBtn"
                 class="bg-[#ec7113] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#D16210] transition duration-200"
               >
-                See More
+                View More
               </button>
             </div>
             <!--
@@ -441,83 +443,6 @@
         </div>
       </div>
     </div>
-    <script>
-      document
-        .getElementById("seeMoreBtn")
-        .addEventListener("click", function () {
-          let hiddenItems = document.querySelectorAll(
-            "#portfolio-container .hidden"
-          );
-          hiddenItems.forEach((item) => item.classList.remove("hidden"));
-          this.style.display = "none"; // Hide button after revealing items
-        });
-    </script>
-    
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    let craftsmanId = new URLSearchParams(window.location.search).get(
-      "craftsmanId"
-    );
-
-    if (!craftsmanId) {
-      craftsmanId = localStorage.getItem("craftsmanId");
-      if (!craftsmanId) {
-        console.error("❌ Missing craftsmanId in URL and Local Storage!");
-        return;
-      }
-    }
-
-    localStorage.setItem("craftsmanId", craftsmanId);
-
-    try {
-      const res = await fetch(`/api/profile/${craftsmanId}`);
-
-      if (!res.ok)
-        throw new Error(
-          `Failed to fetch profile: ${response.status} ${response.statusText}`
-        );
-
-      const data = await res.json();
-
-      console.log("✅ API Response:", data); // Debugging log
-
-      if (!data || !data.profileImage) {
-        console.error("❌ Profile image is missing in API response");
-        return;
-      }
-
-      const profileImage = data.profileImage.trim()
-        ? data.profileImage
-        : "/uploads/default.png";
-      console.log("✅ Profile Image URL:", profileImage);
-
-      const profilePicDiv = document.getElementById("profile-pic");
-      if (profilePicDiv) {
-        profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-      } else {
-        console.error("❌ profile-pic element not found");
-      }
-
-      document.getElementById(
-        "profile-pic"
-      ).style.backgroundImage = `url(${profileImage})`;
-
-      const mainSkill =
-        data.skills && data.skills.length > 0 ? data.skills[0].name : "General";
-      const profileLink = document.getElementById("profile-link");
-
-      if (profileLink) {
-        profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-          mainSkill
-        )}`;
-      } else {
-        console.error("❌ profile-link element not found");
-      }
-    } catch (error) {
-      console.error("❌ Error loading profile:", error);
-    }
-  });
-</script>
 
 
 <script>
@@ -526,13 +451,13 @@ document.getElementById("seeMoreBtn").addEventListener("click", function () {
     "#portfolio-container .portfolio-card:nth-child(n+6)"
   );
 
-  const isShowingMore = this.textContent === "See More";
+  const isShowingMore = this.textContent === "View More";
 
   extraCards.forEach((card) => {
     card.querySelector("div").classList.toggle("hidden", !isShowingMore);
   });
 
-  this.textContent = isShowingMore ? "See Less" : "See More";
+  this.textContent = isShowingMore ? "View Less" : "View More";
 });
 
 </script>
