@@ -21,4 +21,34 @@ router.post("/upload-profile", upload.single("profileImage"), (req, res) => {
   res.json({ imageUrl });
 });
 
+
+// ✅ GET users by skill category
+router.get("/by-skill", async (req, res) => {
+  const category = req.query.category;
+
+  if (!category) {
+    return res.status(400).json({ error: "Category is required" });
+  }
+
+  try {
+    const users = await User.find({
+      role: "craftsman", // Only get craftsmen
+      "skills.name": category, // Match skill name
+    }).select("fullName skills profileImage");
+
+    const filteredUsers = users.map((user) => {
+      const matchedSkill = user.skills.find((skill) => skill.name === category);
+      return {
+        name: user.fullName,
+        rating: matchedSkill?.rating?.toFixed(1) || "N/A",
+        profileImage: user.profileImage || "",
+      };
+    });
+
+    res.json(filteredUsers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch users by skill" });
+  }
+});
 module.exports = router;
