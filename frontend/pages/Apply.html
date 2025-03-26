@@ -255,6 +255,13 @@
                 See More
               </button>
             </div>
+            <h2 class="text-[#181411] text-[22px] font-bold px-4 pt-6">
+              Browse Jobs
+            </h2>
+            <div
+              id="job-list"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-4"
+            ></div>
           </div>
         </div>
       </div>
@@ -278,6 +285,49 @@
 
           this.textContent = isShowingMore ? "See Less" : "See More";
         });
+
+      async function fetchJobs() {
+        try {
+          const response = await fetch("/api/jobs");
+          const jobs = await response.json();
+          const jobList = document.getElementById("job-list");
+
+          jobs.forEach((job) => {
+            const jobCard = document.createElement("div");
+            jobCard.className =
+              "flex flex-col gap-2 bg-white shadow-md rounded-xl p-4 border border-[#f0f0f0]";
+
+            jobCard.innerHTML = `
+          <h3 class="text-lg font-bold text-[#1b150d]">${job.title}</h3>
+          <p class="text-sm text-[#555]">${
+            job.description || "No description provided."
+          }</p>
+          <p class="text-sm text-[#333] font-medium">Budget: $${job.budget}</p>
+          <p class="text-xs text-[#777]">Deadline: ${new Date(
+            job.deadline
+          ).toLocaleDateString()}</p>
+          <button
+            class="mt-2 bg-[#ec7113] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#d16210] transition"
+            onclick="applyToJob('${job._id}')"
+          >
+            Apply
+          </button>
+        `;
+
+            jobList.appendChild(jobCard);
+          });
+        } catch (err) {
+          console.error("Failed to fetch jobs:", err);
+        }
+      }
+
+      function applyToJob(jobId) {
+        // This function should be customized to handle your application logic (e.g., API POST request or redirect)
+        alert("Applied to job with ID: " + jobId);
+      }
+
+      // Fetch jobs when page loads
+      document.addEventListener("DOMContentLoaded", fetchJobs);
     </script>
   </body>
 </html>

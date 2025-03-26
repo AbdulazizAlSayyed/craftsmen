@@ -12,6 +12,29 @@
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+<style>
+  /* Keeps checkboxes styled like buttons */
+  .skill-checkbox {
+    @apply flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 text-black peer-checked:bg-[#ee7f2b] peer-checked:text-white hover:bg-[#f3a952] transition-colors duration-200;
+  }
+
+  /* Ensures the post button looks polished */
+  #postJobButton {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  #postJobButton:hover {
+    background-color: #ff933e;
+    transform: translateY(-1px);
+  }
+
+  /* Optional: Focus ring for inputs */
+  .form-input:focus {
+    @apply ring-2 ring-orange-300 ring-offset-1;
+  }
+</style>
+
   </head>
   <body>
     <div
@@ -54,12 +77,12 @@
                 href="dashboard.html"
                 >Dashboard</a
               >
-                <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="job.html"
                 >Hire</a
               >
-               <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="Apply.html"
                 >Apply</a
@@ -211,234 +234,418 @@
                   value=""
                 />
               </label>
-              <label class="flex flex-col min-w-40 flex-1">
-                <p
-                  class="text-[#1b130d] text-base font-medium leading-normal pb-2"
-                >
-                  Deadline
-                </p>
-                <input
-                  placeholder="1 week"
-                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 placeholder:text-[#637588] p-4 text-base font-normal leading-normal"
-                  value=""
-                />
-              </label>
-            </div>
-            <p>after click make it darker</p>
-            <div class="flex gap-3 p-3 flex-wrap pr-4">
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#1b130d] text-sm font-medium leading-normal">
-                  Web Development
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#1b130d] text-sm font-medium leading-normal">
-                  ReactJS
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#1b130d] text-sm font-medium leading-normal">
-                  JavaScript
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#1b130d] text-sm font-medium leading-normal">
-                  Front-end
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#1b130d] text-sm font-medium leading-normal">
-                  UI/UX Design
-                </p>
-              </div>
+             <label class="flex flex-col min-w-40 flex-1">
+  <p class="text-[#1b130d] text-base font-medium leading-normal pb-2">
+    Deadline
+  </p>
+  <input
+    type="date" 
+    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 placeholder:text-[#637588] p-4 text-base font-normal leading-normal"
+    value=""
+  />
+</label>
+
             </div>
 
-            <h3
-              class="text-[#1b130d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-            >
-              Proposals
-            </h3>
-            <p
-              class="text-[#1b130d] text-base font-normal leading-normal pb-3 pt-1 px-4"
-            >
-              You will receive proposals from freelancers. You can invite
-              specific freelancers to submit proposals. You can also set your
-              job as private, in which case only freelancers you invite can see
-              it.
-            </p>
-            <h3
-              class="text-[#1b130d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-            >
-              Milestones
-            </h3>
-            <p
-              class="text-[#1b130d] text-base font-normal leading-normal pb-3 pt-1 px-4"
-            >
-              You can create milestones for your job. If you create a milestone,
-              you'll be required to escrow the funds for that milestone. When
-              you approve a milestone, the funds will be released to the
-              freelancer. If a milestone is not approved, you can request a
-              refund of the funds.
-            </p>
-            <div class="px-4">
-              <label class="flex gap-x-3 py-3 flex-row">
-                <input
-                  type="checkbox"
-                  class="h-5 w-5 rounded border-[#e7dacf] border-2 bg-transparent text-[#ee7f2b] checked:bg-[#ee7f2b] checked:border-[#ee7f2b] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#e7dacf] focus:outline-none"
-                  checked=""
-                />
-                <p class="text-[#1b130d] text-base font-normal leading-normal">
-                  Create milestone payments for this job
-                </p>
-              </label>
-            </div>
-            <div class="flex px-4 py-3">
+            
+            <!-- Skills Required -->
+
+
+            <label class="flex flex-col px-4 py-3">
+              <p class="text-base font-medium pb-2">Select required skills</p>
+              <div class="grid grid-cols-2 gap-2">
+               
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Woodworking"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Woodworking</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Metalworking"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Metalworking</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Painting"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Painting</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Plumbing"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Plumbing</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Electrical Work"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Electrical Work</span
+                  >
+                </label>
+
+                <!-- New options from the image -->
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Carpentry"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Carpentry</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Pottery"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Pottery</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Leathercraft"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Leathercraft</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Glassblowing"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Glassblowing</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Ceramics"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Ceramics</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Wood Carving"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Wood Carving</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Blacksmithing"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Blacksmithing</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Stone Carving"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Stone Carving</span
+                  >
+                </label>
+                <label
+                  class="flex items-center gap-2 p-2 rounded-md cursor-pointer bg-gray-200 hover:bg-[#ee7f2b] peer-checked:bg-[#ee7f2b]"
+                >
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="Weaving"
+                    class="peer hidden"
+                  />
+                  <span class="text-black peer-checked:text-white"
+                    >Weaving</span
+                  >
+                </label>
+              </div>
+            </label>
+
+
+</div>
+
+</div>
+<!-- Wrapper to center everything -->
+<div class="w-full flex flex-col items-center">
+
+  <!-- Job Rank -->
+  <div class="w-full max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+    <label class="flex flex-col w-full">
+      <p class="text-[#1b130d] text-base font-medium leading-normal pb-2">
+        Job Rank
+      </p>
+      <select
+        class="form-input w-full rounded-xl bg-[#f0f2f4] h-14 p-4 text-base text-[#111418]"
+        id="jobRankSelect"
+      >
+        <option value="Beginner">Beginner</option>
+        <option value="Advanced">Advanced</option>
+        <option value="Expert">Expert</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Milestones -->
+  <div class="w-full max-w-[720px] px-4 py-3">
+    <h3
+      class="text-[#1b130d] text-lg font-bold leading-tight tracking-[-0.015em] pb-2"
+    >
+      Milestones
+    </h3>
+    <p class="text-[#1b130d] text-base font-normal leading-normal pb-3">
+      You can create milestones for your job. If you create a milestone,
+      you'll be required to escrow the funds for that milestone. When
+      you approve a milestone, the funds will be released to the
+      freelancer. If a milestone is not approved, you can request a
+      refund of the funds.
+    </p>
+    <div class="flex items-center gap-2 pt-1">
+      <input type="checkbox" id="milestoneCheckbox" />
+      <span class="text-[#1b130d] text-base font-medium">
+        Enable Milestones
+      </span>
+    </div>
+  </div>
+<div class="flex px-4 py-3">
               <button
                 id="postJobButton"
                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 bg-[#ee7f2b] text-[#1b130d] text-base font-bold leading-normal tracking-[0.015em]"
               >
-                <span class="truncate" id="postJobButton">Continue</span>
+                <span class="truncate" id="postJobButton">Post</span>
               </button>
             </div>
+</div>
+
+
+           
+            <div class="flex gap-3 p-3 flex-wrap pr-4">
+              
+
+            
+            
           </div>
         </div>
       </div>
     </div>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const continueButton = document.getElementById("postJobButton"); // Use ID
-        if (continueButton) {
-          continueButton.addEventListener("click", async () => {
-            const title = document.querySelector(
-              "input[placeholder='What do you need help with?']"
-            ).value;
-            const description = document.querySelector("textarea").value;
-            const budget = parseFloat(
-              document.querySelector("input[placeholder='$500']").value
-            );
-            const deadline = document.querySelector(
-              "input[placeholder='1 week']"
-            ).value;
-            const categories = ["Web Development", "ReactJS", "JavaScript"]; // Example categories
-            const milestonesEnabled = document.querySelector(
-              "input[type='checkbox']"
-            ).checked;
-            const userId = "65fbc1234abcd56789ef0123"; // Replace with logged-in user ID
+  document.addEventListener("DOMContentLoaded", async () => {
+    // ========= Job Post Handler =========
+    const continueButton = document.getElementById("postJobButton");
+    if (continueButton) {
+      continueButton.addEventListener("click", async () => {
+        const title = document.querySelector(
+          "input[placeholder='What do you need help with?']"
+        ).value;
+        const description = document.querySelector("textarea").value;
+        const budget = parseFloat(
+          document.querySelector("input[placeholder='$500']").value
+        );
+        const deadline = document.querySelector("input[type='date']").value;
 
-            const jobData = {
-              title,
-              description,
-              budget,
-              deadline,
-              categories,
-              milestonesEnabled,
-              userId,
-            };
-
-            console.log("Sending job data:", jobData); // Debugging
-
-            try {
-              const response = await fetch("http://localhost:5001/api/jobs", {
-                // No "/create"
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(jobData),
-              });
-
-              const data = await response.json();
-              if (response.ok) {
-                alert("Job posted successfully!");
-              } else {
-                alert("Error: " + data.message);
-              }
-            } catch (error) {
-              console.error("Error posting job:", error);
-            }
-          });
-        } else {
-          console.error("Post job button not found!");
-        }
-      });
-    </script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        let craftsmanId = new URLSearchParams(window.location.search).get(
-          "craftsmanId"
+        // ✅ Collect selected skills from buttons
+        const selectedSkillButtons = document.querySelectorAll(
+          ".skill-btn.selected"
+        );
+        const skillsRequired = Array.from(selectedSkillButtons).map((btn) =>
+          btn.textContent.trim()
         );
 
-        if (!craftsmanId) {
-          craftsmanId = localStorage.getItem("craftsmanId");
-          if (!craftsmanId) {
-            console.error("❌ Missing craftsmanId in URL and Local Storage!");
-            return;
-          }
-        }
+        const jobRank = document.getElementById("jobRankSelect").value;
+        const milestonesEnabled = document.getElementById(
+          "milestoneCheckbox"
+        ).checked;
 
-        localStorage.setItem("craftsmanId", craftsmanId);
+        const userId = "65fbc1234abcd56789ef0123"; // Replace with actual user ID
+
+        const jobData = {
+          title,
+          description,
+          budget,
+          deadline,
+          milestonesEnabled,
+          skillsRequired,
+          jobRank,
+          userId,
+        };
+
+        console.log("Sending job data:", jobData);
 
         try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
+          const response = await fetch("http://localhost:5001/api/jobs", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jobData),
+          });
 
-          if (!res.ok)
-            throw new Error(
-              `Failed to fetch profile: ${response.status} ${response.statusText}`
-            );
-
-          const data = await res.json();
-
-          console.log("✅ API Response:", data); // Debugging log
-
-          if (!data || !data.profileImage) {
-            console.error("❌ Profile image is missing in API response");
-            return;
-          }
-
-          const profileImage = data.profileImage.trim()
-            ? data.profileImage
-            : "/uploads/default.png";
-          console.log("✅ Profile Image URL:", profileImage);
-
-          const profilePicDiv = document.getElementById("profile-pic");
-          if (profilePicDiv) {
-            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+          const data = await response.json();
+          if (response.ok) {
+            alert("Job posted successfully!");
           } else {
-            console.error("❌ profile-pic element not found");
-          }
-
-          document.getElementById(
-            "profile-pic"
-          ).style.backgroundImage = `url(${profileImage})`;
-
-          const mainSkill =
-            data.skills && data.skills.length > 0
-              ? data.skills[0].name
-              : "General";
-          const profileLink = document.getElementById("profile-link");
-
-          if (profileLink) {
-            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-              mainSkill
-            )}`;
-          } else {
-            console.error("❌ profile-link element not found");
+            alert("Error: " + data.message);
           }
         } catch (error) {
-          console.error("❌ Error loading profile:", error);
+          console.error("Error posting job:", error);
         }
       });
-    </script>
+    } else {
+      console.error("Post job button not found!");
+    }
+
+    // ========= Skill Button Toggle Logic =========
+    document.querySelectorAll(".skill-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("selected");
+      });
+    });
+
+    // ========= Profile Image + Link =========
+    let craftsmanId = new URLSearchParams(window.location.search).get(
+      "craftsmanId"
+    );
+
+    if (!craftsmanId) {
+      craftsmanId = localStorage.getItem("craftsmanId");
+      if (!craftsmanId) {
+        console.error("❌ Missing craftsmanId in URL and Local Storage!");
+        return;
+      }
+    }
+
+    localStorage.setItem("craftsmanId", craftsmanId);
+
+    try {
+      const res = await fetch(`/api/profile/${craftsmanId}`);
+      if (!res.ok)
+        throw new Error(
+          `Failed to fetch profile: ${res.status} ${res.statusText}`
+        );
+
+      const data = await res.json();
+      console.log("✅ API Response:", data);
+
+      if (!data || !data.profileImage) {
+        console.error("❌ Profile image is missing in API response");
+        return;
+      }
+
+      const profileImage = data.profileImage.trim()
+        ? data.profileImage
+        : "/uploads/default.png";
+
+      const profilePicDiv = document.getElementById("profile-pic");
+      if (profilePicDiv) {
+        profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+      } else {
+        console.error("❌ profile-pic element not found");
+      }
+
+      const mainSkill =
+        data.skills && data.skills.length > 0
+          ? data.skills[0].name
+          : "General";
+
+      const profileLink = document.getElementById("profile-link");
+      if (profileLink) {
+        profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+          mainSkill
+        )}`;
+      } else {
+        console.error("❌ profile-link element not found");
+      }
+    } catch (error) {
+      console.error("❌ Error loading profile:", error);
+    }
+  });
+  document.querySelectorAll(".skill-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    btn.classList.toggle("selected");
+  });
+});
+
+</script>
+
   </body>
 </html>

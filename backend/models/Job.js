@@ -5,7 +5,6 @@ const jobSchema = new mongoose.Schema({
   description: { type: String },
   budget: { type: Number, required: true },
   deadline: { type: Date, required: true },
-  categories: [{ type: String }],
   milestonesEnabled: { type: Boolean, default: false },
   status: {
     type: String,
@@ -19,7 +18,7 @@ const jobSchema = new mongoose.Schema({
   ratings: { type: Number, default: 0 },
   jobRank: {
     type: String,
-    enum: ["Beginner", "Intermediate", "Advanced", "Expert"],
+    enum: ["Beginner", "Advanced", "Expert"],
     default: "Beginner", // Default rank could be "Beginner"
   },
   createdAt: { type: Date, default: Date.now },

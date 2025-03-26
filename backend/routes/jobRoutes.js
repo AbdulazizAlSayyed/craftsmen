@@ -3,8 +3,8 @@ const router = express.Router();
 const Job = require("../models/Job");
 
 // ✅ POST: Create a new job
+// ✅ POST: Create a new job
 router.post("/", async (req, res) => {
-  // Route should be "/" not "/create"
   try {
     const {
       title,
@@ -14,6 +14,8 @@ router.post("/", async (req, res) => {
       categories,
       milestonesEnabled,
       userId,
+      skillsRequired, // ✅ Add this
+      jobRank, // ✅ Add this
     } = req.body;
 
     const newJob = new Job({
@@ -24,6 +26,8 @@ router.post("/", async (req, res) => {
       categories,
       milestonesEnabled,
       userId,
+      skillsRequired, // ✅ Save to DB
+      jobRank, // ✅ Save to DB
     });
 
     await newJob.save();
@@ -36,16 +40,6 @@ router.post("/", async (req, res) => {
 });
 
 // ✅ GET: Fetch all jobs
-router.get("/", async (req, res) => {
-  try {
-    const jobs = await Job.find();
-    res.status(200).json(jobs);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching jobs", error: error.message });
-  }
-});
 router.get("/completed/:craftsmanId/:skillName", async (req, res) => {
   try {
     const { craftsmanId, skillName } = req.params;
@@ -55,9 +49,9 @@ router.get("/completed/:craftsmanId/:skillName", async (req, res) => {
     );
 
     const completedJobs = await Job.find({
-      craftsmanId: craftsmanId, // ✅ Ensure craftsmanId is used correctly
+      craftsmanId,
       status: "completed",
-      categories: { $in: [skillName] }, // ✅ Ensure category filter
+      skillsRequired: { $in: [skillName] },
     }).lean();
 
     if (!completedJobs.length) {
