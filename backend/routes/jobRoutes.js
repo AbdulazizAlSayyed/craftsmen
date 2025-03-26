@@ -11,7 +11,6 @@ router.post("/", async (req, res) => {
       description,
       budget,
       deadline,
-      categories,
       milestonesEnabled,
       userId,
       skillsRequired, // ✅ Add this
@@ -23,7 +22,6 @@ router.post("/", async (req, res) => {
       description,
       budget,
       deadline,
-      categories,
       milestonesEnabled,
       userId,
       skillsRequired, // ✅ Save to DB
@@ -64,6 +62,16 @@ router.get("/completed/:craftsmanId/:skillName", async (req, res) => {
   } catch (error) {
     console.error("❌ Error fetching completed jobs:", error);
     res.status(500).json({ message: "Error fetching completed jobs", error });
+  }
+});
+// ✅ GET: Fetch ALL jobs (for homepage or general listing)
+router.get("/", async (req, res) => {
+  try {
+    const jobs = await Job.find(); // Fetch all jobs
+    res.json(jobs);
+  } catch (error) {
+    console.error("❌ Error fetching jobs:", error);
+    res.status(500).json({ message: "Error fetching jobs", error });
   }
 });
 
