@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="flex gap-3 p-3 flex-wrap pr-4">
+      <div
+        class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f4f2f0] pl-4 pr-4"
+      >
+        <p class="text-[#181411] text-sm font-medium leading-normal">
+          UI Design
+        </p>
+      </div>
+      <div
+        class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f4f2f0] pl-4 pr-4"
+      >
+        <p class="text-[#181411] text-sm font-medium leading-normal">
+          UX Design
+        </p>
+      </div>
+      <div
+        class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f4f2f0] pl-4 pr-4"
+      >
+        <p class="text-[#181411] text-sm font-medium leading-normal">
+          Prototyping
+        </p>
+      </div>
+      <div
+        class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f4f2f0] pl-4 pr-4"
+      >
+        <p class="text-[#181411] text-sm font-medium leading-normal">
+          Wireframing
+        </p>
+      </div>
+      <div
+        class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f4f2f0] pl-4 pr-4"
+      >
+        <p class="text-[#181411] text-sm font-medium leading-normal">
+          User Research
+        </p>
+      </div>
+      <div
+        class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f4f2f0] pl-4 pr-4"
+      >
+        <p class="text-[#181411] text-sm font-medium leading-normal">
+          Interaction Design
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+
+<a href="Profile2.html"></a>
+
+<a href="#" id="profile-link">
+  <div
+    id="profile-pic"
+    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+  ></div>
+</a>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    let craftsmanId = new URLSearchParams(window.location.search).get(
+      "craftsmanId"
+    );
+
+    if (!craftsmanId) {
+      craftsmanId = localStorage.getItem("craftsmanId");
+      if (!craftsmanId) {
+        console.error("❌ Missing craftsmanId in URL and Local Storage!");
+        return;
+      }
+    }
+
+    localStorage.setItem("craftsmanId", craftsmanId);
+
+    try {
+      const res = await fetch(`/api/profile/${craftsmanId}`);
+
+      if (!res.ok)
+        throw new Error(
+          `Failed to fetch profile: ${response.status} ${response.statusText}`
+        );
+
+      const data = await res.json();
+
+      console.log("✅ API Response:", data); // Debugging log
+
+      if (!data || !data.profileImage) {
+        console.error("❌ Profile image is missing in API response");
+        return;
+      }
+
+      const profileImage = data.profileImage.trim()
+        ? data.profileImage
+        : "/uploads/default.png";
+      console.log("✅ Profile Image URL:", profileImage);
+
+      const profilePicDiv = document.getElementById("profile-pic");
+      if (profilePicDiv) {
+        profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+      } else {
+        console.error("❌ profile-pic element not found");
+      }
+
+      document.getElementById(
+        "profile-pic"
+      ).style.backgroundImage = `url(${profileImage})`;
+
+      const mainSkill =
+        data.skills && data.skills.length > 0 ? data.skills[0].name : "General";
+      const profileLink = document.getElementById("profile-link");
+
+      if (profileLink) {
+        profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+          mainSkill
+        )}`;
+      } else {
+        console.error("❌ profile-link element not found");
+      }
+    } catch (error) {
+      console.error("❌ Error loading profile:", error);
+    }
+  });
+</script>
