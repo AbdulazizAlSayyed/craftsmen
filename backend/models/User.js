@@ -7,7 +7,7 @@ const skillSchema = new mongoose.Schema({
     enum: ["Beginner", "Intermediate", "Advanced", "Expert"],
     default: "Beginner",
   },
-  experience: { type: Number, default: 0 }, // Experience points for this skill
+  xpPoints: { type: Number, default: 0 }, // Experience points for this skill
   rating: { type: Number, default: 0.0 }, // Average rating for this skill
   numberOfJobs: { type: Number, default: 0 }, // Jobs completed under this skill
   numberOfRatedJobs: { type: Number, default: 0 }, // Jobs that received a rating
