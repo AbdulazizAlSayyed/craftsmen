@@ -50,12 +50,12 @@
                 href="dashboard.html"
                 >Dashboard</a
               >
-                <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="job.html"
                 >Hire</a
               >
-               <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="Apply.html"
                 >Apply</a
@@ -172,6 +172,8 @@
                 </p>
               </div>
             </div>
+            <div id="posted-jobs-list"></div>
+
             <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3">
               <div
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
@@ -287,6 +289,7 @@
         }
 
         localStorage.setItem("craftsmanId", craftsmanId);
+        await fetchPostedJobs(craftsmanId);
 
         try {
           const res = await fetch(`/api/profile/${craftsmanId}`);
@@ -338,6 +341,45 @@
           console.error("❌ Error loading profile:", error);
         }
       });
+
+      //fetching
+      async function fetchPostedJobs(userId) {
+        try {
+          const res = await fetch(`/api/jobs/posted/${userId}`);
+          if (!res.ok) throw new Error("Failed to fetch posted jobs");
+
+          const jobs = await res.json();
+
+          const container = document.getElementById("posted-jobs-list");
+
+          jobs.forEach((job) => {
+            const jobCard = document.createElement("div");
+            jobCard.className = "flex gap-4 bg-[#fcfaf8] px-4 py-3";
+
+            jobCard.innerHTML = `
+        <div
+          class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+          style="background-image: url('https://cdn.usegalileo.ai/sdxl10/fallback-job-thumb.png');"
+        ></div>
+        <div class="flex flex-1 flex-col justify-center">
+          <p class="text-[#111922] text-base font-medium leading-normal">
+            ${job.title}
+          </p>
+          <p class="text-[#93adc8] text-sm font-normal leading-normal">
+            ${job.description || "No description"}
+          </p>
+          <p class="text-[#93adc8] text-sm font-normal leading-normal">
+            ${job.status} • ${new Date(job.createdAt).toLocaleDateString()}
+          </p>
+        </div>
+      `;
+
+            container.appendChild(jobCard);
+          });
+        } catch (err) {
+          console.error("❌ Error fetching posted jobs:", err);
+        }
+      }
     </script>
   </body>
 </html>

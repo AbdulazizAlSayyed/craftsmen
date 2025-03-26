@@ -536,7 +536,11 @@
           "milestoneCheckbox"
         ).checked;
 
-        const userId = "65fbc1234abcd56789ef0123"; // Replace with actual user ID
+const userId = localStorage.getItem("userId");
+if (!userId) {
+  alert("User not logged in. Please sign in first.");
+  return;
+}
 
         const jobData = {
           title,

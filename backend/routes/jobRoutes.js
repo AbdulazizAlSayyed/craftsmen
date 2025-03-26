@@ -75,4 +75,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+// ✅ GET jobs posted by a specific user
+router.get("/posted/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log("✅ Received userId:", userId);
+
+    const jobs = await Job.find({ userId });
+    console.log("✅ Jobs found:", jobs);
+
+    res.json(jobs);
+  } catch (err) {
+    console.error("❌ Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 module.exports = router;
