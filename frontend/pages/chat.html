@@ -184,6 +184,7 @@
                 >
                   Select a conversation
                 </p>
+                <p class="text-sm italic text-gray-400 ml-4"></p>
               </div>
             </div>
 
@@ -375,33 +376,45 @@
         loadConversations(userId);
       }
     </script>
+
     <script>
+      const partnerName = document
+        .getElementById("conversation-title")
+        .textContent.replace("Chatting with ", "")
+        .trim();
+
+      // ✅ Create typing indicator
       const typingIndicator = document.createElement("p");
-      typingIndicator.innerHTML = `<span class="animate-pulse">💬 ${
-        partnerName || "User"
-      } is typing...</span>`;
-
       typingIndicator.className = "text-sm italic text-gray-400 ml-4";
-      let typingTimeout;
+      typingIndicator.style.display = "none";
 
-      // 👇 Append indicator below chat title
+      // ✅ Add it to the DOM (after title)
       const headerContainer = document.querySelector("#conversation-title");
       const parentOfTitle = headerContainer.parentElement;
       parentOfTitle.appendChild(typingIndicator);
-      typingIndicator.style.display = "none";
 
-      // 👇 Listen for typing from other user
+      // ✅ Typing logic
+      let typingTimeout;
+
       socket.on("showTyping", ({ senderId }) => {
         if (senderId === receiverId) {
+          // ✅ Dynamically get name every time someone types
+          const currentTitle =
+            document.getElementById("conversation-title").textContent;
+          const currentPartnerName = currentTitle
+            .replace("Chatting with ", "")
+            .trim();
+
+          typingIndicator.innerHTML = `<span class="animate-pulse">💬 ${currentPartnerName} is typing...</span>`;
           typingIndicator.style.display = "block";
+
           clearTimeout(typingTimeout);
           typingTimeout = setTimeout(() => {
             typingIndicator.style.display = "none";
-          }, 2000); // Hide after 2s
+          }, 2000);
         }
       });
 
-      // 👇 Emit typing event when current user types
       input.addEventListener("input", () => {
         socket.emit("typing", { senderId: userId, receiverId });
       });
