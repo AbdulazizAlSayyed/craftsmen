@@ -377,7 +377,10 @@
     </script>
     <script>
       const typingIndicator = document.createElement("p");
-      typingIndicator.textContent = "Typing...";
+      typingIndicator.innerHTML = `<span class="animate-pulse">💬 ${
+        partnerName || "User"
+      } is typing...</span>`;
+
       typingIndicator.className = "text-sm italic text-gray-400 ml-4";
       let typingTimeout;
 

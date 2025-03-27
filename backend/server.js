@@ -10,10 +10,9 @@ const jobRoutes = require("./routes/jobRoutes");
 const chatRoutes = require("./routes/chat");
 const profileRoutes = require("./routes/profile");
 
+const { Server } = require("socket.io");
 const http = require("http");
 const { logError, logInfo } = require("./logger"); // Import logger
-
-const { Server } = require("socket.io");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -82,6 +81,7 @@ app.use((req, res) => {
 });
 
 // ✅ Start the Server
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -94,29 +94,42 @@ const io = new Server(server, {
 let users = [];
 
 const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
+  !users.some((u) => u.userId === userId) && users.push({ userId, socketId });
 };
 
-const getUser = (userId) => users.find((user) => user.userId === userId);
+const getUser = (userId) => users.find((u) => u.userId === userId);
 
 io.on("connection", (socket) => {
-  console.log("A user connected");
+  console.log("📡 User connected:", socket.id);
 
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
+    console.log("✅ Added user:", userId);
   });
 
   socket.on("sendMessage", ({ sender, receiver, text, conversationId }) => {
     const user = getUser(receiver);
     if (user) {
-      io.to(user.socketId).emit("getMessage", { sender, text, conversationId });
+      io.to(user.socketId).emit("getMessage", {
+        sender,
+        text,
+        conversationId,
+        createdAt: new Date().toISOString(),
+      });
     }
   });
 
-  // ✅ Move this here:
   socket.on("disconnect", () => {
     console.log("❌ User disconnected:", socket.id);
+    users = users.filter((u) => u.socketId !== socket.id);
+  });
+
+  // Typing event (optional)
+  socket.on("typing", ({ senderId, receiverId }) => {
+    const user = getUser(receiverId);
+    if (user) {
+      io.to(user.socketId).emit("showTyping", { senderId });
+    }
   });
 });
 
