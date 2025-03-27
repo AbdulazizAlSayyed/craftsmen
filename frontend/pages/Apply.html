@@ -46,7 +46,7 @@
             <div class="flex items-center gap-9">
               <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="dashborad.html"
+                href="dashboard.html"
                 >Dashboard</a
               >
               <a
@@ -54,7 +54,6 @@
                 href="job.html"
                 >Hire</a
               >
-
               <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="Apply.html"
@@ -78,7 +77,12 @@
                 <button
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                 >
-                  <div class="text-[#1b150d]">
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="Bell"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20px"
@@ -97,7 +101,12 @@
                 <button
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                 >
-                  <div class="text-[#1b150d]">
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="ChatCircleDots"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20px"
@@ -113,10 +122,16 @@
                 </button>
               </a>
               <a href="Setting.html">
+                <!-- Settings Button -->
                 <button
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                 >
-                  <div class="text-[#1b150d]">
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="Settings"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20px"
@@ -132,12 +147,10 @@
                 </button>
               </a>
             </div>
-            <a href="Profile2.html">
+            <a href="#" id="profile-link">
               <div
+                id="profile-pic"
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/f440dfe7-c1cd-439b-8f43-9bae8adc21c6.png');
-                "
               ></div>
             </a>
           </div>
@@ -328,6 +341,74 @@
 
       // Fetch jobs when page loads
       document.addEventListener("DOMContentLoaded", fetchJobs);
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        let craftsmanId = new URLSearchParams(window.location.search).get(
+          "craftsmanId"
+        );
+
+        if (!craftsmanId) {
+          craftsmanId = localStorage.getItem("craftsmanId");
+          if (!craftsmanId) {
+            console.error("❌ Missing craftsmanId in URL and Local Storage!");
+            return;
+          }
+        }
+
+        localStorage.setItem("craftsmanId", craftsmanId);
+
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+
+          if (!res.ok)
+            throw new Error(
+              `Failed to fetch profile: ${response.status} ${response.statusText}`
+            );
+
+          const data = await res.json();
+
+          console.log("✅ API Response:", data); // Debugging log
+
+          if (!data || !data.profileImage) {
+            console.error("❌ Profile image is missing in API response");
+            return;
+          }
+
+          const profileImage = data.profileImage.trim()
+            ? data.profileImage
+            : "/uploads/default.png";
+          console.log("✅ Profile Image URL:", profileImage);
+
+          const profilePicDiv = document.getElementById("profile-pic");
+          if (profilePicDiv) {
+            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+          } else {
+            console.error("❌ profile-pic element not found");
+          }
+
+          document.getElementById(
+            "profile-pic"
+          ).style.backgroundImage = `url(${profileImage})`;
+
+          const mainSkill =
+            data.skills && data.skills.length > 0
+              ? data.skills[0].name
+              : "General";
+          const profileLink = document.getElementById("profile-link");
+
+          if (profileLink) {
+            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+              mainSkill
+            )}`;
+          } else {
+            console.error("❌ profile-link element not found");
+          }
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+      });
     </script>
   </body>
 </html>

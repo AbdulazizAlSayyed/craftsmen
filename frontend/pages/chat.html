@@ -10,7 +10,14 @@
 
     <title>Galileo Design</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
+    <style>
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    </style>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -52,12 +59,12 @@
                 href="dashboard.html"
                 >Dashboard</a
               >
-                <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="job.html"
                 >Hire</a
               >
-               <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="Apply.html"
                 >Apply</a
@@ -150,7 +157,6 @@
                 </button>
               </a>
             </div>
-
             <a href="#" id="profile-link">
               <div
                 id="profile-pic"
@@ -190,11 +196,11 @@
             </div>
 
             <!-- Message input -->
-            <div class="flex items-center px-4 py-3 gap-3">
+            <div class="flex items-center gap-3 px-4 py-3">
               <input
                 id="message-input"
                 placeholder="Type a message"
-                class="form-input flex flex-1 resize-none overflow-hidden rounded-xl bg-[#f4f2f0] text-[#181411] px-4 py-2 text-base"
+                class="form-input flex-1 rounded-xl bg-[#f4f2f0] text-[#181411] px-4 py-2 text-base break-words"
               />
               <button
                 id="send-button"
@@ -207,133 +213,194 @@
         </div>
       </div>
     </div>
-
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const socket = io("http://localhost:5001");
+      // 🧠 Required: Socket.IO setup and API interaction
+      const socket = io("http://localhost:5001");
 
-        function getQueryParam(param) {
-          const urlParams = new URLSearchParams(window.location.search);
-          return urlParams.get(param);
+      // 🧠 Utility to extract query params from URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      const conversationId = getQueryParam("conversationId");
+      const userId = localStorage.getItem("userId");
+      const receiverId = getQueryParam("receiverId");
+
+      const sendButton = document.getElementById("send-button");
+      const input = document.getElementById("message-input");
+      const chatBox = document.getElementById("chat-box");
+
+      if (userId) {
+        socket.emit("addUser", userId);
+      }
+
+      // Load previous messages
+      function renderMessage(msg) {
+        const isMe = msg.sender === userId;
+        const alignment = isMe ? "justify-end" : "justify-start";
+        const bubbleColor = isMe
+          ? "bg-[#ec7113] text-white"
+          : "bg-[#f3f3f3] text-black";
+
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `flex ${alignment} gap-2`;
+
+        msgDiv.innerHTML = `
+        <div class="${bubbleColor} px-4 py-2 rounded-xl shadow-sm max-w-full sm:max-w-[75%] break-all">
+
+      <p class="text-sm">${msg.text}</p>
+      <p class="text-xs text-right text-gray-300 mt-1">${new Date(
+        msg.createdAt || Date.now()
+      ).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}</p>
+    </div>
+  `;
+
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      async function loadMessages() {
+        try {
+          const res = await fetch(`/api/messages/${conversationId}`);
+          const messages = await res.json();
+          messages.forEach(renderMessage);
+          chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (err) {
+          console.error("❌ Failed to load messages:", err);
         }
+      }
 
-        const conversationId = getQueryParam("conversationId");
-        const userId = localStorage.getItem("userId");
-        const receiverId = getQueryParam("receiverId");
+      if (conversationId) {
+        loadMessages();
+      }
 
-        const sendButton = document.getElementById("send-button");
-        const input = document.getElementById("message-input");
-        const chatBox = document.getElementById("chat-box");
+      sendButton.addEventListener("click", async () => {
+        if (!input.value.trim()) return;
 
-        function renderMessage(msg) {
-          const isMe = msg.sender === userId;
-          const alignment = isMe ? "justify-end" : "justify-start";
-          const bubbleColor = isMe
-            ? "bg-[#ec7113] text-white"
-            : "bg-[#f4f2f0] text-[#181411]";
-          const msgDiv = document.createElement("div");
-          msgDiv.className = `flex ${alignment} gap-3 p-2`;
-          msgDiv.innerHTML = `<div class="${bubbleColor} rounded-xl px-4 py-2 max-w-[360px] text-sm">${msg.text}</div>`;
-          chatBox.appendChild(msgDiv);
+        const message = {
+          sender: userId,
+          receiver: receiverId,
+          text: input.value,
+          conversationId,
+        };
+
+        socket.emit("sendMessage", message);
+        renderMessage(message);
+        input.value = "";
+
+        // Save to MongoDB
+        try {
+          await fetch("/api/messages", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(message),
+          });
+        } catch (err) {
+          console.error("❌ Failed to save message:", err);
         }
+      });
 
-        async function loadMessages() {
-          try {
-            const res = await fetch(`/api/messages/${conversationId}`);
-            const messages = await res.json();
-            messages.forEach(renderMessage);
-            chatBox.scrollTop = chatBox.scrollHeight;
-          } catch (err) {
-            console.error("❌ Failed to load messages:", err);
-          }
-        }
-
-        if (conversationId) {
-          loadMessages();
-        }
-
-        sendButton.addEventListener("click", () => {
-          if (!input.value.trim()) return;
-          const message = {
-            sender: userId,
-            receiver: receiverId,
-            text: input.value,
-            conversationId,
-          };
-          socket.emit("sendMessage", message);
-          input.value = "";
-        });
-
-        socket.on("receiveMessage", (msg) => {
+      // Listen for incoming real-time messages
+      socket.on("getMessage", (msg) => {
+        if (msg.conversationId === conversationId) {
           renderMessage(msg);
           chatBox.scrollTop = chatBox.scrollHeight;
-        });
+        }
+      });
 
-        async function loadConversations(userId) {
-          try {
-            const res = await fetch(`/api/conversations/${userId}`);
-            const conversations = await res.json();
-            const container = document.getElementById("conversation-list");
-            const selectedConversationId = getQueryParam("conversationId");
+      // Load all conversations
+      async function loadConversations(userId) {
+        try {
+          const res = await fetch(`/api/conversations/${userId}`);
+          const conversations = await res.json();
+          const container = document.getElementById("conversation-list");
+          const selectedConversationId = getQueryParam("conversationId");
 
-            container.innerHTML = "";
+          container.innerHTML = "";
 
-            conversations
-              .sort((a, b) => new Date(b.lastTime) - new Date(a.lastTime))
-              .forEach((conv) => {
-                const partner = conv.participants.find((p) => p._id !== userId);
-                const div = document.createElement("div");
-                div.className =
-                  "flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100";
+          conversations.forEach((conv) => {
+            const partner = conv.participants.find((p) => p._id !== userId);
+            if (!partner) return;
 
-                div.onclick = () => {
-                  window.location.href = `chat.html?userId=${userId}&receiverId=${partner._id}&conversationId=${conv._id}`;
-                };
+            const div = document.createElement("div");
+            div.className =
+              "flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100";
 
-                // ✅ Set header if this is the selected conversation
-                if (conv._id === selectedConversationId && partner?.fullName) {
-                  const header = document.getElementById("conversation-title");
-                  if (header) {
-                    header.textContent = `Chatting with ${partner.fullName}`;
-                  }
-                }
+            div.onclick = () => {
+              window.location.href = `chat.html?userId=${userId}&receiverId=${partner._id}&conversationId=${conv._id}`;
+            };
 
-                div.innerHTML = `
-          <div class="flex items-center gap-4">
-            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-              style="background-image: url('${
-                partner.profileImage
-                  ? partner.profileImage
-                  : "/uploads/default.png"
-              }');">
-            </div>
-            <div class="flex flex-col justify-center">
-              <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
-                partner.fullName
-              }</p>
-              <p class="text-[#897361] text-sm font-normal leading-normal line-clamp-2">${
-                conv.lastMessage || "No messages yet..."
-              }</p>
-            </div>
+            if (conv._id === selectedConversationId && partner.fullName) {
+              const header = document.getElementById("conversation-title");
+              header.textContent = `Chatting with ${partner.fullName}`;
+            }
+
+            div.innerHTML = `
+        <div class="flex items-center gap-4">
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
+            style="background-image: url('${
+              partner.profileImage || "/uploads/default.png"
+            }');">
           </div>
-          <div class="shrink-0">
-            <p class="text-[#897361] text-sm font-normal leading-normal">
-              ${new Date(conv.lastTime).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-          </div>`;
-                container.appendChild(div);
-              });
-          } catch (err) {
-            console.error("❌ Failed to load conversations:", err);
-          }
-        }
+          <div class="flex flex-col justify-center">
+            <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
+              partner.fullName
+            }</p>
+           <p class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
+  ${conv.lastMessage || "No messages yet..."}
+</p>
+          </div>
+        </div>
+        <div class="shrink-0">
+          <p class="text-[#897361] text-sm font-normal leading-normal">
+            ${new Date(conv.lastTime).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        </div>`;
 
-        if (userId) {
-          loadConversations(userId);
+            container.appendChild(div);
+          });
+        } catch (err) {
+          console.error("❌ Failed to load conversations:", err);
         }
+      }
+
+      if (userId) {
+        loadConversations(userId);
+      }
+    </script>
+    <script>
+      const typingIndicator = document.createElement("p");
+      typingIndicator.textContent = "Typing...";
+      typingIndicator.className = "text-sm italic text-gray-400 ml-4";
+      let typingTimeout;
+
+      // 👇 Append indicator below chat title
+      const headerContainer = document.querySelector("#conversation-title");
+      const parentOfTitle = headerContainer.parentElement;
+      parentOfTitle.appendChild(typingIndicator);
+      typingIndicator.style.display = "none";
+
+      // 👇 Listen for typing from other user
+      socket.on("showTyping", ({ senderId }) => {
+        if (senderId === receiverId) {
+          typingIndicator.style.display = "block";
+          clearTimeout(typingTimeout);
+          typingTimeout = setTimeout(() => {
+            typingIndicator.style.display = "none";
+          }, 2000); // Hide after 2s
+        }
+      });
+
+      // 👇 Emit typing event when current user types
+      input.addEventListener("input", () => {
+        socket.emit("typing", { senderId: userId, receiverId });
       });
     </script>
 
@@ -355,22 +422,15 @@
 
         try {
           const res = await fetch(`/api/profile/${craftsmanId}`);
-
           if (!res.ok)
             throw new Error(
-              `Failed to fetch profile: ${response.status} ${response.statusText}`
+              `Failed to fetch profile: ${res.status} ${res.statusText}`
             );
 
           const data = await res.json();
+          console.log("✅ API Response:", data);
 
-          console.log("✅ API Response:", data); // Debugging log
-
-          if (!data || !data.profileImage) {
-            console.error("❌ Profile image is missing in API response");
-            return;
-          }
-
-          const profileImage = data.profileImage.trim()
+          const profileImage = data.profileImage?.trim()
             ? data.profileImage
             : "/uploads/default.png";
           console.log("✅ Profile Image URL:", profileImage);
@@ -378,13 +438,7 @@
           const profilePicDiv = document.getElementById("profile-pic");
           if (profilePicDiv) {
             profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-          } else {
-            console.error("❌ profile-pic element not found");
           }
-
-          document.getElementById(
-            "profile-pic"
-          ).style.backgroundImage = `url(${profileImage})`;
 
           const mainSkill =
             data.skills && data.skills.length > 0
@@ -396,8 +450,6 @@
             profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
               mainSkill
             )}`;
-          } else {
-            console.error("❌ profile-link element not found");
           }
         } catch (error) {
           console.error("❌ Error loading profile:", error);

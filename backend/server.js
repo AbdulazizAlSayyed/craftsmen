@@ -7,16 +7,13 @@ require("dotenv").config(); // ✅ Load environment variables
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
-const conversationRoutes = require("./routes/conversationRoutes");
-const messageRoutes = require("./routes/messages");
+const chatRoutes = require("./routes/chat");
 const profileRoutes = require("./routes/profile");
-
 
 const http = require("http");
 const { logError, logInfo } = require("./logger"); // Import logger
 
 const { Server } = require("socket.io");
-const Message = require("./models/message");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -24,6 +21,7 @@ const PORT = process.env.PORT || 5001;
 // ✅ Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
 
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
@@ -32,9 +30,8 @@ app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
-app.use("/api/conversations", conversationRoutes);
-app.use("/api/messages", messageRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api", chatRoutes);
 
 // ✅ MongoDB Connection
 mongoose
@@ -94,20 +91,30 @@ const io = new Server(server, {
 });
 
 // ✅ Real-time Chat with Socket.IO
-io.on("connection", (socket) => {
-  logInfo(`🔌 New user connected: ${socket.id}`); // Log connection
+let users = [];
 
-  socket.on("sendMessage", async (data) => {
-    try {
-      const newMsg = new Message(data);
-      await newMsg.save();
-      io.emit("receiveMessage", newMsg);
-    } catch (err) {
-      logError(`Message save error: ${err}`); // Log message save error
-      console.error("❌ Message save error:", err);
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
+};
+
+const getUser = (userId) => users.find((user) => user.userId === userId);
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("addUser", (userId) => {
+    addUser(userId, socket.id);
+  });
+
+  socket.on("sendMessage", ({ sender, receiver, text, conversationId }) => {
+    const user = getUser(receiver);
+    if (user) {
+      io.to(user.socketId).emit("getMessage", { sender, text, conversationId });
     }
   });
 
+  // ✅ Move this here:
   socket.on("disconnect", () => {
     console.log("❌ User disconnected:", socket.id);
   });

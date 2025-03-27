@@ -869,6 +869,7 @@
         }
 
         localStorage.setItem("craftsmanId", craftsmanId);
+        localStorage.setItem("userId", craftsmanId);
 
         try {
           const res = await fetch(`/api/profile/${craftsmanId}`);
