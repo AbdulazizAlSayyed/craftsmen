@@ -331,6 +331,7 @@
             div.className =
               "flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100";
 
+            div.setAttribute("data-conversation-id", conv._id); // ✅ Add this
             div.onclick = () => {
               window.location.href = `chat.html?userId=${userId}&receiverId=${partner._id}&conversationId=${conv._id}`;
             };
@@ -351,18 +352,20 @@
             <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
               partner.fullName
             }</p>
-           <p class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
+           <p data-preview class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
   ${conv.lastMessage || "No messages yet..."}
 </p>
+
           </div>
         </div>
         <div class="shrink-0">
-          <p class="text-[#897361] text-sm font-normal leading-normal">
-            ${new Date(conv.lastTime).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
+          <p data-time class="text-[#897361] text-sm font-normal leading-normal">
+  ${new Date(conv.lastTime).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}
+</p>
+
         </div>`;
 
             container.appendChild(div);
@@ -470,6 +473,32 @@
         } catch (error) {
           console.error("❌ Error loading profile:", error);
         }
+      });
+      socket.on("lastMessageUpdate", ({ conversationId, text, createdAt }) => {
+        const convoItems = document.querySelectorAll(
+          "#conversation-list > div"
+        );
+
+        convoItems.forEach((item) => {
+          const convId = item.getAttribute("data-conversation-id");
+          if (convId === conversationId) {
+            const preview = item.querySelector("[data-preview]");
+            const time = item.querySelector("[data-time]");
+
+            if (preview) preview.textContent = text;
+            if (time) {
+              const date = new Date(createdAt);
+              time.textContent = date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+            }
+
+            // ✅ Move this conversation div to the top of the list
+            const container = document.getElementById("conversation-list");
+            container.prepend(item);
+          }
+        });
       });
     </script>
   </body>

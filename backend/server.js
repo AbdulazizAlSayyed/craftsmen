@@ -109,14 +109,28 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", ({ sender, receiver, text, conversationId }) => {
     const user = getUser(receiver);
+    const messageData = {
+      sender,
+      text,
+      conversationId,
+      createdAt: new Date().toISOString(),
+    };
+
     if (user) {
-      io.to(user.socketId).emit("getMessage", {
-        sender,
-        text,
-        conversationId,
-        createdAt: new Date().toISOString(),
-      });
+      io.to(user.socketId).emit("getMessage", messageData);
     }
+
+    // 💬 Emit to both sender and receiver for updating conversation preview
+    [sender, receiver].forEach((uid) => {
+      const u = getUser(uid);
+      if (u) {
+        io.to(u.socketId).emit("lastMessageUpdate", {
+          conversationId,
+          text,
+          createdAt: messageData.createdAt,
+        });
+      }
+    });
   });
 
   socket.on("disconnect", () => {
