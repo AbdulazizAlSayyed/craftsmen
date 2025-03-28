@@ -769,7 +769,8 @@
       </div>
 
       <!-- Post Content -->
-      <p class="text-[#1b150d] text-base leading-relaxed">${post.text}</p>
+      <p class="text-[#1b150d] text-base mt-2 break-all">${post.text}</p>
+
 
       <!-- Reactions -->
       <div class="flex gap-6 text-sm text-[#637588]">
@@ -795,7 +796,7 @@
             <p class="font-semibold text-sm text-[#1b150d]">${
               c.userId?.fullName || "Unknown"
             }</p>
-            <p class="text-sm text-[#1b150d]">${c.text}</p>
+            <p class="text-sm text-[#1b150d] break-all">${c.text}</p>
             <div class="text-sm text-[#637588] flex gap-4 mt-1">
               <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
               c.likes.length
