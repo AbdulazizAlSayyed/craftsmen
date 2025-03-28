@@ -729,6 +729,8 @@
     <script>
       const userId = localStorage.getItem("userId");
 
+      const openCommentSections = new Set(); // 👈 ADD THIS HERE
+
       async function fetchDiscussions() {
         try {
           const res = await fetch("/api/posts");
@@ -743,10 +745,14 @@
       function renderPost(post) {
         return `
     <div class="bg-[#fcfaf8] p-4 rounded-xl border flex flex-col gap-2">
-      <div class="flex gap-4 items-center">
-        <div class="h-14 w-14 rounded-full bg-center bg-cover bg-no-repeat" style="background-image: url('${
-          post.userId?.profileImage || "/uploads/default.png"
-        }')"></div>
+      <div class="h-14 w-14 rounded-full bg-center bg-cover bg-no-repeat cursor-pointer"
+     onclick="window.location.href='Profile2.html?craftsmanId=${
+       post.userId?._id
+     }'"
+     style="background-image: url('${
+       post.userId?.profileImage || "/uploads/default.png"
+     }')"></div>
+
         <div>
           <p class="text-[#1b150d] font-medium">${
             post.userId?.fullName || "Unknown User"
@@ -770,10 +776,12 @@
         } Comments</button>
       </div>
 
-      <div id="comments-${post._id}" class="hidden mt-2 space-y-2">
-        ${post.comments
-          .map(
-            (c) => `
+      <div id="comments-${post._id}" class="${
+          openCommentSections.has(post._id) ? "" : "hidden"
+        } mt-2 space-y-2">
+  ${post.comments
+    .map(
+      (c) => `
           <div class="pl-4 border-l">
             <p class="text-[#1b150d] font-medium">${
               c.userId?.fullName || "Unknown"
@@ -781,15 +789,15 @@
             <p class="text-sm">${c.text}</p>
             <div class="text-sm mt-1">
               <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
-              c.likes.length
-            }</button>
+        c.likes.length
+      }</button>
               <button onclick="dislikeComment('${post._id}', '${c._id}')">👎 ${
-              c.dislikes.length
-            }</button>
+        c.dislikes.length
+      }</button>
             </div>
           </div>`
-          )
-          .join("")}
+    )
+    .join("")}
 
         <div class="flex gap-2 mt-2">
           <input type="text" id="comment-input-${
@@ -804,9 +812,14 @@
       }
 
       function toggleComments(postId) {
-        document
-          .getElementById(`comments-${postId}`)
-          .classList.toggle("hidden");
+        const commentBox = document.getElementById(`comments-${postId}`);
+        commentBox.classList.toggle("hidden");
+
+        if (commentBox.classList.contains("hidden")) {
+          openCommentSections.delete(postId);
+        } else {
+          openCommentSections.add(postId);
+        }
       }
 
       async function likePost(postId) {

@@ -314,8 +314,8 @@
       <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const craftsmanId = urlParams.get("craftsmanId"); // Get craftsman ID from URL
-  const skillName = urlParams.get("skill"); // Get skill name from URL
+  const craftsmanId = urlParams.get("craftsmanId");
+let skillName = urlParams.get("skill") || "General"; // fallback if missing
 
   // Debugging logs
   console.log("🔍 Extracted craftsmanId:", craftsmanId);
@@ -343,7 +343,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // ✅ Update Skill Section
     if (data.skills && data.skills.length > 0) {
-      const skill = data.skills.find((s) => s.name === skillName);
+      let skill = data.skills.find((s) => s.name === skillName);
+if (!skill && data.skills.length > 0) {
+  skill = data.skills[0]; // fallback to first skill
+  console.warn(`⚠️ No skill matched '${skillName}', falling back to first skill.`);
+}
       if (skill) {
         document.getElementById("skill-name").textContent = skill.name;
         document.getElementById("skill-rank").textContent = `Rank: ${skill.rank}`;
@@ -449,10 +453,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             const data = await res.json();
 
             // Get main skill (first skill)
-            const mainSkill = data.skills?.length
-              ? data.skills[0].name
-              : "General";
-
+            let mainSkill = "General";
+if (Array.isArray(data.skills) && data.skills.length > 0 && data.skills[0].name) {
+  mainSkill = data.skills[0].name;
+}
             //abd now
             // Set profile image (or default if unavailable)
             //const profilePicDiv = document.getElementById("profile-pic");
