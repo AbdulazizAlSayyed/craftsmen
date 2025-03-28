@@ -748,36 +748,44 @@
       function renderPost(post, openCommentSections) {
         return `
     <div class="bg-white rounded-xl border border-[#e7ddcf] shadow-sm p-4 space-y-4">
-      <!-- User Info -->
-      <div class="flex items-center gap-4">
-        <div class="h-14 w-14 rounded-full bg-center bg-cover bg-no-repeat cursor-pointer"
-             onclick="window.location.href='Profile2.html?craftsmanId=${
-               post.userId?._id
-             }'"
-             style="background-image: url('${
-               post.userId?.profileImage || "/uploads/default.png"
-             }')">
+      <!-- User Info + Delete -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="h-14 w-14 rounded-full bg-center bg-cover bg-no-repeat cursor-pointer"
+               onclick="window.location.href='Profile2.html?craftsmanId=${
+                 post.userId?._id
+               }'"
+               style="background-image: url('${
+                 post.userId?.profileImage || "/uploads/default.png"
+               }')">
+          </div>
+          <div>
+            <p class="text-[#1b150d] font-semibold text-base">${
+              post.userId?.fullName || "Unknown User"
+            }</p>
+            <p class="text-sm text-[#637588]">${new Date(
+              post.createdAt
+            ).toLocaleString()}</p>
+          </div>
         </div>
-        <div>
-          <p class="text-[#1b150d] font-semibold text-base">${
-            post.userId?.fullName || "Unknown User"
-          }</p>
-          <p class="text-sm text-[#637588]">${new Date(
-            post.createdAt
-          ).toLocaleString()}</p>
-        </div>
+        ${
+          userId === post.userId?._id
+            ? `<button onclick="event.stopPropagation(); deletePost('${post._id}')" class="text-sm font-medium text-red-500 hover:underline">
+                Delete
+              </button>`
+            : ""
+        }
       </div>
 
       <!-- Post Content -->
       <p class="text-[#1b150d] text-base mt-2 break-all">${post.text}</p>
 
-      <!-- Black Reply Button -->
+      <!-- Reply Button -->
       <div class="flex justify-end">
         <button onclick="toggleReplyInputOnly('${post._id}')"
-  class="text-sm font-medium text-[#1b150d] hover:underline">
-  Reply
-</button>
-
+                class="text-sm font-medium text-[#1b150d] hover:underline">
+          Reply
+        </button>
       </div>
 
       <!-- Reactions -->
@@ -793,22 +801,19 @@
         }')">💬 ${post.comments.length} Comments</button>
       </div>
 
-      <!-- Quick Reply Input Box (hidden by default) -->
+      <!-- Reply Input -->
       <div id="reply-box-${post._id}" class="hidden mt-2 flex gap-2">
-  <input
-    type="text"
-    id="reply-input-${post._id}"
-    placeholder="Write a comment..."
-    class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
-  />
-  <button onclick="addComment('${post._id}')"
-    class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg">
-    Reply
-  </button>
-</div>
+        <input type="text"
+               id="reply-input-${post._id}"
+               placeholder="Write a comment..."
+               class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300" />
+        <button onclick="addComment('${post._id}')"
+                class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg">
+          Reply
+        </button>
+      </div>
 
-
-      <!-- Comments Section (toggle with 💬 button only) -->
+      <!-- Comments -->
       <div id="comments-${post._id}" class="${
           openCommentSections.has(post._id) ? "" : "hidden"
         } space-y-3 mt-3">
@@ -849,12 +854,9 @@
                 </div>
 
                 <div id="edit-comment-box-${c._id}" class="hidden mt-2">
-                  <input type="text" id="edit-input-${c._id}" value="${
-              c.text
-            }" class="w-full px-2 py-1 text-sm border rounded" />
-                  <button onclick="submitEditComment('${post._id}', '${
-              c._id
-            }')" 
+                  <input type="text" id="edit-input-${c._id}" value="${c.text}"
+                         class="w-full px-2 py-1 text-sm border rounded" />
+                  <button onclick="submitEditComment('${post._id}', '${c._id}')"
                           class="bg-[#ec8e13] text-white text-sm px-2 py-1 rounded mt-1">Save</button>
                 </div>
               </div>
@@ -873,6 +875,34 @@
           if (!box.classList.contains("hidden")) {
             document.getElementById(`reply-input-${postId}`).focus();
           }
+        }
+      }
+
+      async function deletePost(postId) {
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this post?"
+        );
+        if (!confirmDelete) return;
+
+        const userId = localStorage.getItem("userId");
+
+        try {
+          const res = await fetch(`/api/posts/${postId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            fetchDiscussions(); // Refresh list after deletion
+          } else {
+            alert(data.error || "❌ Failed to delete post.");
+          }
+        } catch (err) {
+          console.error("❌ Delete post error:", err);
+          alert("❌ Failed to delete post.");
         }
       }
 
