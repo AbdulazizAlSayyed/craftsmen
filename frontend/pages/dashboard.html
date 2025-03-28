@@ -771,16 +771,14 @@
       <!-- Post Content -->
       <p class="text-[#1b150d] text-base mt-2 break-all">${post.text}</p>
 
-<!-- Reply Button aligned right -->
-<div class="flex justify-end">
-  <button onclick="toggleReplyInput('${post._id}')"
-          class="text-sm font-medium text-[#1b150d] hover:underline">
-    Reply
-  </button>
-</div>
+      <!-- Black Reply Button -->
+      <div class="flex justify-end">
+        <button onclick="toggleReplyInputOnly('${post._id}')"
+  class="text-sm font-medium text-[#1b150d] hover:underline">
+  Reply
+</button>
 
-      
-
+      </div>
 
       <!-- Reactions -->
       <div class="flex gap-6 text-sm text-[#637588]">
@@ -793,68 +791,89 @@
         <button class="hover:text-[#ec8e13]" onclick="toggleComments('${
           post._id
         }')">💬 ${post.comments.length} Comments</button>
-        
-        </div>
-        
-        <div id="reply-input-${
-          post._id
-        }" class="hidden mt-2 flex gap-2 justify-end">
+      </div>
 
-  <input type="text" id="comment-input-${post._id}" 
-         placeholder="Write a comment..." 
-         class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300" />
-  <button onclick="addComment('${post._id}')" 
-          class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg text-sm">
+      <!-- Quick Reply Input Box (hidden by default) -->
+      <div id="reply-box-${post._id}" class="hidden mt-2 flex gap-2">
+  <input
+    type="text"
+    id="reply-input-${post._id}"
+    placeholder="Write a comment..."
+    class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+  />
+  <button onclick="addComment('${post._id}')"
+    class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg">
     Reply
   </button>
 </div>
 
 
-      <!-- Comments Section -->
+      <!-- Comments Section (toggle with 💬 button only) -->
       <div id="comments-${post._id}" class="${
           openCommentSections.has(post._id) ? "" : "hidden"
         } space-y-3 mt-3">
         ${post.comments
-          .map(
-            (c) => `
-          <div class="bg-[#f8f4ef] p-3 rounded-lg border border-[#e7ddcf]">
-            <p class="font-semibold text-sm text-[#1b150d]" text-[#ec8e13] transition duration-200>${
-              c.userId?.fullName || "Unknown"
-            }</p>
-            <p class="text-sm text-[#1b150d] break-all text-[#ec8e13] transition duration-200">${
-              c.text
-            }</p>
-            <div class="text-sm text-[#637588] flex gap-4 mt-1 text-[#ec8e13] transition duration-200">
-              <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
+          .map((c) => {
+            const isCommentAuthor = userId === c.userId?._id;
+            const isPostOwner = userId === post.userId?._id;
+            const canEdit =
+              isCommentAuthor &&
+              Date.now() - new Date(c.createdAt).getTime() < 5 * 60 * 1000;
+
+            return `
+              <div class="bg-[#f8f4ef] p-3 rounded-lg border border-[#e7ddcf] space-y-1">
+                <p class="font-semibold text-sm text-[#1b150d]">${
+                  c.userId?.fullName || "Unknown"
+                }</p>
+                <p class="text-sm text-[#1b150d] break-all" id="comment-text-${
+                  c._id
+                }">${c.text}</p>
+
+                <div class="text-sm text-[#637588] flex gap-4 mt-1">
+                  <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
               c.likes.length
             }</button>
-              <button onclick="dislikeComment('${post._id}', '${c._id}')">👎 ${
-              c.dislikes.length
-            }</button>
-            </div>
-          </div>
-        `
-          )
-          .join("")}
+                  <button onclick="dislikeComment('${post._id}', '${
+              c._id
+            }')">👎 ${c.dislikes.length}</button>
+                  ${
+                    canEdit
+                      ? `<button onclick="showEditComment('${post._id}', '${c._id}', \`${c.text}\`)">✏️ Edit</button>`
+                      : ""
+                  }
+                  ${
+                    isCommentAuthor || isPostOwner
+                      ? `<button onclick="deleteComment('${post._id}', '${c._id}')">🗑️ Delete</button>`
+                      : ""
+                  }
+                </div>
 
-        <!-- Add New Comment -->
-        <div class="flex gap-2 mt-2">
-          <input type="text" id="comment-input-${
-            post._id
-          }" placeholder="Write a comment..."
-                 class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300" />
-          <button onclick="addComment('${post._id}')" 
-                  class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg">
-            Reply
-          </button>
-        </div>
+                <div id="edit-comment-box-${c._id}" class="hidden mt-2">
+                  <input type="text" id="edit-input-${c._id}" value="${
+              c.text
+            }" class="w-full px-2 py-1 text-sm border rounded" />
+                  <button onclick="submitEditComment('${post._id}', '${
+              c._id
+            }')" 
+                          class="bg-[#ec8e13] text-white text-sm px-2 py-1 rounded mt-1">Save</button>
+                </div>
+              </div>
+            `;
+          })
+          .join("")}
       </div>
     </div>
   `;
       }
-      function toggleReplyInput(postId) {
-        const inputBox = document.getElementById(`reply-input-${postId}`);
-        inputBox.classList.toggle("hidden");
+
+      function toggleReplyInputOnly(postId) {
+        const box = document.getElementById(`reply-box-${postId}`);
+        if (box) {
+          box.classList.toggle("hidden");
+          if (!box.classList.contains("hidden")) {
+            document.getElementById(`reply-input-${postId}`).focus();
+          }
+        }
       }
 
       async function submitQuickReply(postId) {
@@ -904,8 +923,8 @@
       }
 
       async function addComment(postId) {
-        const input = document.getElementById(`comment-input-${postId}`);
-        const text = input.value.trim();
+        const input = document.getElementById(`reply-input-${postId}`);
+        const text = input?.value.trim();
         if (!text) return;
 
         await fetch(`/api/posts/${postId}/comment`, {
@@ -915,7 +934,7 @@
         });
 
         input.value = "";
-        setTimeout(() => fetchDiscussions(), 100);
+        fetchDiscussions();
       }
 
       async function likeComment(postId, commentId) {
@@ -934,6 +953,56 @@
           body: JSON.stringify({ userId }),
         });
         setTimeout(() => fetchDiscussions(), 100);
+      }
+
+      function showEditComment(postId, commentId, currentText) {
+        document
+          .getElementById(`edit-comment-box-${commentId}`)
+          .classList.remove("hidden");
+        document.getElementById(`edit-input-${commentId}`).value = currentText;
+      }
+
+      async function submitEditComment(postId, commentId) {
+        const text = document
+          .getElementById(`edit-input-${commentId}`)
+          .value.trim();
+        if (!text) return;
+
+        const userId = localStorage.getItem("userId");
+
+        const res = await fetch(`/api/posts/${postId}/comments/${commentId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, text }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          fetchDiscussions(); // Reload
+        } else {
+          alert(data.error || "❌ Could not update comment.");
+        }
+      }
+
+      async function deleteComment(postId, commentId) {
+        const userId = localStorage.getItem("userId");
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this comment?"
+        );
+        if (!confirmDelete) return;
+
+        const res = await fetch(`/api/posts/${postId}/comments/${commentId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          fetchDiscussions(); // Refresh comments
+        } else {
+          alert(data.error || "❌ Could not delete comment.");
+        }
       }
 
       document.addEventListener("DOMContentLoaded", async () => {

@@ -139,4 +139,73 @@ router.post("/posts/:id/comments/:commentId/dislike", async (req, res) => {
   }
 });
 
+// 🗑️ DELETE Post - only if user is post creator
+router.delete("/posts/:postId", async (req, res) => {
+  const { postId } = req.params;
+  const { userId } = req.body;
+  try {
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    if (post.userId.toString() !== userId)
+      return res.status(403).json({ error: "Unauthorized: not your post" });
+    await post.deleteOne();
+    res.json({ message: "✅ Post deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "❌ Failed to delete post" });
+  }
+});
+
+// 🗑️ DELETE Comment - author OR post creator
+router.delete("/posts/:postId/comments/:commentId", async (req, res) => {
+  const { postId, commentId } = req.params;
+  const { userId } = req.body;
+  try {
+    const post = await Post.findById(postId);
+    const comment = post.comments.id(commentId);
+    if (!comment) return res.status(404).json({ error: "Comment not found" });
+
+    const isCommentAuthor = comment.userId.toString() === userId;
+    const isPostOwner = post.userId.toString() === userId;
+
+    if (!isCommentAuthor && !isPostOwner)
+      return res.status(403).json({ error: "Unauthorized to delete comment" });
+
+    comment.deleteOne();
+    await post.save();
+    res.json({ message: "✅ Comment deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "❌ Failed to delete comment" });
+  }
+});
+
+// ✏️ UPDATE Comment - only by author, within 5 min
+router.put("/posts/:postId/comments/:commentId", async (req, res) => {
+  const { postId, commentId } = req.params;
+  const { userId, text } = req.body;
+  try {
+    const post = await Post.findById(postId);
+    const comment = post.comments.id(commentId);
+    if (!comment) return res.status(404).json({ error: "Comment not found" });
+
+    if (comment.userId.toString() !== userId)
+      return res.status(403).json({ error: "Unauthorized to edit comment" });
+
+    const now = Date.now();
+    const createdAt = new Date(comment.createdAt).getTime();
+    const diff = now - createdAt;
+
+    if (diff > 5 * 60 * 1000) {
+      return res
+        .status(403)
+        .json({ error: "⏳ Time expired. You can't edit this comment." });
+    }
+
+    comment.text = text.trim();
+    await post.save();
+    res.json({ message: "✅ Comment updated", comment });
+  } catch (err) {
+    res.status(500).json({ error: "❌ Failed to update comment" });
+  }
+});
+
 module.exports = router;
