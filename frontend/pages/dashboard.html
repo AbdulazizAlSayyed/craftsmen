@@ -701,6 +701,7 @@
                           </button>
                         </div>
                         <button
+                          id="post-btn"
                           class="min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec8e13] text-[#1b150d] text-sm font-medium leading-normal hidden @[480px]:block"
                         >
                           <span class="truncate">Post</span>
@@ -717,143 +718,202 @@
             >
               Real-time Discussions
             </h2>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/530a81ce-a902-48f1-a4ad-2a3d0a7085b9.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    I'm trying to create a custom metal sign, but I'm not sure
-                    what type of metal to use. Any suggestions?
-                  </p>
-                  <p
-                    class="text-[#637588] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    By John, Metalworking
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f3eee7] text-[#1b150d] text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Reply</span>
-                </button>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/45587d45-b5c5-4464-9e86-059b9f72f3e8.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    I've been experimenting with new glaze combinations, and I'd
-                    love to hear what others have tried. What are your favorite
-                    glaze recipes?
-                  </p>
-                  <p
-                    class="text-[#637588] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    By Sarah, Pottery
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f3eee7] text-[#1b150d] text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Reply</span>
-                </button>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/8eb31c25-4d21-4bd0-941f-cd480a3318e8.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    I'm looking for recommendations on the best wood to use for
-                    outdoor furniture. What species holds up well to the
-                    elements?
-                  </p>
-                  <p
-                    class="text-[#637588] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    By Michael, Woodworking
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f3eee7] text-[#1b150d] text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Reply</span>
-                </button>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/6cef6c51-7525-403c-b377-d382a8c24891.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    I'm curious about how others approach the design process for
-                    their glass pieces. Do you usually start with a sketch or
-                    jump right into the studio?
-                  </p>
-                  <p
-                    class="text-[#637588] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    By Emily, Glassblowing
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f3eee7] text-[#1b150d] text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Reply</span>
-                </button>
-              </div>
-            </div>
+
+            <div id="discussion-list" class="space-y-4 px-4 py-2"></div>
 
             <!-- addd -->
           </div>
         </div>
       </div>
     </div>
+    <script>
+      const userId = localStorage.getItem("userId");
+
+      async function fetchDiscussions() {
+        try {
+          const res = await fetch("/api/posts");
+          const posts = await res.json();
+          const container = document.getElementById("discussion-list");
+          container.innerHTML = posts.map(renderPost).join("");
+        } catch (err) {
+          console.error("❌ Failed to fetch posts", err);
+        }
+      }
+
+      function renderPost(post) {
+        return `
+    <div class="bg-[#fcfaf8] p-4 rounded-xl border flex flex-col gap-2">
+      <div class="flex gap-4 items-center">
+        <div class="h-14 w-14 rounded-full bg-center bg-cover bg-no-repeat" style="background-image: url('${
+          post.userId?.profileImage || "/uploads/default.png"
+        }')"></div>
+        <div>
+          <p class="text-[#1b150d] font-medium">${
+            post.userId?.fullName || "Unknown User"
+          }</p>
+          <p class="text-sm text-[#637588]">${new Date(
+            post.createdAt
+          ).toLocaleString()}</p>
+        </div>
+      </div>
+      <p class="text-[#1b150d] text-base mt-2">${post.text}</p>
+
+      <div class="flex gap-4 items-center text-sm text-[#637588] mt-2">
+        <button onclick="likePost('${post._id}')">👍 ${
+          post.likes.length
+        }</button>
+        <button onclick="dislikePost('${post._id}')">👎 ${
+          post.dislikes.length
+        }</button>
+        <button onclick="toggleComments('${post._id}')">💬 ${
+          post.comments.length
+        } Comments</button>
+      </div>
+
+      <div id="comments-${post._id}" class="hidden mt-2 space-y-2">
+        ${post.comments
+          .map(
+            (c) => `
+          <div class="pl-4 border-l">
+            <p class="text-[#1b150d] font-medium">${
+              c.userId?.fullName || "Unknown"
+            }</p>
+            <p class="text-sm">${c.text}</p>
+            <div class="text-sm mt-1">
+              <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
+              c.likes.length
+            }</button>
+              <button onclick="dislikeComment('${post._id}', '${c._id}')">👎 ${
+              c.dislikes.length
+            }</button>
+            </div>
+          </div>`
+          )
+          .join("")}
+
+        <div class="flex gap-2 mt-2">
+          <input type="text" id="comment-input-${
+            post._id
+          }" placeholder="Write a comment..." class="flex-1 px-2 py-1 border rounded" />
+          <button onclick="addComment('${
+            post._id
+          }')" class="text-sm bg-orange-400 px-3 py-1 rounded text-white">Reply</button>
+        </div>
+      </div>
+    </div>`;
+      }
+
+      function toggleComments(postId) {
+        document
+          .getElementById(`comments-${postId}`)
+          .classList.toggle("hidden");
+      }
+
+      async function likePost(postId) {
+        await fetch(`/api/posts/${postId}/like`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        });
+        fetchDiscussions();
+      }
+
+      async function dislikePost(postId) {
+        await fetch(`/api/posts/${postId}/dislike`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        });
+        fetchDiscussions();
+      }
+
+      async function addComment(postId) {
+        const input = document.getElementById(`comment-input-${postId}`);
+        const text = input.value.trim();
+        if (!text) return;
+
+        await fetch(`/api/posts/${postId}/comment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, text }),
+        });
+
+        input.value = "";
+        fetchDiscussions();
+      }
+
+      async function likeComment(postId, commentId) {
+        await fetch(`/api/posts/${postId}/comments/${commentId}/like`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        });
+        fetchDiscussions();
+      }
+
+      async function dislikeComment(postId, commentId) {
+        await fetch(`/api/posts/${postId}/comments/${commentId}/dislike`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        });
+        fetchDiscussions();
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        let craftsmanId =
+          new URLSearchParams(window.location.search).get("craftsmanId") ||
+          localStorage.getItem("craftsmanId");
+        if (!craftsmanId) return console.error("❌ Missing craftsmanId");
+
+        localStorage.setItem("craftsmanId", craftsmanId);
+        localStorage.setItem("userId", craftsmanId);
+
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+          const data = await res.json();
+
+          const profileImage =
+            data.profileImage?.trim() || "/uploads/default.png";
+          document.getElementById(
+            "profile-pic"
+          ).style.backgroundImage = `url(${profileImage})`;
+
+          const mainSkill = data.skills?.[0]?.name || "General";
+          document.getElementById(
+            "profile-link"
+          ).href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+            mainSkill
+          )}`;
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+
+        fetchDiscussions();
+      });
+
+      document
+        .getElementById("post-btn")
+        ?.addEventListener("click", async () => {
+          const text = document.querySelector("textarea").value.trim();
+          const userId = localStorage.getItem("craftsmanId");
+          if (!text || !userId) return alert("Missing post content or user ID");
+
+          try {
+            await fetch("/api/posts", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ userId, text }),
+            });
+
+            document.querySelector("textarea").value = "";
+            fetchDiscussions();
+          } catch (err) {
+            console.error("❌ Failed to post", err);
+          }
+        });
+    </script>
+
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
         let craftsmanId = new URLSearchParams(window.location.search).get(
