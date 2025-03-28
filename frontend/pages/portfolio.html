@@ -196,11 +196,16 @@
                   return `
               <div class="p-4 border rounded-lg shadow-sm bg-white flex items-center justify-between gap-4 hover:shadow-md transition duration-200">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-full bg-center bg-cover bg-gray-200" 
-                       style="background-image: url('${
-                         user.profileImage || "default-avatar.png"
-                       }')">
-                  </div>
+                  <a href="Profile2.html?craftsmanId=${user._id}" title="${
+                    user.name
+                  }">
+  <div class="w-12 h-12 rounded-full bg-center bg-cover bg-gray-200" 
+       style="background-image: url('${
+         user.profileImage || "default-avatar.png"
+       }')">
+  </div>
+</a>
+
                   <div>
                     <p class="font-semibold">${user.name}</p>
                     <p class="text-sm text-gray-500">${user.rating} ⭐</p>
