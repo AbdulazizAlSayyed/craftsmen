@@ -47,7 +47,7 @@
             <div class="flex items-center gap-9">
               <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="dashborad.html"
+                href="dashboard.html"
                 >Dashboard</a
               >
               <a
@@ -190,6 +190,7 @@
                     </svg>
                   </div>
                   <input
+                  id="searchInput"
                     placeholder="What do you need done?"
                     class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                     value=""
@@ -212,13 +213,13 @@
             <h2
               class="text-[#1b150d] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
             >
-              Featured Portfolios
+              Portfolios
             </h2>
 
                         <!-- Portfolio Grid -->
             <div id="portfolio-container" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
 
-              <a href="portfolio.html?category=Carpentry" class="portfolio-card">
+              <a href="portfolio.html?category=Carpentry" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3">
                   <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/d73ed847-c73f-41af-b271-e0beb583fec8.png');"></div>
                   <div>
@@ -228,7 +229,7 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Metalworking" class="portfolio-card">
+              <a href="portfolio.html?category=Metalworking" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3">
                   <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/2ec4b1e7-70ac-4f1a-8f3d-29e40b9deb3b.png');"></div>
                   <div>
@@ -238,7 +239,7 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Pottery" class="portfolio-card">
+              <a href="portfolio.html?category=Pottery" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3">
                   <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/93955401-8ef2-40fd-876e-fa6e68872203.png');"></div>
                   <div>
@@ -248,7 +249,7 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Leathercraft" class="portfolio-card">
+              <a href="portfolio.html?category=Leathercraft" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3">
                   <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/a266f679-01db-49af-a4f2-93c9436d3bd5.png');"></div>
                   <div>
@@ -258,7 +259,7 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Glassblowing" class="portfolio-card">
+              <a href="portfolio.html?category=Glassblowing" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3">
                   <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/25af0add-2ce3-4772-93fd-f55e220073dd.png');"></div>
                   <div>
@@ -268,7 +269,7 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Ceramics" class="portfolio-card">
+              <a href="portfolio.html?category=Ceramics" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
                   <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/1ad6cf1b-6d66-47be-8961-27f246e02fc9.png');"></div>
                   <div>
@@ -278,9 +279,9 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Wood Carving" class="portfolio-card">
+              <a href="portfolio.html?category=Wood Carving" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/f940e847-bd6c-49e7-bbe7-c25e950f8c9a.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/woodcarving.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Wood Carving</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">75k followers</p>
@@ -288,9 +289,9 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Blacksmithing" class="portfolio-card">
+              <a href="portfolio.html?category=Blacksmithing" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/cc3d5b4a-7c48-42af-93a6-bd780fe4c7ad.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/blacksmithing.png');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Blacksmithing</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">68k followers</p>
@@ -298,9 +299,9 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Stone Carving" class="portfolio-card">
+              <a href="portfolio.html?category=Stone Carving" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/bd1f4d3c-47a3-48eb-a6dc-8169f23f9648.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/stonecarving.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Stone Carving</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">58k followers</p>
@@ -308,9 +309,9 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Weaving" class="portfolio-card">
+              <a href="portfolio.html?category=Weaving" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/fe7d0d79-3a35-48b6-b9de-9820a65e6bdf.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/weaving.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Weaving</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">55k followers</p>
@@ -318,9 +319,9 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Woodworking" class="portfolio-card">
+              <a href="portfolio.html?category=Woodworking" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/woodworking-image.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/woodworking.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Woodworking</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">75k followers</p>
@@ -328,9 +329,9 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Painting" class="portfolio-card">
+              <a href="portfolio.html?category=Painting" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/painting-image.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/painting.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Painting</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">Follower count unavailable</p>
@@ -338,10 +339,10 @@
                 </div>
               </a>
 
-            <a href="portfolio.html?category=Plumbing" class="portfolio-card">
+            <a href="portfolio.html?category=Plumbing" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
                   
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/plumbing-image.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/plumbing.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Plumbing</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">Follower count unavailable</p>
@@ -349,10 +350,10 @@
                 </div>
               </a>
 
-              <a href="portfolio.html?category=Electrical Work" class="portfolio-card">
+              <a href="portfolio.html?category=Electrical Work" class="portfolio-card  max-w-xs w-full mx-auto">
                 <div class="flex flex-col gap-3 pb-3 hidden">
                   
-                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('https://cdn.usegalileo.ai/sdxl10/electrical-work-image.png');"></div>
+                  <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" style="background-image: url('/assets/electricalwork.jpg');"></div>
                   <div>
                     <p class="text-[#1b150d] text-base font-medium leading-normal">Electrical Work</p>
                     <p class="text-[#637588] text-sm font-normal leading-normal">Follower count unavailable</p>
@@ -458,8 +459,18 @@ document.getElementById("seeMoreBtn").addEventListener("click", function () {
   this.textContent = isShowingMore ? "View Less" : "View More";
 });
 
-</script>
-<script>
+
+  //da search
+      document.getElementById("searchInput").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+    const portfolioCards = document.querySelectorAll("#portfolio-container .portfolio-card");
+
+    portfolioCards.forEach((card) => {
+      const name = card.querySelector("p").textContent.toLowerCase();
+      const matches = name.includes(query);
+      card.classList.toggle("hidden", !matches);
+    });
+  });
   document.addEventListener("DOMContentLoaded", async () => {
     let craftsmanId = new URLSearchParams(window.location.search).get(
       "craftsmanId"

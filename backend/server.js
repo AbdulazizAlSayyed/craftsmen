@@ -21,6 +21,8 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// ✅ Serve everything in /frontend (pages, assets, js, etc.)
+app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
 
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
@@ -62,6 +64,7 @@ const pages = [
   "t1.html",
   "Forgot-your-password.html",
   "verification-email.html",
+  "Apply.html",
 ];
 
 pages.forEach((page) => {
