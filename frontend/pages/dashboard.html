@@ -770,6 +770,15 @@
 
       <!-- Post Content -->
       <p class="text-[#1b150d] text-base mt-2 break-all">${post.text}</p>
+
+<!-- Reply Button aligned right -->
+<div class="flex justify-end">
+  <button onclick="toggleReplyInput('${post._id}')"
+          class="text-sm font-medium text-[#1b150d] hover:underline">
+    Reply
+  </button>
+</div>
+
       
 
 
@@ -784,7 +793,22 @@
         <button class="hover:text-[#ec8e13]" onclick="toggleComments('${
           post._id
         }')">💬 ${post.comments.length} Comments</button>
-      </div>
+        
+        </div>
+        
+        <div id="reply-input-${
+          post._id
+        }" class="hidden mt-2 flex gap-2 justify-end">
+
+  <input type="text" id="comment-input-${post._id}" 
+         placeholder="Write a comment..." 
+         class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300" />
+  <button onclick="addComment('${post._id}')" 
+          class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg text-sm">
+    Reply
+  </button>
+</div>
+
 
       <!-- Comments Section -->
       <div id="comments-${post._id}" class="${
@@ -794,11 +818,13 @@
           .map(
             (c) => `
           <div class="bg-[#f8f4ef] p-3 rounded-lg border border-[#e7ddcf]">
-            <p class="font-semibold text-sm text-[#1b150d]">${
+            <p class="font-semibold text-sm text-[#1b150d]" text-[#ec8e13] transition duration-200>${
               c.userId?.fullName || "Unknown"
             }</p>
-            <p class="text-sm text-[#1b150d] break-all">${c.text}</p>
-            <div class="text-sm text-[#637588] flex gap-4 mt-1">
+            <p class="text-sm text-[#1b150d] break-all text-[#ec8e13] transition duration-200">${
+              c.text
+            }</p>
+            <div class="text-sm text-[#637588] flex gap-4 mt-1 text-[#ec8e13] transition duration-200">
               <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
               c.likes.length
             }</button>
@@ -825,6 +851,27 @@
       </div>
     </div>
   `;
+      }
+      function toggleReplyInput(postId) {
+        const inputBox = document.getElementById(`reply-input-${postId}`);
+        inputBox.classList.toggle("hidden");
+      }
+
+      async function submitQuickReply(postId) {
+        const input = document.getElementById(`quick-comment-input-${postId}`);
+        const text = input.value.trim();
+        const userId = localStorage.getItem("userId");
+        if (!text || !userId) return;
+
+        await fetch(`/api/posts/${postId}/comment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, text }),
+        });
+
+        input.value = "";
+        toggleQuickReply(postId); // hide after sending
+        setTimeout(() => fetchDiscussions(), 100);
       }
 
       function toggleComments(postId) {
