@@ -59,4 +59,53 @@ router.get("/conversations/:userId", async (req, res) => {
   }
 });
 
+// POST to start a new conversation and send initial message
+router.post("/conversations/start", async (req, res) => {
+  const { senderId, receiverId } = req.body;
+  console.log("📩 senderId:", senderId);
+  console.log("📩 receiverId:", receiverId);
+
+  const mongoose = require("mongoose");
+  if (
+    !mongoose.Types.ObjectId.isValid(senderId) ||
+    !mongoose.Types.ObjectId.isValid(receiverId)
+  ) {
+    console.error("❌ Invalid ObjectId detected");
+    return res.status(400).json({ error: "Invalid sender or receiver ID." });
+  }
+
+  try {
+    // Check if conversation already exists
+    let conversation = await Conversation.findOne({
+      participants: { $all: [senderId, receiverId], $size: 2 },
+    });
+
+    // If no conversation, create it
+    if (!conversation) {
+      conversation = new Conversation({
+        participants: [senderId, receiverId],
+      });
+      await conversation.save();
+    }
+
+    // Send initial message
+    const message = new Message({
+      conversationId: conversation._id,
+      sender: senderId,
+      receiver: receiverId,
+      text: "hello",
+    });
+
+    await message.save();
+
+    res.status(200).json({
+      message: "Conversation started and message sent.",
+      conversationId: conversation._id,
+    });
+  } catch (error) {
+    console.error("Error starting conversation:", error);
+    res.status(500).json({ error: "Failed to start conversation" });
+  }
+});
+
 module.exports = router;

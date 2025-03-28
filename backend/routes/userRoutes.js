@@ -21,7 +21,6 @@ router.post("/upload-profile", upload.single("profileImage"), (req, res) => {
   res.json({ imageUrl });
 });
 
-
 // ✅ GET users by skill category
 router.get("/by-skill", async (req, res) => {
   const category = req.query.category;
@@ -34,14 +33,15 @@ router.get("/by-skill", async (req, res) => {
     const users = await User.find({
       role: "craftsman", // Only get craftsmen
       "skills.name": category, // Match skill name
-    }).select("fullName skills profileImage");
+    }).select("_id fullName skills profileImage");
 
     const filteredUsers = users.map((user) => {
       const matchedSkill = user.skills.find((skill) => skill.name === category);
       return {
+        _id: user._id, // ✅ this was missing
         name: user.fullName,
         rating: matchedSkill?.rating?.toFixed(1) || "N/A",
-        profileImage: user.profileImage || "",
+        profileImage: user.profileImage || "/uploads/default.png",
       };
     });
 
