@@ -50,12 +50,12 @@
                 href="dashboard.html"
                 >Dashboard</a
               >
-                <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="job.html"
                 >Hire</a
               >
-               <a
+              <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="Apply.html"
                 >Apply</a
@@ -122,36 +122,18 @@
                   </div>
                 </button>
               </a>
-              <a href="Setting.html">
-                <!-- Settings Button -->
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="Settings"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M224,136a8,8,0,0,1-8,8H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16H128a32,32,0,0,1,64,0h24A8,8,0,0,1,224,136ZM128,96a32,32,0,0,1,64,0h24a8,8,0,0,1,0,16H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
+              <a
+                href="Setting.html"
+                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
+              >
+                ⚙️
               </a>
             </div>
             <a href="#" id="profile-link">
               <div
                 id="profile-pic"
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                style="background-image: url('/uploads/default.png')"
               ></div>
             </a>
           </div>
@@ -253,7 +235,11 @@
                   Profile Picture
                 </p>
 
-                <input type="file" class="mt-1 text-sm text-gray-600" />
+                <input
+                  type="file"
+                  id="upload-input"
+                  class="mt-1 text-sm text-gray-600"
+                />
               </div>
               <div class="shrink-0">
                 <button
@@ -458,69 +444,120 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        let craftsmanId = new URLSearchParams(window.location.search).get(
-          "craftsmanId"
-        );
+      document
+        .getElementById("upload-input")
+        .addEventListener("change", async function () {
+          const file = this.files[0];
+          const craftsmanId = localStorage.getItem("craftsmanId");
+          if (!file || !craftsmanId) return;
 
-        if (!craftsmanId) {
-          craftsmanId = localStorage.getItem("craftsmanId");
-          if (!craftsmanId) {
-            console.error("❌ Missing craftsmanId in URL and Local Storage!");
-            return;
+          const formData = new FormData();
+          formData.append("profileImage", file);
+
+          try {
+            const response = await fetch(`/api/profile/${craftsmanId}/image`, {
+              method: "POST",
+              body: formData,
+            });
+
+            if (!response.ok) throw new Error("Upload failed");
+
+            const result = await response.json();
+            const newImageUrl = result.imageUrl;
+
+            if (newImageUrl) {
+              // Update profile picture immediately
+              const profilePicDiv = document.getElementById("profile-pic");
+              profilePicDiv.style.backgroundImage = `url('${newImageUrl}')`;
+
+              // Cache the new image URL
+              localStorage.setItem("profileImage", newImageUrl);
+
+              alert("✅ Profile picture updated!");
+            } else {
+              throw new Error("Missing image URL in response");
+            }
+          } catch (error) {
+            console.error("❌ Upload error:", error);
+            alert("❌ Failed to upload profile picture.");
           }
-        }
+        });
+    </script>
 
-        localStorage.setItem("craftsmanId", craftsmanId);
+    <script>
+      window.addEventListener("DOMContentLoaded", async () => {
+        const profilePicDiv = document.getElementById("profile-pic");
+        const craftsmanId = localStorage.getItem("craftsmanId");
+
+        if (!profilePicDiv || !craftsmanId) return;
+
+        try {
+          const response = await fetch(`/api/profile/${craftsmanId}`);
+          if (!response.ok) throw new Error("Failed to fetch profile");
+
+          const result = await response.json();
+          if (result.imageUrl) {
+            profilePicDiv.style.backgroundImage = `url('${result.imageUrl}')`;
+          }
+        } catch (error) {
+          console.error("Could not load profile picture:", error);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profilePicDiv = document.getElementById("profile-pic");
+
+        if (!craftsmanId || !profilePicDiv) return;
+
+        // Try cached image first
+        const cachedImage = localStorage.getItem("profileImage");
+        if (cachedImage) {
+          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+        }
 
         try {
           const res = await fetch(`/api/profile/${craftsmanId}`);
-
-          if (!res.ok)
-            throw new Error(
-              `Failed to fetch profile: ${response.status} ${response.statusText}`
-            );
+          if (!res.ok) throw new Error("Failed fetching profile");
 
           const data = await res.json();
+          const profileImage =
+            data.profileImage.trim() || "/uploads/default.png";
 
-          console.log("✅ API Response:", data); // Debugging log
+          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
 
-          if (!data || !data.profileImage) {
-            console.error("❌ Profile image is missing in API response");
-            return;
-          }
+          // Update cache
+          localStorage.setItem("profileImage", profileImage);
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+      });
+    </script>
 
-          const profileImage = data.profileImage.trim()
-            ? data.profileImage
-            : "/uploads/default.png";
-          console.log("✅ Profile Image URL:", profileImage);
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profileLink = document.getElementById("profile-link");
 
-          const profilePicDiv = document.getElementById("profile-pic");
-          if (profilePicDiv) {
-            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-          } else {
-            console.error("❌ profile-pic element not found");
-          }
+        if (!craftsmanId || !profileLink) return;
 
-          document.getElementById(
-            "profile-pic"
-          ).style.backgroundImage = `url(${profileImage})`;
+        try {
+          const response = await fetch(`/api/profile/${craftsmanId}`);
+          if (!response.ok) throw new Error("Failed to fetch profile");
+
+          const data = await response.json();
 
           const mainSkill =
             data.skills && data.skills.length > 0
               ? data.skills[0].name
               : "General";
-          const profileLink = document.getElementById("profile-link");
 
-          if (profileLink) {
-            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-              mainSkill
-            )}`;
-          } else {
-            console.error("❌ profile-link element not found");
-          }
+          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+            mainSkill
+          )}`;
         } catch (error) {
-          console.error("❌ Error loading profile:", error);
+          console.error("❌ Error loading profile link:", error);
         }
       });
     </script>
