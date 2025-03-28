@@ -748,16 +748,17 @@
       function renderPost(post, openCommentSections) {
         return `
     <div class="bg-white rounded-xl border border-[#e7ddcf] shadow-sm p-4 space-y-4">
-      <!-- User Info + Delete -->
-      <div class="flex items-center justify-between">
+      <!-- Post Header -->
+      <div class="flex items-center gap-4 justify-between">
+        <!-- Left: Profile Info -->
         <div class="flex items-center gap-4">
           <div class="h-14 w-14 rounded-full bg-center bg-cover bg-no-repeat cursor-pointer"
-               onclick="window.location.href='Profile2.html?craftsmanId=${
-                 post.userId?._id
-               }'"
-               style="background-image: url('${
-                 post.userId?.profileImage || "/uploads/default.png"
-               }')">
+            onclick="window.location.href='Profile2.html?craftsmanId=${
+              post.userId?._id
+            }'"
+            style="background-image: url('${
+              post.userId?.profileImage || "/uploads/default.png"
+            }')">
           </div>
           <div>
             <p class="text-[#1b150d] font-semibold text-base">${
@@ -768,9 +769,12 @@
             ).toLocaleString()}</p>
           </div>
         </div>
+
+        <!-- Right: Delete Button -->
         ${
           userId === post.userId?._id
-            ? `<button onclick="event.stopPropagation(); deletePost('${post._id}')" class="text-sm font-medium text-red-500 hover:underline">
+            ? `<button onclick="event.stopPropagation(); deletePost('${post._id}')"
+                  class="text-sm font-medium text-red-500 hover:underline">
                 Delete
               </button>`
             : ""
@@ -783,7 +787,7 @@
       <!-- Reply Button -->
       <div class="flex justify-end">
         <button onclick="toggleReplyInputOnly('${post._id}')"
-                class="text-sm font-medium text-[#1b150d] hover:underline">
+          class="text-sm font-medium text-[#1b150d] hover:underline">
           Reply
         </button>
       </div>
@@ -801,19 +805,21 @@
         }')">💬 ${post.comments.length} Comments</button>
       </div>
 
-      <!-- Reply Input -->
+      <!-- Reply Box -->
       <div id="reply-box-${post._id}" class="hidden mt-2 flex gap-2">
-        <input type="text"
-               id="reply-input-${post._id}"
-               placeholder="Write a comment..."
-               class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300" />
+        <input
+          type="text"
+          id="reply-input-${post._id}"
+          placeholder="Write a comment..."
+          class="flex-1 px-3 py-2 border border-[#e7ddcf] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+        />
         <button onclick="addComment('${post._id}')"
-                class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg">
+          class="bg-[#ec8e13] hover:bg-[#d77e0b] text-white text-sm px-4 py-2 rounded-lg">
           Reply
         </button>
       </div>
 
-      <!-- Comments -->
+      <!-- Comments Section -->
       <div id="comments-${post._id}" class="${
           openCommentSections.has(post._id) ? "" : "hidden"
         } space-y-3 mt-3">
@@ -826,38 +832,60 @@
               Date.now() - new Date(c.createdAt).getTime() < 5 * 60 * 1000;
 
             return `
-              <div class="bg-[#f8f4ef] p-3 rounded-lg border border-[#e7ddcf] space-y-1">
-                <p class="font-semibold text-sm text-[#1b150d]">${
-                  c.userId?.fullName || "Unknown"
-                }</p>
-                <p class="text-sm text-[#1b150d] break-all" id="comment-text-${
-                  c._id
-                }">${c.text}</p>
+              <div class="bg-[#f8f4ef] p-3 rounded-lg border border-[#e7ddcf] flex gap-3 items-start">
+                <a href="Profile2.html?craftsmanId=${c.userId?._id}" title="${
+              c.userId?.fullName || "Unknown"
+            }">
+                  <div class="h-10 w-10 rounded-full bg-center bg-cover bg-no-repeat shrink-0"
+                      style="background-image: url('${
+                        c.userId?.profileImage || "/uploads/default.png"
+                      }')">
+                  </div>
+                </a>
 
-                <div class="text-sm text-[#637588] flex gap-4 mt-1">
-                  <button onclick="likeComment('${post._id}', '${c._id}')">👍 ${
-              c.likes.length
-            }</button>
-                  <button onclick="dislikeComment('${post._id}', '${
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="font-semibold text-sm text-[#1b150d]">${
+                      c.userId?.fullName || "Unknown"
+                    }</p>
+                    <p class="text-xs text-[#637588]">${new Date(
+                      c.createdAt
+                    ).toLocaleString()}</p>
+                  </div>
+
+                  <p class="text-sm text-[#1b150d] break-all" id="comment-text-${
+                    c._id
+                  }">${c.text}</p>
+
+                  <div class="text-sm text-[#637588] flex gap-4 mt-1">
+                    <button onclick="likeComment('${post._id}', '${
+              c._id
+            }')">👍 ${c.likes.length}</button>
+                    <button onclick="dislikeComment('${post._id}', '${
               c._id
             }')">👎 ${c.dislikes.length}</button>
-                  ${
-                    canEdit
-                      ? `<button onclick="showEditComment('${post._id}', '${c._id}', \`${c.text}\`)">✏️ Edit</button>`
-                      : ""
-                  }
-                  ${
-                    isCommentAuthor || isPostOwner
-                      ? `<button onclick="deleteComment('${post._id}', '${c._id}')">🗑️ Delete</button>`
-                      : ""
-                  }
-                </div>
+                    ${
+                      canEdit
+                        ? `<button onclick="showEditComment('${post._id}', '${c._id}', \`${c.text}\`)">✏️ Edit</button>`
+                        : ""
+                    }
+                    ${
+                      isCommentAuthor || isPostOwner
+                        ? `<button onclick="deleteComment('${post._id}', '${c._id}')">🗑️ Delete</button>`
+                        : ""
+                    }
+                  </div>
 
-                <div id="edit-comment-box-${c._id}" class="hidden mt-2">
-                  <input type="text" id="edit-input-${c._id}" value="${c.text}"
-                         class="w-full px-2 py-1 text-sm border rounded" />
-                  <button onclick="submitEditComment('${post._id}', '${c._id}')"
-                          class="bg-[#ec8e13] text-white text-sm px-2 py-1 rounded mt-1">Save</button>
+                  <div id="edit-comment-box-${c._id}" class="hidden mt-2">
+                    <input type="text" id="edit-input-${c._id}" value="${
+              c.text
+            }"
+                          class="w-full px-2 py-1 text-sm border rounded" />
+                    <button onclick="submitEditComment('${post._id}', '${
+              c._id
+            }')"
+                            class="bg-[#ec8e13] text-white text-sm px-2 py-1 rounded mt-1">Save</button>
+                  </div>
                 </div>
               </div>
             `;
