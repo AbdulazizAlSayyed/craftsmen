@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const Job = require("../models/Job");
+const upload = require("../middleware/upload");
 
 // ✅ Fetch craftsman profile based on skill
 // ✅ Route to fetch all skills of a craftsman
@@ -83,6 +84,44 @@ router.get("/:id", async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+router.post(
+  "/:craftsmanId/image",
+  upload.single("profileImage"),
+  async (req, res) => {
+    const { craftsmanId } = req.params;
+
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded." });
+    }
+
+    const imageUrl = `/uploads/${req.file.filename}`;
+
+    try {
+      await User.findByIdAndUpdate(craftsmanId, { profileImage: imageUrl });
+      res.json({ message: "Image uploaded successfully.", imageUrl });
+    } catch (err) {
+      console.error("❌ Error updating user profile:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+router.put("/:craftsmanId", async (req, res) => {
+  const { craftsmanId } = req.params;
+  const updates = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(craftsmanId, updates, {
+      new: true,
+    });
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "Profile updated", user });
+  } catch (error) {
+    console.error("❌ Error updating profile:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
