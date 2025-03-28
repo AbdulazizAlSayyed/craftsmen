@@ -12,7 +12,7 @@
 
     <title>Galileo Design</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
+    <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body>
@@ -1125,6 +1125,39 @@
         } catch (error) {
           console.error("❌ Error loading profile:", error);
         }
+      });
+    </script>
+
+    <script>
+      const socket = io("http://localhost:5001");
+
+      socket.on("newPost", (post) => {
+        fetchDiscussions();
+      });
+      socket.on("postUpdated", (post) => {
+        fetchDiscussions(); // Reloads the updated post (for new comments, etc.)
+      });
+
+      socket.on("postLiked", (post) => {
+        fetchDiscussions();
+      });
+
+      socket.on("postDisliked", (post) => {
+        fetchDiscussions();
+      });
+      socket.on("newComment", ({ postId, comment }) => {
+        fetchDiscussions();
+      });
+
+      socket.on("commentUpdated", (post) => {
+        fetchDiscussions();
+      });
+      socket.on("commentDeleted", ({ postId, commentId }) => {
+        fetchDiscussions();
+      });
+
+      socket.on("postDeleted", ({ postId }) => {
+        fetchDiscussions();
       });
     </script>
   </body>

@@ -9,7 +9,6 @@ const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const chatRoutes = require("./routes/chat");
 const profileRoutes = require("./routes/profile");
-const postRoutes = require("./routes/postRoutes");
 
 const { Server } = require("socket.io");
 const http = require("http");
@@ -32,7 +31,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api", chatRoutes);
-app.use("/api", postRoutes);
 
 // ✅ MongoDB Connection
 mongoose
@@ -78,9 +76,6 @@ app.get("/", (req, res) => {
 });
 
 // ✅ Handle 404 Errors
-app.use((req, res) => {
-  res.status(404).send("Page not found!");
-});
 
 // ✅ Start the Server
 
@@ -90,6 +85,14 @@ const io = new Server(server, {
     origin: "*",
     methods: ["GET", "POST"],
   },
+});
+app.set("io", io); // <- this line lets you use `req.app.get("io")` inside routes
+
+// ✅ FIX: mount post routes WITH io after io is created
+const postRoutesWithIO = require("./routes/postRoutes")(io);
+app.use("/api", postRoutesWithIO);
+app.use((req, res) => {
+  res.status(404).send("Page not found!");
 });
 
 // ✅ Real-time Chat with Socket.IO
