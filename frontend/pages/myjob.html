@@ -155,105 +155,7 @@
             </div>
             <div id="posted-jobs-list"></div>
 
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/a0ddce3f-a531-4e63-ac3b-1546939f601c.png');
-                "
-              ></div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#111922] text-base font-medium leading-normal">
-                  Install new hardwood floors
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  Home Renovation
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  In Progress • 2 days ago
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/38b7624a-7a3d-4ed5-8cb0-edb41b525838.png');
-                "
-              ></div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#111922] text-base font-medium leading-normal">
-                  Install new kitchen cabinets
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  Home Renovation
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  In Progress • 3 days ago
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/c940294b-f425-489f-9356-d4309ca9eb5d.png');
-                "
-              ></div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#111922] text-base font-medium leading-normal">
-                  Install new windows
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  Home Renovation
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  In Progress • 5 days ago
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/f4086b99-2aa3-4c86-bcdf-d2242f48f0a5.png');
-                "
-              ></div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#111922] text-base font-medium leading-normal">
-                  Install new bathroom tile
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  Home Renovation
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  In Progress • 7 days ago
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/8e2d30f1-37a8-4ceb-b5d9-222f4e784a2c.png');
-                "
-              ></div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#111922] text-base font-medium leading-normal">
-                  Install new light fixtures
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  Home Renovation
-                </p>
-                <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                  In Progress • 9 days ago
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -343,9 +245,10 @@
           style="background-image: url('https://cdn.usegalileo.ai/sdxl10/fallback-job-thumb.png');"
         ></div>
         <div class="flex flex-1 flex-col justify-center">
-          <p class="text-[#111922] text-base font-medium leading-normal">
-            ${job.title}
-          </p>
+          <a href="myapplicants.html?jobId=${job._id}" class="text-[#111922] text-base font-medium leading-normal hover:underline">
+  ${job.title}
+</a>
+
           <p class="text-[#93adc8] text-sm font-normal leading-normal">
             ${job.description || "No description"}
           </p>

@@ -210,124 +210,35 @@
               >
                 <div class="flex flex-col gap-1">
                   <p class="text-[#1b150d] text-base font-bold leading-tight">
-                    Submit proposals
+                    Apply
                   </p>
                   <p
                     class="text-[#9a784c] text-base font-normal leading-normal"
                   >
-                    You haven't submitted any proposals yet. Start by finding a
-                    job you'd like to work on and submit a proposal to get
-                    started.
+                  find a job you'd like to work on and submit a proposal.
+                   
                   </p>
                 </div>
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec8e13] text-[#1b150d] text-sm font-medium leading-normal"
-                >
-                  <span class="truncate">Find a job</span>
-                </button>
-              </div>
+<a href="Apply.html">
+  <button
+    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec8e13] text-[#1b150d] text-sm font-medium leading-normal"
+  >
+    <span class="truncate">Find a job</span>
+  </button>
+</a>
+
             </div>
             <h3
               class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
             >
               Submitted Proposals
             </h3>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/replicate/5dd6d634-8c6c-43e2-afce-bb9c4348695f.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Clean my house
-                  </p>
-                  <p
-                    class="text-[#9a784c] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    Submitted 2 days ago
-                  </p>
-                </div>
+           <!-- Replace all static proposals with this -->
+              <div class="submitted-proposals-list px-4 pb-4 space-y-3">
+                <p>Loading proposals...</p>
               </div>
-              <div class="shrink-0">
-                <p class="text-[#1b150d] text-base font-normal leading-normal">
-                  $100
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/77106d26-9878-4c61-b110-f0be04b0a426.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Mow my lawn
-                  </p>
-                  <p
-                    class="text-[#9a784c] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    Submitted 4 days ago
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#1b150d] text-base font-normal leading-normal">
-                  $80
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14"
-                  style="
-                    background-image: url('https://cdn.usegalileo.ai/sdxl10/7b739473-b648-49c3-8f99-2851c40e165c.png');
-                  "
-                ></div>
-                <div class="flex flex-col justify-center">
-                  <p
-                    class="text-[#1b150d] text-base font-medium leading-normal line-clamp-1"
-                  >
-                    Paint my walls
-                  </p>
-                  <p
-                    class="text-[#9a784c] text-sm font-normal leading-normal line-clamp-2"
-                  >
-                    Submitted 1 day ago
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p class="text-[#1b150d] text-base font-normal leading-normal">
-                  $200
-                </p>
-              </div>
-            </div>
-            <div class="flex px-4 py-3">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#f3eee7] text-[#1b150d] text-sm font-bold leading-normal tracking-[0.015em]"
-              >
-                <span class="truncate">View all (3) proposals</span>
-              </button>
-            </div>
-          </div>
-        </div>
+
+           
         <footer class="flex justify-center">
           <div class="flex max-w-[960px] flex-1 flex-col">
             <footer
@@ -457,102 +368,152 @@
         </footer>
       </div>
     </div>
+<script>
+  function getStatusColor(status) {
+    switch (status) {
+      case "accepted":
+        return "bg-green-100 text-green-800";
+      case "rejected":
+        return "bg-red-100 text-red-700";
+      case "in progress":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-yellow-100 text-yellow-800"; // pending
+    }
+  }
 
-    <script>
+  function timeAgo(date) {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    const days = Math.floor(seconds / 86400);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    const hours = Math.floor(seconds / 3600);
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    const minutes = Math.floor(seconds / 60);
+    return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.querySelector(".submitted-proposals-list");
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      container.innerHTML = "<p>Please log in to see your proposals.</p>";
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/applications/craftsman/${userId}`);
+      const applications = await response.json();
+
+      if (!Array.isArray(applications) || applications.length === 0) {
+        container.innerHTML = "<p>No applications found.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+
+      applications.forEach((app) => {
+        const job = app.jobId;
+        const html = `
+  <div class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
+            <!-- Header -->
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="text-lg font-bold text-[#1b150d] mb-1">${job.title}</h3>
+                <p class="text-sm text-[#9a784c]">
+                  Skills: <span class="text-[#1b150d] font-medium">${job.skillsRequired.join(", ") || "None"}</span>
+                </p>
+              </div>
+              <div class="text-right text-sm text-[#9a784c] whitespace-nowrap">
+                Submitted ${timeAgo(app.appliedAt)}
+              </div>
+            </div>
+
+            <!-- Cover Letter -->
+            <div class="text-sm text-[#1b150d]">
+              <span class="font-semibold">Cover Letter:</span>
+              <p class="mt-1 whitespace-pre-line">${app.coverLetter || "No cover letter provided."}</p>
+            </div>
+
+            <!-- Bid / Budget -->
+            <div class="flex flex-wrap justify-between items-center pt-2 border-t border-[#eee]">
+              <div class="text-sm space-y-1 text-[#1b150d]">
+                <p><span class="font-semibold">Original Budget:</span> $${job.budget}</p>
+                ${app.bidAmount ? `<p><span class="font-semibold">Your Bid:</span> $${app.bidAmount}</p>` : ""}
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)}">
+                  ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                </span>
+                <span class="text-sm font-medium text-[#9a784c]">${job.jobRank}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML("beforeend", html);
+      });
+    } catch (error) {
+      console.error(error);
+      container.innerHTML = "<p>Failed to load your proposals.</p>";
+    }
+  });
+</script>
+ <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        let craftsmanId = new URLSearchParams(window.location.search).get(
-          "craftsmanId"
-        );
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profilePicDiv = document.getElementById("profile-pic");
 
-        if (!craftsmanId) {
-          craftsmanId = localStorage.getItem("craftsmanId");
-          if (!craftsmanId) {
-            console.error("❌ Missing craftsmanId in URL and Local Storage!");
-            return;
-          }
+        if (!craftsmanId || !profilePicDiv) return;
+
+        // Try cached image first
+        const cachedImage = localStorage.getItem("profileImage");
+        if (cachedImage) {
+          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
         }
-
-        localStorage.setItem("craftsmanId", craftsmanId);
 
         try {
           const res = await fetch(`/api/profile/${craftsmanId}`);
-
-          if (!res.ok)
-            throw new Error(
-              `Failed to fetch profile: ${response.status} ${response.statusText}`
-            );
+          if (!res.ok) throw new Error("Failed fetching profile");
 
           const data = await res.json();
+          const profileImage =
+            data.profileImage.trim() || "/uploads/default.png";
 
-          console.log("✅ API Response:", data); // Debugging log
+          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
 
-          if (!data || !data.profileImage) {
-            console.error("❌ Profile image is missing in API response");
-            return;
-          }
-
-          const profileImage = data.profileImage.trim()
-            ? data.profileImage
-            : "/uploads/default.png";
-          console.log("✅ Profile Image URL:", profileImage);
-
-          const profilePicDiv = document.getElementById("profile-pic");
-          if (profilePicDiv) {
-            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-          } else {
-            console.error("❌ profile-pic element not found");
-          }
-
-          document.getElementById(
-            "profile-pic"
-          ).style.backgroundImage = `url(${profileImage})`;
-
-          const mainSkill =
-            data.skills && data.skills.length > 0
-              ? data.skills[0].name
-              : "General";
-          const profileLink = document.getElementById("profile-link");
-
-          if (profileLink) {
-            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-              mainSkill
-            )}`;
-          } else {
-            console.error("❌ profile-link element not found");
-          }
+          // Update cache
+          localStorage.setItem("profileImage", profileImage);
         } catch (error) {
           console.error("❌ Error loading profile:", error);
         }
       });
     </script>
-    <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const craftsmanId = localStorage.getItem("craftsmanId");
-  const profilePicDiv = document.getElementById("profile-pic");
-  
-  if (!craftsmanId || !profilePicDiv) return;
-
-  // Try cached image first
-  const cachedImage = localStorage.getItem("profileImage");
-  if (cachedImage) {
-    profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-  }
-
-  try {
-    const res = await fetch(`/api/profile/${craftsmanId}`);
-    if (!res.ok) throw new Error("Failed fetching profile");
     
-    const data = await res.json();
-    const profileImage = data.profileImage.trim() || "/uploads/default.png";
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profileLink = document.getElementById("profile-link");
 
-    profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+        if (!craftsmanId || !profileLink) return;
 
-    // Update cache
-    localStorage.setItem("profileImage", profileImage);
-  } catch (error) {
-    console.error("❌ Error loading profile:", error);
-  }
-});
-</script>
+        try {
+          const response = await fetch(`/api/profile/${craftsmanId}`);
+          if (!response.ok) throw new Error("Failed to fetch profile");
+
+          const data = await response.json();
+
+          const mainSkill =
+            data.skills && data.skills.length > 0
+              ? data.skills[0].name
+              : "General";
+
+          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+            mainSkill
+          )}`;
+        } catch (error) {
+          console.error("❌ Error loading profile link:", error);
+        }
+      });
+    </script>
   </body>
 </html>

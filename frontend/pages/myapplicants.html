@@ -123,115 +123,142 @@
               <div
                 id="profile-pic"
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                style="
-                  background-image: url('https://cdn.usegalileo.ai/sdxl10/f440dfe7-c1cd-439b-8f43-9bae8adc21c6.png');
-                "
+                
               ></div>
             </a>
           </div>
         </header>
-        <main class="flex justify-center items-center p-10">
-          <form
-            id="applicationForm"
-            class="w-full max-w-xl bg-white shadow-lg rounded-xl p-8 space-y-6"
-          >
-            <h2 class="text-2xl font-bold text-[#1b150d]">
-              Apply for this Job
-            </h2>
+        <div id="applicant-list" class="p-6"></div>
 
-            <!-- Hidden Fields for jobId and craftsmanId -->
-            <input type="hidden" id="jobId" name="jobId" value="" />
-            <input type="hidden" id="craftsmanId" name="craftsmanId" value="" />
-
-            <!-- Cover Letter -->
-            <div>
-              <label
-                for="coverLetter"
-                class="block text-sm font-medium text-[#1b150d] mb-1"
-                >Cover Letter</label
-              >
-              <textarea
-                id="coverLetter"
-                name="coverLetter"
-                rows="5"
-                class="w-full p-3 border rounded-xl focus:outline-none focus:ring"
-                placeholder="Write your cover letter here..."
-              ></textarea>
-            </div>
-
-            <!-- Bid Amount -->
-            <div>
-              <label
-                for="bidAmount"
-                class="block text-sm font-medium text-[#1b150d] mb-1"
-                >Bid Amount (optional)</label
-              >
-              <input
-                type="number"
-                id="bidAmount"
-                name="bidAmount"
-                class="w-full p-3 border rounded-xl focus:outline-none focus:ring"
-                placeholder="Enter your bid amount"
-              />
-            </div>
-
-            <!-- Submit Button -->
-            <button
-              type="submit"
-              class="w-full bg-[#ec7113] text-white font-bold py-3 rounded-xl hover:bg-[#d16210] transition"
-            >
-              Submit Application
-            </button>
-          </form>
-        </main>
-      </div>
-    </div>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("applicationForm");
+  document.addEventListener("DOMContentLoaded", async () => {
+    const jobId = new URLSearchParams(window.location.search).get("jobId");
+    const container = document.getElementById("applicant-list");
 
-        // You may dynamically fetch jobId and craftsmanId from URL or session
-        // For now, hardcoding for example purposes
-        const jobId = new URLSearchParams(window.location.search).get("jobId");
-        const craftsmanId = localStorage.getItem("userId"); // replace with actual method
-        document.getElementById("jobId").value = jobId;
-        document.getElementById("craftsmanId").value = craftsmanId;
+    async function updateStatus(appId, newStatus, customBid = null) {
+      if (newStatus === "accepted") {
+        const confirmAccept = confirm("You are accepting this bid, meaning you're hiring this worker. Continue?");
+        if (!confirmAccept) return;
+      } else if (newStatus === "rejected") {
+        const confirmReject = confirm("You are rejecting this bid. This does NOT mean you're rejecting the worker. Continue?");
+        if (!confirmReject) return;
+      }
 
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-
-          const coverLetter = document.getElementById("coverLetter").value;
-          const bidAmount = document.getElementById("bidAmount").value;
-
-          try {
-            const response = await fetch("/api/applications", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                jobId,
-                craftsmanId,
-                coverLetter,
-                bidAmount: bidAmount ? Number(bidAmount) : undefined,
-              }),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-              alert("Application submitted successfully!");
-              window.location.href = "proposal.html";
-            } else {
-              alert("Error: " + result.error);
-            }
-          } catch (error) {
-            alert("An unexpected error occurred.");
-            console.error(error);
-          }
+      try {
+        const res = await fetch(`/api/applications/${appId}/status`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus, bidAmount: customBid }),
         });
+
+        const updated = await res.json();
+
+        if (res.ok) {
+          document.getElementById(`status-${appId}`).textContent = updated.status;
+          if (updated.bidAmount !== undefined) {
+            document.getElementById(`bid-${appId}`).textContent = `$${updated.bidAmount}`;
+          }
+        } else {
+          alert("Failed to update: " + updated.error);
+        }
+      } catch (err) {
+        console.error("Error updating status:", err);
+      }
+    }
+
+    // ✅ ADD THIS BELOW updateStatus, before your fetch logic
+    async function confirmAndReject(appId) {
+      const confirmReject = confirm("Are you sure you want to reject this bid? This will remove it from your view.");
+      if (!confirmReject) return;
+
+      try {
+        const res = await fetch(`/api/applications/${appId}/status`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "rejected" }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          alert("Failed to reject bid: " + data.error);
+          return;
+        }
+
+        // Remove the card from DOM
+        const card = document.getElementById(`app-card-${appId}`);
+        if (card) card.remove();
+      } catch (err) {
+        console.error("Error rejecting bid:", err);
+        alert("An unexpected error occurred.");
+      }
+    }
+
+    // 🧠 Continue with your existing jobId logic
+    if (!jobId) {
+      container.innerHTML = "<p>No job ID found.</p>";
+      return;
+    }
+
+    
+
+    try {
+      const res = await fetch(`/api/applications/job/${jobId}`);
+      const applicants = await res.json();
+
+      if (!Array.isArray(applicants) || applicants.length === 0) {
+        container.innerHTML = "<p>No applicants yet.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+      applicants.forEach((app) => {
+        const user = app.craftsmanId;
+       const html = `
+<div id="app-card-${app._id}" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
+    
+    <!-- Left: User Info & Cover Letter -->
+    <div class="flex-1">
+      <div class="flex items-center gap-4 mb-2">
+        <img src="${user.profileImage || '/uploads/default.png'}" class="w-12 h-12 rounded-full object-cover" />
+        <div>
+          <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName}</h3>
+          <p class="text-sm text-gray-500">${user.email}</p>
+        </div>
+      </div>
+
+      <p class="text-sm text-[#1b150d]"><strong>Status:</strong> <span id="status-${app._id}">${app.status}</span></p>
+      <p class="mt-2 text-sm text-[#1b150d]"><strong>Cover Letter:</strong><br/>${app.coverLetter}</p>
+    </div>
+
+    <!-- Right: Bid + Action Buttons -->
+    <div class="flex flex-col items-center justify-between gap-2 min-w-[100px]">
+     <p class="text-sm text-[#1b150d]"><strong>Bid:</strong><br/><span id="bid-${app._id}">$${app.bidAmount || 'N/A'}</span></p>
+<div class="flex flex-col items-center gap-1 mt-2">
+  <div class="flex gap-2">
+    <button onclick="updateStatus('${app._id}', 'accepted')" title="Accept" class="text-green-600 hover:text-green-800 text-lg">✅</button>
+<button onclick="confirmAndReject('${app._id}')" title="Reject" class="text-red-600 hover:text-red-800 text-lg">❌</button>
+  </div>
+  <div class="flex gap-1 mt-1">
+    <input id="new-bid-${app._id}" type="number" class="w-16 text-sm border rounded px-1 py-0.5" placeholder="New $" />
+    <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
+      title="Update Bid" class="text-[#ec8e13] font-semibold">Update</button>
+  </div>
+</div>
+
+    </div>
+
+  </div>
+`;
+
+
+        container.insertAdjacentHTML("beforeend", html);
       });
-    </script>
+    } catch (error) {
+      console.error(error);
+      container.innerHTML = "<p>Error loading applicants.</p>";
+    }
+  });
+</script>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {

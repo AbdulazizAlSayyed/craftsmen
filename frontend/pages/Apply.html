@@ -393,10 +393,7 @@
      class="flex-1 text-center bg-[#ec7113] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#d16210] transition">
     Apply
   </a>
-  <a href="proposal.html?jobId=${job._id}" 
-     class="flex-1 text-center bg-[#0077cc] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#005fa3] transition">
-    Bid
-  </a>
+  
 </div>
 
         `;
@@ -498,9 +495,7 @@
           <a href="application.html?jobId=${
             job._id
           }" class="flex-1 text-center bg-[#ec7113] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#d16210] transition">Apply</a>
-          <a href="proposal.html?jobId=${
-            job._id
-          }" class="flex-1 text-center bg-[#0077cc] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#005fa3] transition">Bid</a>
+          
         </div>
       `;
 
@@ -593,33 +588,34 @@
       });
     </script>
     <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const craftsmanId = localStorage.getItem("craftsmanId");
-  const profilePicDiv = document.getElementById("profile-pic");
-  
-  if (!craftsmanId || !profilePicDiv) return;
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profilePicDiv = document.getElementById("profile-pic");
 
-  // Try cached image first
-  const cachedImage = localStorage.getItem("profileImage");
-  if (cachedImage) {
-    profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-  }
+        if (!craftsmanId || !profilePicDiv) return;
 
-  try {
-    const res = await fetch(`/api/profile/${craftsmanId}`);
-    if (!res.ok) throw new Error("Failed fetching profile");
-    
-    const data = await res.json();
-    const profileImage = data.profileImage.trim() || "/uploads/default.png";
+        // Try cached image first
+        const cachedImage = localStorage.getItem("profileImage");
+        if (cachedImage) {
+          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+        }
 
-    profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+          if (!res.ok) throw new Error("Failed fetching profile");
 
-    // Update cache
-    localStorage.setItem("profileImage", profileImage);
-  } catch (error) {
-    console.error("❌ Error loading profile:", error);
-  }
-});
-</script>
+          const data = await res.json();
+          const profileImage =
+            data.profileImage.trim() || "/uploads/default.png";
+
+          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+
+          // Update cache
+          localStorage.setItem("profileImage", profileImage);
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+      });
+    </script>
   </body>
 </html>

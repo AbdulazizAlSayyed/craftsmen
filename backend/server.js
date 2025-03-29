@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const chatRoutes = require("./routes/chat");
 const profileRoutes = require("./routes/profile");
+const applicationRoutes = require("./routes/application");
 
 const { Server } = require("socket.io");
 const http = require("http");
@@ -33,6 +34,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api", chatRoutes);
+app.use("/api/applications", applicationRoutes);
 
 // ✅ MongoDB Connection
 mongoose
