@@ -21,6 +21,7 @@
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div
@@ -131,11 +132,30 @@
                   </div>
                 </button>
               </a>
-              <a
-                href="Setting.html"
-                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
-              >
-                ⚙️
+              <a href="Setting.html">
+                <!-- Settings Button -->
+                <button
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                >
+                  <div
+                    class="text-[#1b150d]"
+                    data-icon="Settings"
+                    data-size="20px"
+                    data-weight="regular"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20px"
+                      height="20px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M224,136a8,8,0,0,1-8,8H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16H128a32,32,0,0,1,64,0h24A8,8,0,0,1,224,136ZM128,96a32,32,0,0,1,64,0h24a8,8,0,0,1,0,16H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
               </a>
             </div>
             <a href="#" id="profile-link">
@@ -176,6 +196,12 @@
             >
               <!-- Messages will render here -->
             </div>
+            <button
+              id="scroll-bottom-btn"
+              class="fixed bottom-20 right-6 bg-[#ec7113] text-white px-3 py-1 rounded-full shadow-md text-sm hidden z-50"
+            >
+              ↓ Scroll to Bottom
+            </button>
 
             <!-- Message input -->
             <div class="flex items-center gap-3 px-4 py-3">
@@ -217,8 +243,39 @@
         socket.emit("addUser", userId);
       }
 
-      // Load previous messages
+      let lastRenderedDate = null;
+
+      function formatDateSeparator(date) {
+        const today = new Date();
+        const msgDate = new Date(date);
+
+        const isToday = msgDate.toDateString() === today.toDateString();
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        const isYesterday = msgDate.toDateString() === yesterday.toDateString();
+
+        if (isToday) return "Today";
+        if (isYesterday) return "Yesterday";
+
+        return msgDate.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
       function renderMessage(msg) {
+        const msgDate = new Date(msg.createdAt || Date.now()).toDateString();
+
+        if (msgDate !== lastRenderedDate) {
+          const dateSeparator = document.createElement("div");
+          dateSeparator.className = "text-center text-xs text-gray-500 my-2";
+          dateSeparator.innerText = formatDateSeparator(msg.createdAt);
+          chatBox.appendChild(dateSeparator);
+          scrollToBottom();
+          lastRenderedDate = msgDate;
+        }
+
         const isMe = msg.sender === userId;
         const alignment = isMe ? "justify-end" : "justify-start";
         const bubbleColor = isMe
@@ -227,28 +284,39 @@
 
         const msgDiv = document.createElement("div");
         msgDiv.className = `flex ${alignment} gap-2`;
+        msgDiv.setAttribute("data-id", msg._id);
+
+        const ticks = isMe
+          ? `<span class="tick">${
+              msg.read === true
+                ? '<span style="color: #007aff;">✔✔</span>'
+                : "✔"
+            }</span>`
+          : "";
 
         msgDiv.innerHTML = `
-        <div class="${bubbleColor} px-4 py-2 rounded-xl shadow-sm max-w-full sm:max-w-[75%] break-all">
-
-      <p class="text-sm">${msg.text}</p>
-      <p class="text-xs text-right text-gray-300 mt-1">${new Date(
-        msg.createdAt || Date.now()
-      ).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}</p>
-    </div>
-  `;
+            <div class="${bubbleColor} px-4 py-2 rounded-xl shadow-sm max-w-full sm:max-w-[75%] break-all">
+              <p class="text-sm">${msg.text}</p>
+              <p class="text-xs text-right text-gray-300 mt-1">
+                ${new Date(msg.createdAt || Date.now()).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+                ${ticks}
+              </p>
+            </div>
+          `;
 
         chatBox.appendChild(msgDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
       }
 
       async function loadMessages() {
         try {
           const res = await fetch(`/api/messages/${conversationId}`);
           const messages = await res.json();
+          chatBox.innerHTML = "";
+          lastRenderedDate = null; // Reset before rendering
+
           messages.forEach(renderMessage);
           chatBox.scrollTop = chatBox.scrollHeight;
         } catch (err) {
@@ -257,42 +325,84 @@
       }
 
       if (conversationId) {
-        loadMessages();
+        loadMessages().then(() => {
+          socket.emit("markAsRead", { conversationId, userId });
+          markMessagesAsRead(); // ✅ ADD THIS LINE
+        });
       }
 
       sendButton.addEventListener("click", async () => {
         if (!input.value.trim()) return;
 
+        const now = new Date().toISOString();
         const message = {
           sender: userId,
           receiver: receiverId,
           text: input.value,
           conversationId,
+          createdAt: now,
         };
 
+        // Emit to Socket.IO
         socket.emit("sendMessage", message);
+
+        // Optimistically render message
         renderMessage(message);
         input.value = "";
 
-        // Save to MongoDB
+        // Save to MongoDB and get back the real _id
         try {
-          await fetch("/api/messages", {
+          const response = await fetch("/api/messages", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(message),
           });
+          const savedMessage = await response.json();
+
+          // 🔥 UPDATE data-id on the last rendered message
+          const msgElem = chatBox.lastElementChild;
+          if (msgElem) {
+            msgElem.setAttribute("data-id", savedMessage._id);
+          }
         } catch (err) {
           console.error("❌ Failed to save message:", err);
         }
       });
 
       // Listen for incoming real-time messages
+      // After receiving a real-time message
       socket.on("getMessage", (msg) => {
         if (msg.conversationId === conversationId) {
           renderMessage(msg);
           chatBox.scrollTop = chatBox.scrollHeight;
+
+          // Tell server we've seen it
+          socket.emit("markAsRead", { conversationId, userId });
         }
       });
+
+      socket.on("messageReadUpdate", ({ messageId }) => {
+        const messageElem = document.querySelector(`[data-id="${messageId}"]`);
+        if (messageElem) {
+          const tickElem = messageElem.querySelector(".tick");
+          if (tickElem) {
+            tickElem.innerHTML = '<span style="color: #007aff;">✔✔</span>';
+          }
+        }
+      });
+
+      async function markMessagesAsRead() {
+        try {
+          await fetch(`/api/messages/mark-read/${conversationId}/${userId}`, {
+            method: "PUT",
+          });
+
+          // 🔁 Let sender know to refresh their ticks
+          socket.emit("messagesRead", { conversationId, readerId: userId });
+        } catch (err) {
+          console.error("❌ Failed to mark messages as read:", err);
+        }
+      }
 
       // Load all conversations
       async function loadConversations(userId) {
@@ -323,31 +433,31 @@
             }
 
             div.innerHTML = `
-        <div class="flex items-center gap-4">
-          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-            style="background-image: url('${
-              partner.profileImage || "/uploads/default.png"
-            }');">
-          </div>
-          <div class="flex flex-col justify-center">
-            <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
-              partner.fullName
-            }</p>
-           <p data-preview class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
-  ${conv.lastMessage || "No messages yet..."}
-</p>
+              <div class="flex items-center gap-4">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
+                  style="background-image: url('${
+                    partner.profileImage || "/uploads/default.png"
+                  }');">
+                </div>
+                <div class="flex flex-col justify-center">
+                  <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
+                    partner.fullName
+                  }</p>
+                 <p data-preview class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
+        ${conv.lastMessage || "No messages yet..."}
+      </p>
 
-          </div>
-        </div>
-        <div class="shrink-0">
-          <p data-time class="text-[#897361] text-sm font-normal leading-normal">
-  ${new Date(conv.lastTime).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  })}
-</p>
+                </div>
+              </div>
+              <div class="shrink-0">
+                <p data-time class="text-[#897361] text-sm font-normal leading-normal">
+        ${new Date(conv.lastTime).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </p>
 
-        </div>`;
+              </div>`;
 
             container.appendChild(div);
           });
@@ -362,10 +472,10 @@
     </script>
 
     <script>
-      const partnerName = document
-        .getElementById("conversation-title")
-        .textContent.replace("Chatting with ", "")
-        .trim();
+      const titleElem = document.getElementById("conversation-title");
+      const partnerName = titleElem.textContent.includes("Chatting with ")
+        ? titleElem.textContent.replace("Chatting with ", "").trim()
+        : "";
 
       // ✅ Create typing indicator
       const typingIndicator = document.createElement("p");
@@ -482,35 +592,26 @@
         });
       });
     </script>
+
     <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const craftsmanId = localStorage.getItem("craftsmanId");
-        const profilePicDiv = document.getElementById("profile-pic");
+      const scrollBtn = document.getElementById("scroll-bottom-btn");
 
-        if (!craftsmanId || !profilePicDiv) return;
-
-        // Try cached image first
-        const cachedImage = localStorage.getItem("profileImage");
-        if (cachedImage) {
-          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-        }
-
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
-
-          const data = await res.json();
-          const profileImage =
-            data.profileImage.trim() || "/uploads/default.png";
-
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-
-          // Update cache
-          localStorage.setItem("profileImage", profileImage);
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
+      // Show button if not at bottom
+      chatBox.addEventListener("scroll", () => {
+        const isAtBottom =
+          chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight + 20;
+        scrollBtn.style.display = isAtBottom ? "none" : "block";
       });
+
+      // Scroll when button clicked
+      scrollBtn.addEventListener("click", () => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+
+      // Optional: auto-scroll when sending or receiving a message
+      function scrollToBottom() {
+        chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
+      }
     </script>
   </body>
 </html>

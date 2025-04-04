@@ -21,6 +21,10 @@ const MessageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    read: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true, // creates createdAt and updatedAt automatically
