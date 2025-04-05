@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const chatRoutes = require("./routes/chat");
 const profileRoutes = require("./routes/profile");
+const applicationRoutes = require("./routes/application");
 const Message = require("./models/message");
 
 const { Server } = require("socket.io");
@@ -22,7 +23,9 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
+
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 // API Routes
@@ -32,6 +35,7 @@ app.use("/api/jobs", jobRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api", chatRoutes);
 
+app.use("/api/applications", applicationRoutes);
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI)

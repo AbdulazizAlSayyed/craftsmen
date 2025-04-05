@@ -618,5 +618,35 @@
         socket.emit("markAsRead", { conversationId, userId });
       }
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profilePicDiv = document.getElementById("profile-pic");
+
+        if (!craftsmanId || !profilePicDiv) return;
+
+        // Try cached image first
+        const cachedImage = localStorage.getItem("profileImage");
+        if (cachedImage) {
+          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+        }
+
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+          if (!res.ok) throw new Error("Failed fetching profile");
+
+          const data = await res.json();
+          const profileImage =
+            data.profileImage.trim() || "/uploads/default.png";
+
+          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+
+          // Update cache
+          localStorage.setItem("profileImage", profileImage);
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+      });
+    </script>
   </body>
 </html>
