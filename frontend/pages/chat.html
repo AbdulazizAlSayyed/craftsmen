@@ -288,6 +288,7 @@
 
         const msgDiv = document.createElement("div");
         msgDiv.className = `flex ${alignment} gap-2`;
+        msgDiv.setAttribute("data-id", key); // ✅ Add this!
 
         const ticks = isMe
           ? `<span class="tick">${
@@ -597,8 +598,11 @@
       // Show button if not at bottom
       chatBox.addEventListener("scroll", () => {
         const isAtBottom =
-          chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight + 20;
-        scrollBtn.style.display = isAtBottom ? "none" : "block";
+          chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight + 10;
+
+        if (isAtBottom) {
+          socket.emit("markAsRead", { conversationId, userId });
+        }
       });
 
       // Scroll when button clicked
@@ -609,6 +613,9 @@
       // Optional: auto-scroll when sending or receiving a message
       function scrollToBottom() {
         chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
+
+        // Trigger real-time read
+        socket.emit("markAsRead", { conversationId, userId });
       }
     </script>
   </body>
