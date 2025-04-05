@@ -116,7 +116,7 @@ io.on("connection", (socket) => {
   // Sending a message
   socket.on(
     "sendMessage",
-    async ({ sender, receiver, text, conversationId }) => {
+    async ({ sender, receiver, text, conversationId, tempId }) => {
       const user = getUser(receiver);
       const messageData = {
         sender,
@@ -124,21 +124,31 @@ io.on("connection", (socket) => {
         text,
         conversationId,
         createdAt: new Date().toISOString(),
-        read: !!user, // mark as read if user online
+        read: !!user,
       };
 
       try {
         const newMsg = new Message(messageData);
         await newMsg.save();
 
-        messageData.messageId = newMsg._id.toString(); // for frontend
+        const fullMessage = {
+          ...messageData,
+          _id: newMsg._id.toString(),
+          tempId, // 🧠 include tempId so frontend can match it
+        };
 
-        // Send message to receiver (real-time)
+        // Send to receiver
         if (user) {
-          io.to(user.socketId).emit("getMessage", messageData);
+          io.to(user.socketId).emit("getMessage", fullMessage);
         }
 
-        // Update preview for both users
+        // Send to sender (optional real-time echo with _id)
+        const senderSocket = getUser(sender);
+        if (senderSocket) {
+          io.to(senderSocket.socketId).emit("messageSaved", fullMessage);
+        }
+
+        // Update previews
         [sender, receiver].forEach((uid) => {
           const u = getUser(uid);
           if (u) {

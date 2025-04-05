@@ -222,6 +222,7 @@
       </div>
     </div>
     <script>
+      const renderedMessages = new Set();
       // 🧠 Required: Socket.IO setup and API interaction
       const socket = io("http://localhost:5001");
 
@@ -265,6 +266,9 @@
       }
 
       function renderMessage(msg) {
+        const key = msg._id || msg.tempId;
+        if (renderedMessages.has(key)) return; // ✅ Prevent duplicate
+        renderedMessages.add(key);
         const msgDate = new Date(msg.createdAt || Date.now()).toDateString();
 
         if (msgDate !== lastRenderedDate) {
@@ -284,7 +288,6 @@
 
         const msgDiv = document.createElement("div");
         msgDiv.className = `flex ${alignment} gap-2`;
-        msgDiv.setAttribute("data-id", msg._id);
 
         const ticks = isMe
           ? `<span class="tick">${
@@ -295,19 +298,22 @@
           : "";
 
         msgDiv.innerHTML = `
-            <div class="${bubbleColor} px-4 py-2 rounded-xl shadow-sm max-w-full sm:max-w-[75%] break-all">
-              <p class="text-sm">${msg.text}</p>
-              <p class="text-xs text-right text-gray-300 mt-1">
-                ${new Date(msg.createdAt || Date.now()).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-                ${ticks}
-              </p>
-            </div>
-          `;
+                  <div class="${bubbleColor} px-4 py-2 rounded-xl shadow-sm max-w-full sm:max-w-[75%] break-all">
+                    <p class="text-sm">${msg.text}</p>
+                    <p class="text-xs text-right text-gray-300 mt-1">
+                      ${new Date(
+                        msg.createdAt || Date.now()
+                      ).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      ${ticks}
+                    </p>
+                  </div>
+                `;
 
         chatBox.appendChild(msgDiv);
+        scrollToBottom();
       }
 
       async function loadMessages() {
@@ -331,42 +337,25 @@
         });
       }
 
-      sendButton.addEventListener("click", async () => {
+      sendButton.addEventListener("click", () => {
         if (!input.value.trim()) return;
 
         const now = new Date().toISOString();
+        const tempId =
+          Date.now().toString() + Math.random().toString(36).substr(2, 5);
+
         const message = {
           sender: userId,
           receiver: receiverId,
           text: input.value,
           conversationId,
           createdAt: now,
+          tempId,
         };
 
-        // Emit to Socket.IO
         socket.emit("sendMessage", message);
-
-        // Optimistically render message
         renderMessage(message);
         input.value = "";
-
-        // Save to MongoDB and get back the real _id
-        try {
-          const response = await fetch("/api/messages", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(message),
-          });
-          const savedMessage = await response.json();
-
-          // 🔥 UPDATE data-id on the last rendered message
-          const msgElem = chatBox.lastElementChild;
-          if (msgElem) {
-            msgElem.setAttribute("data-id", savedMessage._id);
-          }
-        } catch (err) {
-          console.error("❌ Failed to save message:", err);
-        }
       });
 
       // Listen for incoming real-time messages
@@ -378,6 +367,15 @@
 
           // Tell server we've seen it
           socket.emit("markAsRead", { conversationId, userId });
+        }
+      });
+      socket.on("messageSaved", (msg) => {
+        const { tempId, _id } = msg;
+        const msgElem = document.querySelector(`[data-id="${tempId}"]`);
+        if (msgElem) {
+          msgElem.setAttribute("data-id", _id);
+          renderedMessages.delete(tempId);
+          renderedMessages.add(_id);
         }
       });
 
@@ -433,31 +431,31 @@
             }
 
             div.innerHTML = `
-              <div class="flex items-center gap-4">
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                  style="background-image: url('${
-                    partner.profileImage || "/uploads/default.png"
-                  }');">
-                </div>
-                <div class="flex flex-col justify-center">
-                  <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
-                    partner.fullName
-                  }</p>
-                 <p data-preview class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
-        ${conv.lastMessage || "No messages yet..."}
-      </p>
+                    <div class="flex items-center gap-4">
+                      <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
+                        style="background-image: url('${
+                          partner.profileImage || "/uploads/default.png"
+                        }');">
+                      </div>
+                      <div class="flex flex-col justify-center">
+                        <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
+                          partner.fullName
+                        }</p>
+                       <p data-preview class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
+              ${conv.lastMessage || "No messages yet..."}
+            </p>
 
-                </div>
-              </div>
-              <div class="shrink-0">
-                <p data-time class="text-[#897361] text-sm font-normal leading-normal">
-        ${new Date(conv.lastTime).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        })}
-      </p>
+                      </div>
+                    </div>
+                    <div class="shrink-0">
+                      <p data-time class="text-[#897361] text-sm font-normal leading-normal">
+              ${new Date(conv.lastTime).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
 
-              </div>`;
+                    </div>`;
 
             container.appendChild(div);
           });
