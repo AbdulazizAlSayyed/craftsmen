@@ -9,6 +9,7 @@
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
   <script src="../js/seemorejob.js"></script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -388,16 +389,7 @@
         profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
 
         // ✅ SweetAlert2: show success after loading image
-        Swal.fire({
-          icon: "success",
-          title: "Profile Loaded",
-          text: "Your profile image was loaded successfully!",
-          confirmButtonColor: "#22c55e",
-          background: "#ecfdf5",
-          backdrop: "rgba(34,197,94,0.2)",
-          timer: 2000,
-          showConfirmButton: false
-        });
+
         // Update cache
         localStorage.setItem("profileImage", profileImage);
       } catch (error) {
@@ -586,9 +578,12 @@
         icon: "info",
         title: "Welcome to Craftsman!",
         text: "Explore the best portfolios and connect with skilled workers.",
+        timer: 2200,
+
         confirmButtonColor: "#ec7113",
-        background: "#fffaf0",
-        backdrop: "rgba(255, 215, 160, 0.3)"
+        showConfirmButton: false,
+        background: "#ecfdf5",
+        backdrop: `rgba(34,197,94,0.2)`
       });
     });
   </script>
