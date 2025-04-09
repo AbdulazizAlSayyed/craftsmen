@@ -12,6 +12,7 @@
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div
@@ -132,6 +133,7 @@
         </div>
       </div>
     </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const signInButton = document.getElementById("signInButton");
@@ -154,17 +156,41 @@
             const data = await response.json();
 
             if (response.ok) {
-              alert("Login successful!");
-              localStorage.setItem("token", data.token);
-              localStorage.setItem("userId", data.user._id);
+              await Swal.fire({
+                icon: "success",
+                title: "Login Successful 🎉",
+                text: `Welcome back, ${data.user.fullName || "User"}!`,
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: "#ecfdf5",
+                backdrop: `rgba(34,197,94,0.2)`,
+                didOpen: () => {
+                  Swal.showLoading();
+                },
+              });
 
-              localStorage.setItem("userRole", data.user.role);
-              window.location.href = `dashboard.html?craftsmanId=${data.user._id}`;
+              // ✅ Redirect to dashboard
+              window.location.href = "dashboard.html"; // update this path if needed
             } else {
-              alert(data.message || "Login failed");
+              await Swal.fire({
+                icon: "error",
+                title: "Login Failed",
+                text: data.message || "Invalid credentials",
+                confirmButtonColor: "#dc2626",
+                background: "#fff1f2",
+                backdrop: `rgba(252,165,165,0.3)`,
+                timer: 2000,
+              });
             }
           } catch (err) {
-            alert("Something went wrong. Try again.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops!",
+              text: "Something went wrong. Please try again later.",
+              confirmButtonColor: "#ec7113",
+              timer: 2000,
+            });
             console.error(err);
           }
         });

@@ -12,6 +12,7 @@
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div
@@ -469,13 +470,31 @@
                   console.log("🔍 Server response:", data); // ✅ Debugging
 
                   if (response.ok) {
-                    alert(
-                      "Account created successfully! Please verify your email."
-                    );
+                    await Swal.fire({
+                      icon: "success",
+                      title: "Account Created 🎉",
+                      text: "Please verify your email to continue.",
+                      timer: 2000,
+                      timerProgressBar: true,
+                      showConfirmButton: false,
+                      background: "#ecfdf5",
+                      backdrop: `rgba(34,197,94,0.2)`,
+                      didOpen: () => {
+                        Swal.showLoading();
+                      },
+                    });
+
                     localStorage.setItem("emailToVerify", email);
                     window.location.href = "verification-email.html";
                   } else {
-                    alert("Error: " + data.message);
+                    await Swal.fire({
+                      icon: "error",
+                      title: "Signup Failed",
+                      text: data.message || "Something went wrong.",
+                      confirmButtonColor: "#ec7113",
+                      background: "#ffffff",
+                      backdrop: `rgba(0, 0, 0, 0.4)`,
+                    });
                   }
                 }
                 document.addEventListener("DOMContentLoaded", () => {

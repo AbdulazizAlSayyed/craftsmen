@@ -11,7 +11,10 @@
     <title>Galileo Design</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
   <body>
     <div
@@ -127,81 +130,142 @@
       </div>
     </div>
     <script>
-  function submitVerification(e) {
-    e.preventDefault();
-
-    const code = document.getElementById("code").value;
-    const email = localStorage.getItem("emailToVerify"); // saved after signup
-    console.log("✅ Email being verified:", email);
-
-
-    if (!email) {
-      alert("No email found. Please sign up again.");
-      return;
-    }
-
-    fetch("http://localhost:5001/api/auth/verify-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, code }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data.message);
-        if (data.message.includes("success")) {
-          window.location.href = "log-in.html";
+      async function submitVerification(e) {
+        e.preventDefault();
+    
+        const code = document.getElementById("code").value;
+        const email = localStorage.getItem("emailToVerify");
+    
+        if (!email) {
+          await Swal.fire({
+            icon: "error",
+            title: "Email Missing",
+            text: "No email found. Please sign up again.",
+            confirmButtonColor: "#dc2626", // Red for error
+            background: "#fff1f2",
+            backdrop: `rgba(252, 165, 165, 0.3)` // Light red
+          });
+          return;
         }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Verification failed. Try again.");
-      });
-  }
-   // Resend verification code
-   const resendBtn = document.getElementById("resendBtn");
-
-  resendBtn.addEventListener("click", async () => {
-    const email = localStorage.getItem("emailToVerify");
-    if (!email) {
-      alert("No email found. Please sign up again.");
-      return;
-    }
-
-    resendBtn.disabled = true;
-    let timeLeft = 60;
-
-    // Update button text every second
-    const originalText = resendBtn.textContent;
-    resendBtn.textContent = `Resend in ${timeLeft}s`;
-
-    const interval = setInterval(() => {
-      timeLeft--;
-      resendBtn.textContent = `Resend in ${timeLeft}s`;
-      if (timeLeft <= 0) {
-        clearInterval(interval);
-        resendBtn.textContent = originalText;
-        resendBtn.disabled = false;
+    
+        try {
+          const res = await fetch("http://localhost:5001/api/auth/verify-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, code }),
+          });
+    
+          const data = await res.json();
+    
+          if (data.message.includes("success")) {
+            await Swal.fire({
+              icon: "success",
+              title: "Verified 🎉",
+              text: data.message,
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+              background: "#ecfdf5", // Green background
+              backdrop: `rgba(34,197,94,0.2)`, // Greenish tint
+              didOpen: () => {
+                Swal.showLoading();
+              },
+            });
+    
+            window.location.href = "log-in.html";
+          } else {
+            await Swal.fire({
+              icon: "error",
+              title: "Verification Failed",
+              text: data.message,
+              confirmButtonColor: "#dc2626",
+              background: "#fff1f2",
+              backdrop: `rgba(252, 165, 165, 0.3)`
+            });
+          }
+        } catch (err) {
+          console.error(err);
+          await Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Verification failed. Try again.",
+            confirmButtonColor: "#dc2626",
+            background: "#fff1f2",
+            backdrop: `rgba(252, 165, 165, 0.3)`
+          });
+        }
       }
-    }, 1000);
-
-    // Call API
-    try {
-      const res = await fetch("http://localhost:5001/api/auth/resend-verification", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+    
+      // Resend verification code
+      const resendBtn = document.getElementById("resendBtn");
+    
+      resendBtn.addEventListener("click", async () => {
+        const email = localStorage.getItem("emailToVerify");
+    
+        if (!email) {
+          await Swal.fire({
+            icon: "error",
+            title: "Email Missing",
+            text: "No email found. Please sign up again.",
+            confirmButtonColor: "#dc2626",
+            background: "#fff1f2",
+            backdrop: `rgba(252, 165, 165, 0.3)`
+          });
+          return;
+        }
+    
+        resendBtn.disabled = true;
+        let timeLeft = 60;
+        const originalText = resendBtn.textContent;
+        resendBtn.textContent = `Resend in ${timeLeft}s`;
+    
+        const interval = setInterval(() => {
+          timeLeft--;
+          resendBtn.textContent = `Resend in ${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+            resendBtn.textContent = originalText;
+            resendBtn.disabled = false;
+          }
+        }, 1000);
+    
+        try {
+          const res = await fetch("http://localhost:5001/api/auth/resend-verification", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+    
+          const data = await res.json();
+    
+          await Swal.fire({
+            icon: "info",
+            title: "Verification Email Sent",
+            text: data.message,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            background: "#eff6ff", // Blue background
+            backdrop: `rgba(147, 197, 253, 0.3)`,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+    
+        } catch (err) {
+          console.error(err);
+          await Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Something went wrong while resending verification code.",
+            confirmButtonColor: "#dc2626",
+            background: "#fff1f2",
+            backdrop: `rgba(252, 165, 165, 0.3)`
+          });
+        }
       });
-
-      const data = await res.json();
-      alert(data.message);
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong while resending verification code.");
-    }
-  });
-</script>
+    </script>
+    
 
   </body>
 </html>
