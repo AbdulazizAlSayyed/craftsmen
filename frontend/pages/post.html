@@ -95,6 +95,7 @@
               <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="proposal.html"
+                id="proposals-link"
                 >Proposals</a
               >
             </div>
@@ -660,6 +661,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 </script>
+<script>
+  // for disapper proposals if client
+  document.addEventListener("DOMContentLoaded", () => {
+    const userRole = localStorage.getItem("userRole");
+    const proposalsLink = document.getElementById("proposals-link");
 
+    if (userRole === "client" && proposalsLink) {
+      proposalsLink.style.display = "none";
+    }
+  });
+</script>
   </body>
 </html>

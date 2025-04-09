@@ -68,6 +68,7 @@
               <a
                 class="text-[#1b150d] text-sm font-medium leading-normal"
                 href="proposal.html"
+                id="proposals-link"
                 >Proposals</a
               >
             </div>
@@ -512,6 +513,17 @@
           )}`;
         } catch (error) {
           console.error("❌ Error loading profile link:", error);
+        }
+      });
+    </script>
+     <script>
+      // for disapper proposals if client
+      document.addEventListener("DOMContentLoaded", () => {
+        const userRole = localStorage.getItem("userRole");
+        const proposalsLink = document.getElementById("proposals-link");
+
+        if (userRole === "client" && proposalsLink) {
+          proposalsLink.style.display = "none";
         }
       });
     </script>
