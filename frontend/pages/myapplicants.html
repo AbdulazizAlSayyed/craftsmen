@@ -89,9 +89,70 @@
         ></div>
       </div>
     </div>
-
     <!-- Script to Load Applicants and Separate into Two Divs -->
     <script>
+      // ✅ Make these global so buttons can access them
+      async function updateStatus(
+        appId,
+        newStatus,
+        customBid = null,
+        fullName = ""
+      ) {
+        const actionVerb = newStatus === "accepted" ? "accept" : "reject";
+        const confirmMsg = `Are you sure you want to ${actionVerb} ${fullName}?`;
+        const confirmed = confirm(confirmMsg);
+        if (!confirmed) return;
+
+        try {
+          const res = await fetch(`/api/applications/${appId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus, bidAmount: customBid }),
+          });
+
+          const updated = await res.json();
+
+          if (res.ok) {
+            document.getElementById(`status-${appId}`).textContent =
+              updated.status;
+
+            if (updated.bidAmount !== undefined) {
+              const bidEl = document.getElementById(`bid-${appId}`);
+              if (bidEl) bidEl.textContent = `$${updated.bidAmount}`;
+            }
+          } else {
+            alert("Failed to update: " + updated.error);
+          }
+        } catch (err) {
+          console.error("Error updating status:", err);
+        }
+      }
+
+      async function confirmAndReject(appId) {
+        if (!confirm("Are you sure you want to reject this bid?")) return;
+
+        try {
+          const res = await fetch(`/api/applications/${appId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: "rejected" }),
+          });
+
+          if (!res.ok) {
+            const data = await res.json();
+            alert("Failed to reject bid: " + data.error);
+            return;
+          }
+
+          const card = document.getElementById(`app-card-${appId}`);
+          if (card) card.remove();
+        } catch (err) {
+          console.error("Error rejecting bid:", err);
+          alert("An unexpected error occurred.");
+        }
+      }
+
+      // ✅ DOMContentLoaded starts here
       document.addEventListener("DOMContentLoaded", async () => {
         const jobId = new URLSearchParams(window.location.search).get("jobId");
         const applicantContainer = document.getElementById("applicant-list");
@@ -102,75 +163,6 @@
           return;
         }
 
-        async function updateStatus(
-          appId,
-          newStatus,
-          customBid = null,
-          fullName = ""
-        ) {
-          const actionVerb = newStatus === "accepted" ? "accept" : "reject";
-          const confirmMsg = `Are you sure you want to ${actionVerb} ${fullName}?`;
-
-          const confirmed = confirm(confirmMsg);
-          if (!confirmed) return;
-
-          try {
-            const res = await fetch(`/api/applications/${appId}/status`, {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: newStatus, bidAmount: customBid }),
-            });
-
-            const updated = await res.json();
-
-            if (res.ok) {
-              // ✅ Update status visually on the current page
-              document.getElementById(`status-${appId}`).textContent =
-                updated.status;
-
-              // Optional: change background or styling if needed here
-
-              if (updated.bidAmount !== undefined) {
-                const bidEl = document.getElementById(`bid-${appId}`);
-                if (bidEl) bidEl.textContent = `$${updated.bidAmount}`;
-              }
-            } else {
-              alert("Failed to update: " + updated.error);
-            }
-          } catch (err) {
-            console.error("Error updating status:", err);
-          }
-        }
-
-        async function confirmAndReject(appId) {
-          if (
-            !confirm(
-              "Are you sure you want to reject this bid? This will remove it from your view."
-            )
-          )
-            return;
-
-          try {
-            const res = await fetch(`/api/applications/${appId}/status`, {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: "rejected" }),
-            });
-
-            if (!res.ok) {
-              const data = await res.json();
-              alert("Failed to reject bid: " + data.error);
-              return;
-            }
-
-            const card = document.getElementById(`app-card-${appId}`);
-            if (card) card.remove();
-          } catch (err) {
-            console.error("Error rejecting bid:", err);
-            alert("An unexpected error occurred.");
-          }
-        }
-
         try {
           const res = await fetch(`/api/applications/job/${jobId}`);
           const applicants = await res.json();
@@ -179,6 +171,7 @@
             applicantContainer.innerHTML = "<p>No applicants yet.</p>";
             return;
           }
+
           applicantContainer.innerHTML =
             "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
           biddingContainer.innerHTML =
@@ -190,67 +183,70 @@
               typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
             const isPending = app.status === "pending";
 
-            // Shared info layout
             const userInfo = `
-    <div class="flex-1">
-      <div class="flex items-center gap-4 mb-2">
-        <img src="${
-          user.profileImage || "/uploads/default.png"
-        }" class="w-12 h-12 rounded-full object-cover" />
-        <div>
-          <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName}</h3>
-          <p class="text-sm text-gray-500">${user.email}</p>
-        </div>
-      </div>
-      <p class="text-sm text-[#1b150d]"><strong>Status:</strong> <span id="status-${
-        app._id
-      }">${app.status}</span></p>
-      <p class="mt-2 text-sm text-[#1b150d]"><strong>Cover Letter:</strong><br/>${
-        app.coverLetter
-      }</p>
-    </div>
-  `;
+          <div class="flex-1">
+            <div class="flex items-center gap-4 mb-2">
+              <img src="${
+                user.profileImage || "/uploads/default.png"
+              }" class="w-12 h-12 rounded-full object-cover" />
+              <div>
+                <h3 class="text-lg font-bold text-[#1b150d]">${
+                  user.fullName
+                }</h3>
+                <p class="text-sm text-gray-500">${user.email}</p>
+              </div>
+            </div>
+            <p class="text-sm text-[#1b150d]"><strong>Status:</strong> <span id="status-${
+              app._id
+            }">${app.status}</span></p>
+            <p class="mt-2 text-sm text-[#1b150d]"><strong>Cover Letter:</strong><br/>${
+              app.coverLetter
+            }</p>
+          </div>
+        `;
 
             const acceptRejectBtns = `
-  <div class="flex flex-col items-center justify-center gap-2 min-w-[140px]">
-<button onclick="updateStatus('${
+          <div class="flex flex-col items-center justify-center gap-2 min-w-[140px]">
+            <button onclick="updateStatus('${
               app._id
             }', 'accepted', null, '${user.fullName.replace(/'/g, "\\'")}')"
-            class="bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1 rounded text-sm font-semibold">
-      Accept
-    </button>
-<button onclick="updateStatus('${
+              class="bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1 rounded text-sm font-semibold">
+              Accept
+            </button>
+            <button onclick="updateStatus('${
               app._id
             }', 'rejected', null, '${user.fullName.replace(/'/g, "\\'")}')"
-            class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1 rounded text-sm font-semibold">
-      Reject
-    </button>
-  </div>
-`;
+              class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1 rounded text-sm font-semibold">
+              Reject
+            </button>
+          </div>
+        `;
 
             const biddingSection = `
-    <div class="flex flex-col justify-between items-center gap-3 text-sm min-w-[140px]">
-      <p class="text-[#1b150d] font-semibold">Bid: <span id="bid-${app._id}" class="text-black font-normal">$${app.bidAmount}</span></p>
-      <div class="flex gap-2">
-        <button onclick="updateStatus('${app._id}', 'accepted')" title="Accept" class="bg-green-100 text-green-700 hover:bg-green-200 px-2 py-1 rounded">Accept</button>
-        <button onclick="confirmAndReject('${app._id}')" title="Reject" class="bg-red-100 text-red-700 hover:bg-red-200 px-2 py-1 rounded">Reject</button>
-      </div>
-      <div class="flex gap-1 mt-1">
-        <input id="new-bid-${app._id}" type="number" class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
-        <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
-          class="text-[#ec8e13] hover:underline font-semibold">Update</button>
-      </div>
-    </div>
-  `;
+          <div class="flex flex-col justify-between items-center gap-3 text-sm min-w-[140px]">
+            <p class="text-[#1b150d] font-semibold">Bid: <span id="bid-${app._id}" class="text-black font-normal">$${app.bidAmount}</span></p>
+            <div class="flex gap-2">
+              <button onclick="updateStatus('${app._id}', 'accepted')" title="Accept"
+                class="bg-green-100 text-green-700 hover:bg-green-200 px-2 py-1 rounded">Accept</button>
+              <button onclick="confirmAndReject('${app._id}')" title="Reject"
+                class="bg-red-100 text-red-700 hover:bg-red-200 px-2 py-1 rounded">Reject</button>
+            </div>
+            <div class="flex gap-1 mt-1">
+              <input id="new-bid-${app._id}" type="number" class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
+              <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
+                class="text-[#ec8e13] hover:underline font-semibold">Update</button>
+            </div>
+          </div>
+        `;
 
             const html = `
-    <div id="app-card-${
-      app._id
-    }" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
-      ${userInfo}
-      ${isPending && hasBid ? biddingSection : acceptRejectBtns}
-    </div>
-  `;
+          <div id="app-card-${
+            app._id
+          }" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
+            ${userInfo}
+            ${isPending && hasBid ? biddingSection : acceptRejectBtns}
+          </div>
+        `;
 
             if (isPending && hasBid) {
               biddingContainer.insertAdjacentHTML("beforeend", html);
@@ -261,50 +257,6 @@
         } catch (error) {
           console.error(error);
           applicantContainer.innerHTML = "<p>Error loading applicants.</p>";
-        }
-      });
-    </script>
-
-    <!-- Profile Image + Role Handling Scripts -->
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const craftsmanId = localStorage.getItem("craftsmanId");
-        const profilePicDiv = document.getElementById("profile-pic");
-
-        if (!craftsmanId || !profilePicDiv) return;
-
-        const cachedImage = localStorage.getItem("profileImage");
-        if (cachedImage) {
-          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-        }
-
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
-
-          const data = await res.json();
-          const profileImage =
-            data.profileImage?.trim() || "/uploads/default.png";
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-          localStorage.setItem("profileImage", profileImage);
-
-          const mainSkill = data.skills?.[0]?.name || "General";
-          document.getElementById(
-            "profile-link"
-          ).href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-            mainSkill
-          )}`;
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
-      });
-
-      // Hide "Proposals" for clients
-      document.addEventListener("DOMContentLoaded", () => {
-        const userRole = localStorage.getItem("userRole");
-        const proposalsLink = document.getElementById("proposals-link");
-        if (userRole === "client" && proposalsLink) {
-          proposalsLink.style.display = "none";
         }
       });
     </script>

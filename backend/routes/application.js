@@ -46,15 +46,29 @@ router.get("/job/:jobId", async (req, res) => {
 // PATCH /api/applications/:id/status
 router.patch("/:id/status", async (req, res) => {
   try {
+    console.log("PATCH /api/applications/:id/status");
+    console.log("Body received:", req.body);
+    console.log("ID received:", req.params.id);
+
     const { status } = req.body;
+    if (!status) {
+      return res.status(400).json({ error: "Missing status" });
+    }
+
     const updated = await Application.findByIdAndUpdate(
       req.params.id,
       { status },
       { new: true }
     );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
     res.json(updated);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error updating status:", error.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
