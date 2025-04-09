@@ -1,448 +1,404 @@
 <html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
 
-    <title>Galileo Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-    <style>
-      .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-    </style>
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <div
-      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-      style="font-family: 'Work Sans', 'Noto Sans', sans-serif"
-    >
-      <div class="layout-container flex h-full grow flex-col">
-        <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
-        >
-          <div class="flex items-center gap-8">
-            <div class="flex items-center gap-4 text-[#1b150d]">
-              <div class="size-4">
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </div>
-              <h2
-                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
-              >
-                Craftsman
-              </h2>
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <style>
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+    style="font-family: 'Work Sans', 'Noto Sans', sans-serif">
+    <div class="layout-container flex h-full grow flex-col">
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3">
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4 text-[#1b150d]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                  fill="currentColor"></path>
+              </svg>
             </div>
-            <div class="flex items-center gap-9">
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="dashboard.html"
-                >Dashboard</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="job.html"
-                >Hire</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="Apply.html"
-                >Apply</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="myjob.html"
-                >My Jobs</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="proposal.html"
-                id="proposals-link"
-                >Proposals</a
-              >
-            </div>
+            <h2 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]">
+              Craftsman
+            </h2>
           </div>
-          <div class="flex flex-1 justify-end gap-8">
-            <div class="flex gap-2">
-              <a href="Notification.html">
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="Bell"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-              <a href="chat.html">
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="ChatCircleDots"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-              <a href="Setting.html">
-                <!-- Settings Button -->
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="Settings"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M224,136a8,8,0,0,1-8,8H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16H128a32,32,0,0,1,64,0h24A8,8,0,0,1,224,136ZM128,96a32,32,0,0,1,64,0h24a8,8,0,0,1,0,16H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-            </div>
-            <a href="#" id="profile-link">
-              <div
-                id="profile-pic"
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              ></div>
+          <div class="flex items-center gap-9">
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="dashboard.html">Dashboard</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="job.html">Hire</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="Apply.html">Apply</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="myjob.html">My Jobs</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="proposal.html"
+              id="proposals-link">Proposals</a>
+          </div>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+          <div class="flex gap-2">
+            <a href="Notification.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="Bell" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="chat.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="Setting.html">
+              <!-- Settings Button -->
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="Settings" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M224,136a8,8,0,0,1-8,8H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16H128a32,32,0,0,1,64,0h24A8,8,0,0,1,224,136ZM128,96a32,32,0,0,1,64,0h24a8,8,0,0,1,0,16H192a32,32,0,0,1-64,0H40a8,8,0,0,1,0-16Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
             </a>
           </div>
-        </header>
+          <a href="#" id="profile-link">
+            <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"></div>
+          </a>
+        </div>
+      </header>
 
-        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-          <!-- LEFT: Conversation List -->
-          <div class="layout-content-container flex flex-col w-80">
-            <h2>Conversations</h2>
-            <div id="conversation-list"></div>
+      <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+        <!-- LEFT: Conversation List -->
+        <div class="layout-content-container flex flex-col w-80">
+          <h2>Conversations</h2>
+          <div id="conversation-list"></div>
+        </div>
+        <!-- RIGHT CHAT AREA -->
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <div class="flex flex-wrap justify-between gap-3 p-4">
+            <div class="flex min-w-72 flex-col gap-3">
+              <p id="conversation-title" class="text-[#181411] tracking-light text-[32px] font-bold leading-tight">
+                Select a conversation
+              </p>
+              <p class="text-sm italic text-gray-400 ml-4"></p>
+            </div>
           </div>
-          <!-- RIGHT CHAT AREA -->
-          <div
-            class="layout-content-container flex flex-col max-w-[960px] flex-1"
-          >
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-              <div class="flex min-w-72 flex-col gap-3">
-                <p
-                  id="conversation-title"
-                  class="text-[#181411] tracking-light text-[32px] font-bold leading-tight"
-                >
-                  Select a conversation
-                </p>
-                <p class="text-sm italic text-gray-400 ml-4"></p>
-              </div>
-            </div>
 
-            <!-- Chat messages -->
-            <div
-              id="chat-box"
-              class="flex flex-col gap-2 px-4 py-4 overflow-y-auto max-h-[500px]"
-            >
-              <!-- Messages will render here -->
-            </div>
-            <button
-              id="scroll-bottom-btn"
-              class="fixed bottom-20 right-6 bg-[#ec7113] text-white px-3 py-1 rounded-full shadow-md text-sm hidden z-50"
-            >
-              ↓ Scroll to Bottom
+          <!-- Chat messages -->
+          <div id="chat-box" class="flex flex-col gap-2 px-4 py-4 overflow-y-auto max-h-[500px]">
+            <!-- Messages will render here -->
+          </div>
+          <button id="scroll-bottom-btn"
+            class="fixed bottom-20 right-6 bg-[#ec7113] text-white px-3 py-1 rounded-full shadow-md text-sm hidden z-50">
+            ↓ Scroll to Bottom
+          </button>
+
+          <!-- Message input -->
+          <div class="flex items-center gap-3 px-4 py-3">
+            <input id="message-input" placeholder="Type a message"
+              class="form-input flex-1 rounded-xl bg-[#f4f2f0] text-[#181411] px-4 py-2 text-base break-words" />
+            <button id="send-button" class="px-4 py-2 rounded-xl bg-[#ec7113] text-white text-sm font-medium">
+              Send
             </button>
-
-            <!-- Message input -->
-            <div class="flex items-center gap-3 px-4 py-3">
-              <input
-                id="message-input"
-                placeholder="Type a message"
-                class="form-input flex-1 rounded-xl bg-[#f4f2f0] text-[#181411] px-4 py-2 text-base break-words"
-              />
-              <button
-                id="send-button"
-                class="px-4 py-2 rounded-xl bg-[#ec7113] text-white text-sm font-medium"
-              >
-                Send
-              </button>
-            </div>
           </div>
         </div>
       </div>
     </div>
-    <script>
-      const renderedMessages = new Set();
-      // 🧠 Required: Socket.IO setup and API interaction
-      const socket = io("http://localhost:5001");
+  </div>
+  <script>
+    const renderedMessages = new Set();
+    // 🧠 Required: Socket.IO setup and API interaction
+    const socket = io("http://localhost:5001");
 
-      // 🧠 Utility to extract query params from URL
-      function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
+    // 🧠 Utility to extract query params from URL
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const conversationId = getQueryParam("conversationId");
+    const userId = localStorage.getItem("userId");
+    const receiverId = getQueryParam("receiverId");
+    if (!userId || !conversationId) {
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Chat Info",
+        text: "Please make sure you're accessing a valid conversation.",
+        background: "#fef9c3",
+        backdrop: "rgba(253,224,71,0.3)",
+        confirmButtonColor: "#facc15"
+      });
+      return;
+    }
+
+
+    const sendButton = document.getElementById("send-button");
+    const input = document.getElementById("message-input");
+    const chatBox = document.getElementById("chat-box");
+
+    if (userId) {
+      socket.emit("addUser", userId);
+    }
+
+    let lastRenderedDate = null;
+
+    function formatDateSeparator(date) {
+      const today = new Date();
+      const msgDate = new Date(date);
+
+      const isToday = msgDate.toDateString() === today.toDateString();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      const isYesterday = msgDate.toDateString() === yesterday.toDateString();
+
+      if (isToday) return "Today";
+      if (isYesterday) return "Yesterday";
+
+      return msgDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+
+    function renderMessage(msg) {
+      const key = msg._id || msg.tempId;
+      if (renderedMessages.has(key)) return; // ✅ Prevent duplicate
+      renderedMessages.add(key);
+      const msgDate = new Date(msg.createdAt || Date.now()).toDateString();
+
+      if (msgDate !== lastRenderedDate) {
+        const dateSeparator = document.createElement("div");
+        dateSeparator.className = "text-center text-xs text-gray-500 my-2";
+        dateSeparator.innerText = formatDateSeparator(msg.createdAt);
+        chatBox.appendChild(dateSeparator);
+        scrollToBottom();
+        lastRenderedDate = msgDate;
       }
 
-      const conversationId = getQueryParam("conversationId");
-      const userId = localStorage.getItem("userId");
-      const receiverId = getQueryParam("receiverId");
+      const isMe = msg.sender === userId;
+      const alignment = isMe ? "justify-end" : "justify-start";
+      const bubbleColor = isMe
+        ? "bg-[#ec7113] text-white"
+        : "bg-[#f3f3f3] text-black";
 
-      const sendButton = document.getElementById("send-button");
-      const input = document.getElementById("message-input");
-      const chatBox = document.getElementById("chat-box");
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `flex ${alignment} gap-2`;
+      msgDiv.setAttribute("data-id", key); // ✅ Add this!
 
-      if (userId) {
-        socket.emit("addUser", userId);
-      }
+      const ticks = isMe
+        ? `<span class="tick">${msg.read === true
+          ? '<span style="color: #007aff;">✔✔</span>'
+          : "✔"
+        }</span>`
+        : "";
 
-      let lastRenderedDate = null;
-
-      function formatDateSeparator(date) {
-        const today = new Date();
-        const msgDate = new Date(date);
-
-        const isToday = msgDate.toDateString() === today.toDateString();
-        const yesterday = new Date(today);
-        yesterday.setDate(today.getDate() - 1);
-        const isYesterday = msgDate.toDateString() === yesterday.toDateString();
-
-        if (isToday) return "Today";
-        if (isYesterday) return "Yesterday";
-
-        return msgDate.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        });
-      }
-
-      function renderMessage(msg) {
-        const key = msg._id || msg.tempId;
-        if (renderedMessages.has(key)) return; // ✅ Prevent duplicate
-        renderedMessages.add(key);
-        const msgDate = new Date(msg.createdAt || Date.now()).toDateString();
-
-        if (msgDate !== lastRenderedDate) {
-          const dateSeparator = document.createElement("div");
-          dateSeparator.className = "text-center text-xs text-gray-500 my-2";
-          dateSeparator.innerText = formatDateSeparator(msg.createdAt);
-          chatBox.appendChild(dateSeparator);
-          scrollToBottom();
-          lastRenderedDate = msgDate;
-        }
-
-        const isMe = msg.sender === userId;
-        const alignment = isMe ? "justify-end" : "justify-start";
-        const bubbleColor = isMe
-          ? "bg-[#ec7113] text-white"
-          : "bg-[#f3f3f3] text-black";
-
-        const msgDiv = document.createElement("div");
-        msgDiv.className = `flex ${alignment} gap-2`;
-        msgDiv.setAttribute("data-id", key); // ✅ Add this!
-
-        const ticks = isMe
-          ? `<span class="tick">${
-              msg.read === true
-                ? '<span style="color: #007aff;">✔✔</span>'
-                : "✔"
-            }</span>`
-          : "";
-
-        msgDiv.innerHTML = `
+      msgDiv.innerHTML = `
                   <div class="${bubbleColor} px-4 py-2 rounded-xl shadow-sm max-w-full sm:max-w-[75%] break-all">
                     <p class="text-sm">${msg.text}</p>
                     <p class="text-xs text-right text-gray-300 mt-1">
                       ${new Date(
-                        msg.createdAt || Date.now()
-                      ).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+        msg.createdAt || Date.now()
+      ).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}
                       ${ticks}
                     </p>
                   </div>
                 `;
 
-        chatBox.appendChild(msgDiv);
-        scrollToBottom();
+      chatBox.appendChild(msgDiv);
+      scrollToBottom();
+    }
+
+    async function loadMessages() {
+      try {
+        const res = await fetch(`/api/messages/${conversationId}`);
+        const messages = await res.json();
+        chatBox.innerHTML = "";
+        lastRenderedDate = null; // Reset before rendering
+
+        messages.forEach(renderMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (err) {
+        console.error("❌ Failed to load messages:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Error Loading Chat",
+          text: "We couldn't load messages. Please try again.",
+          background: "#fff1f2",
+          backdrop: "rgba(252,165,165,0.3)",
+          confirmButtonColor: "#ef4444"
+        });
+
       }
 
-      async function loadMessages() {
-        try {
-          const res = await fetch(`/api/messages/${conversationId}`);
-          const messages = await res.json();
-          chatBox.innerHTML = "";
-          lastRenderedDate = null; // Reset before rendering
+    }
 
-          messages.forEach(renderMessage);
-          chatBox.scrollTop = chatBox.scrollHeight;
-        } catch (err) {
-          console.error("❌ Failed to load messages:", err);
+    if (conversationId) {
+      loadMessages().then(() => {
+        socket.emit("markAsRead", { conversationId, userId });
+        markMessagesAsRead(); // ✅ ADD THIS LINE
+      });
+    }
+
+    sendButton.addEventListener("click", () => {
+      if (!input.value.trim()) return;
+
+      const now = new Date().toISOString();
+      const tempId =
+        Date.now().toString() + Math.random().toString(36).substr(2, 5);
+
+      const message = {
+        sender: userId,
+        receiver: receiverId,
+        text: input.value,
+        conversationId,
+        createdAt: now,
+        tempId,
+      };
+
+      socket.emit("sendMessage", message);
+      renderMessage(message);
+      input.value = "";
+    });
+
+    // Listen for incoming real-time messages
+    // After receiving a real-time message
+    socket.on("getMessage", (msg) => {
+      if (msg.conversationId === conversationId) {
+        renderMessage(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Tell server we've seen it
+        socket.emit("markAsRead", { conversationId, userId });
+      }
+    });
+    socket.on("messageSaved", (msg) => {
+      const { tempId, _id } = msg;
+      const msgElem = document.querySelector(`[data-id="${tempId}"]`);
+      if (msgElem) {
+        msgElem.setAttribute("data-id", _id);
+        renderedMessages.delete(tempId);
+        renderedMessages.add(_id);
+      }
+    });
+
+    socket.on("messageReadUpdate", ({ messageId }) => {
+      const messageElem = document.querySelector(`[data-id="${messageId}"]`);
+      if (messageElem) {
+        const tickElem = messageElem.querySelector(".tick");
+        if (tickElem) {
+          tickElem.innerHTML = '<span style="color: #007aff;">✔✔</span>';
         }
       }
+    });
 
-      if (conversationId) {
-        loadMessages().then(() => {
-          socket.emit("markAsRead", { conversationId, userId });
-          markMessagesAsRead(); // ✅ ADD THIS LINE
+    async function markMessagesAsRead() {
+      try {
+        await fetch(`/api/messages/mark-read/${conversationId}/${userId}`, {
+          method: "PUT",
+        });
+
+        // 🔁 Let sender know to refresh their ticks
+        socket.emit("messagesRead", { conversationId, readerId: userId });
+      } catch (err) {
+        console.error("❌ Failed to mark messages as read:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Mark Read Failed",
+          text: "Could not update message status.",
+          background: "#fff1f2",
+          backdrop: "rgba(252,165,165,0.3)",
+          confirmButtonColor: "#ef4444"
         });
       }
 
-      sendButton.addEventListener("click", () => {
-        if (!input.value.trim()) return;
+    }
 
-        const now = new Date().toISOString();
-        const tempId =
-          Date.now().toString() + Math.random().toString(36).substr(2, 5);
+    // Load all conversations
+    async function loadConversations(userId) {
+      try {
+        const res = await fetch(`/api/conversations/${userId}`);
+        const conversations = await res.json();
+        const container = document.getElementById("conversation-list");
+        const selectedConversationId = getQueryParam("conversationId");
 
-        const message = {
-          sender: userId,
-          receiver: receiverId,
-          text: input.value,
-          conversationId,
-          createdAt: now,
-          tempId,
-        };
+        container.innerHTML = "";
 
-        socket.emit("sendMessage", message);
-        renderMessage(message);
-        input.value = "";
-      });
-
-      // Listen for incoming real-time messages
-      // After receiving a real-time message
-      socket.on("getMessage", (msg) => {
-        if (msg.conversationId === conversationId) {
-          renderMessage(msg);
-          chatBox.scrollTop = chatBox.scrollHeight;
-
-          // Tell server we've seen it
-          socket.emit("markAsRead", { conversationId, userId });
-        }
-      });
-      socket.on("messageSaved", (msg) => {
-        const { tempId, _id } = msg;
-        const msgElem = document.querySelector(`[data-id="${tempId}"]`);
-        if (msgElem) {
-          msgElem.setAttribute("data-id", _id);
-          renderedMessages.delete(tempId);
-          renderedMessages.add(_id);
-        }
-      });
-
-      socket.on("messageReadUpdate", ({ messageId }) => {
-        const messageElem = document.querySelector(`[data-id="${messageId}"]`);
-        if (messageElem) {
-          const tickElem = messageElem.querySelector(".tick");
-          if (tickElem) {
-            tickElem.innerHTML = '<span style="color: #007aff;">✔✔</span>';
-          }
-        }
-      });
-
-      async function markMessagesAsRead() {
-        try {
-          await fetch(`/api/messages/mark-read/${conversationId}/${userId}`, {
-            method: "PUT",
+        if (conversations.length === 0) {
+          Swal.fire({
+            icon: "info",
+            title: "No Conversations",
+            text: "Start chatting by applying to a job or hiring a craftsman!",
+            background: "#f0f9ff",
+            backdrop: "rgba(147,197,253,0.3)",
+            confirmButtonColor: "#3b82f6"
           });
-
-          // 🔁 Let sender know to refresh their ticks
-          socket.emit("messagesRead", { conversationId, readerId: userId });
-        } catch (err) {
-          console.error("❌ Failed to mark messages as read:", err);
+          return; // Optional: don't proceed with rendering
         }
-      }
 
-      // Load all conversations
-      async function loadConversations(userId) {
-        try {
-          const res = await fetch(`/api/conversations/${userId}`);
-          const conversations = await res.json();
-          const container = document.getElementById("conversation-list");
-          const selectedConversationId = getQueryParam("conversationId");
+        conversations.forEach((conv) => {
+          const partner = conv.participants.find((p) => p._id !== userId);
+          if (!partner) return;
 
-          container.innerHTML = "";
+          const div = document.createElement("div");
+          div.className =
+            "flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100";
 
-          conversations.forEach((conv) => {
-            const partner = conv.participants.find((p) => p._id !== userId);
-            if (!partner) return;
+          div.setAttribute("data-conversation-id", conv._id); // ✅ Add this
+          div.onclick = () => {
+            window.location.href = `chat.html?userId=${userId}&receiverId=${partner._id}&conversationId=${conv._id}`;
+          };
 
-            const div = document.createElement("div");
-            div.className =
-              "flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100";
+          if (conv._id === selectedConversationId && partner.fullName) {
+            const header = document.getElementById("conversation-title");
+            header.textContent = `Chatting with ${partner.fullName}`;
+          }
 
-            div.setAttribute("data-conversation-id", conv._id); // ✅ Add this
-            div.onclick = () => {
-              window.location.href = `chat.html?userId=${userId}&receiverId=${partner._id}&conversationId=${conv._id}`;
-            };
-
-            if (conv._id === selectedConversationId && partner.fullName) {
-              const header = document.getElementById("conversation-title");
-              header.textContent = `Chatting with ${partner.fullName}`;
-            }
-
-            div.innerHTML = `
+          div.innerHTML = `
                     <div class="flex items-center gap-4">
                       <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-fit"
-                        style="background-image: url('${
-                          partner.profileImage || "/uploads/default.png"
-                        }');">
+                        style="background-image: url('${partner.profileImage || "/uploads/default.png"
+            }');">
                       </div>
                       <div class="flex flex-col justify-center">
-                        <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${
-                          partner.fullName
-                        }</p>
+                        <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">${partner.fullName
+            }</p>
                        <p data-preview class="text-[#897361] text-sm font-normal leading-normal break-all max-w-[150px] truncate">
               ${conv.lastMessage || "No messages yet..."}
             </p>
@@ -452,213 +408,241 @@
                     <div class="shrink-0">
                       <p data-time class="text-[#897361] text-sm font-normal leading-normal">
               ${new Date(conv.lastTime).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
             </p>
 
                     </div>`;
 
-            container.appendChild(div);
-          });
-        } catch (err) {
-          console.error("❌ Failed to load conversations:", err);
-        }
-      }
-
-      if (userId) {
-        loadConversations(userId);
-      }
-    </script>
-
-    <script>
-      const titleElem = document.getElementById("conversation-title");
-      const partnerName = titleElem.textContent.includes("Chatting with ")
-        ? titleElem.textContent.replace("Chatting with ", "").trim()
-        : "";
-
-      // ✅ Create typing indicator
-      const typingIndicator = document.createElement("p");
-      typingIndicator.className = "text-sm italic text-gray-400 ml-4";
-      typingIndicator.style.display = "none";
-
-      // ✅ Add it to the DOM (after title)
-      const headerContainer = document.querySelector("#conversation-title");
-      const parentOfTitle = headerContainer.parentElement;
-      parentOfTitle.appendChild(typingIndicator);
-
-      // ✅ Typing logic
-      let typingTimeout;
-
-      socket.on("showTyping", ({ senderId }) => {
-        if (senderId === receiverId) {
-          // ✅ Dynamically get name every time someone types
-          const currentTitle =
-            document.getElementById("conversation-title").textContent;
-          const currentPartnerName = currentTitle
-            .replace("Chatting with ", "")
-            .trim();
-
-          typingIndicator.innerHTML = `<span class="animate-pulse">💬 ${currentPartnerName} is typing...</span>`;
-          typingIndicator.style.display = "block";
-
-          clearTimeout(typingTimeout);
-          typingTimeout = setTimeout(() => {
-            typingIndicator.style.display = "none";
-          }, 2000);
-        }
-      });
-
-      input.addEventListener("input", () => {
-        socket.emit("typing", { senderId: userId, receiverId });
-      });
-    </script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        let craftsmanId = new URLSearchParams(window.location.search).get(
-          "craftsmanId"
-        );
-
-        if (!craftsmanId) {
-          craftsmanId = localStorage.getItem("craftsmanId");
-          if (!craftsmanId) {
-            console.error("❌ Missing craftsmanId in URL and Local Storage!");
-            return;
-          }
-        }
-
-        localStorage.setItem("craftsmanId", craftsmanId);
-
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok)
-            throw new Error(
-              `Failed to fetch profile: ${res.status} ${res.statusText}`
-            );
-
-          const data = await res.json();
-          console.log("✅ API Response:", data);
-
-          const profileImage = data.profileImage?.trim()
-            ? data.profileImage
-            : "/uploads/default.png";
-          console.log("✅ Profile Image URL:", profileImage);
-
-          const profilePicDiv = document.getElementById("profile-pic");
-          if (profilePicDiv) {
-            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-          }
-
-          const mainSkill =
-            data.skills && data.skills.length > 0
-              ? data.skills[0].name
-              : "General";
-          const profileLink = document.getElementById("profile-link");
-
-          if (profileLink) {
-            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-              mainSkill
-            )}`;
-          }
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
-      });
-      socket.on("lastMessageUpdate", ({ conversationId, text, createdAt }) => {
-        const convoItems = document.querySelectorAll(
-          "#conversation-list > div"
-        );
-
-        convoItems.forEach((item) => {
-          const convId = item.getAttribute("data-conversation-id");
-          if (convId === conversationId) {
-            const preview = item.querySelector("[data-preview]");
-            const time = item.querySelector("[data-time]");
-
-            if (preview) preview.textContent = text;
-            if (time) {
-              const date = new Date(createdAt);
-              time.textContent = date.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
-            }
-
-            // ✅ Move this conversation div to the top of the list
-            const container = document.getElementById("conversation-list");
-            container.prepend(item);
-          }
+          container.appendChild(div);
         });
-      });
-    </script>
+      } catch (err) {
+        console.error("❌ Failed to load conversations:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Failed to Load Conversations",
+          text: "Please check your connection or try again later.",
+          background: "#fff1f2",
+          backdrop: "rgba(252,165,165,0.3)",
+          confirmButtonColor: "#ef4444"
+        });
+      }
 
-    <script>
-      const scrollBtn = document.getElementById("scroll-bottom-btn");
+    }
 
-      // Show button if not at bottom
-      chatBox.addEventListener("scroll", () => {
-        const isAtBottom =
-          chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight + 10;
+    if (userId) {
+      loadConversations(userId);
+    }
+  </script>
 
-        if (isAtBottom) {
-          socket.emit("markAsRead", { conversationId, userId });
+  <script>
+    const titleElem = document.getElementById("conversation-title");
+    const partnerName = titleElem.textContent.includes("Chatting with ")
+      ? titleElem.textContent.replace("Chatting with ", "").trim()
+      : "";
+
+    // ✅ Create typing indicator
+    const typingIndicator = document.createElement("p");
+    typingIndicator.className = "text-sm italic text-gray-400 ml-4";
+    typingIndicator.style.display = "none";
+
+    // ✅ Add it to the DOM (after title)
+    const headerContainer = document.querySelector("#conversation-title");
+    const parentOfTitle = headerContainer.parentElement;
+    parentOfTitle.appendChild(typingIndicator);
+
+    // ✅ Typing logic
+    let typingTimeout;
+
+    socket.on("showTyping", ({ senderId }) => {
+      if (senderId === receiverId) {
+        // ✅ Dynamically get name every time someone types
+        const currentTitle =
+          document.getElementById("conversation-title").textContent;
+        const currentPartnerName = currentTitle
+          .replace("Chatting with ", "")
+          .trim();
+
+        typingIndicator.innerHTML = `<span class="animate-pulse">💬 ${currentPartnerName} is typing...</span>`;
+        typingIndicator.style.display = "block";
+
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+          typingIndicator.style.display = "none";
+        }, 2000);
+      }
+    });
+
+    input.addEventListener("input", () => {
+      socket.emit("typing", { senderId: userId, receiverId });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      let craftsmanId = new URLSearchParams(window.location.search).get(
+        "craftsmanId"
+      );
+
+      if (!craftsmanId) {
+        craftsmanId = localStorage.getItem("craftsmanId");
+        if (!craftsmanId) {
+          console.error("❌ Missing craftsmanId in URL and Local Storage!");
+          return;
+        }
+      }
+
+      localStorage.setItem("craftsmanId", craftsmanId);
+
+      try {
+        const res = await fetch(`/api/profile/${craftsmanId}`);
+        if (!res.ok)
+          throw new Error(
+            `Failed to fetch profile: ${res.status} ${res.statusText}`
+          );
+
+        const data = await res.json();
+        console.log("✅ API Response:", data);
+
+        const profileImage = data.profileImage?.trim()
+          ? data.profileImage
+          : "/uploads/default.png";
+        console.log("✅ Profile Image URL:", profileImage);
+
+        const profilePicDiv = document.getElementById("profile-pic");
+        if (profilePicDiv) {
+          profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+        }
+
+        const mainSkill =
+          data.skills && data.skills.length > 0
+            ? data.skills[0].name
+            : "General";
+        const profileLink = document.getElementById("profile-link");
+
+        if (profileLink) {
+          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+            mainSkill
+          )}`;
+        }
+      } catch (error) {
+        console.error("❌ Error loading profile:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Profile Load Error",
+          text: "Could not load your profile picture or details.",
+          background: "#fff1f2",
+          backdrop: "rgba(252,165,165,0.3)",
+          confirmButtonColor: "#ef4444"
+        });
+
+      }
+    });
+    socket.on("lastMessageUpdate", ({ conversationId, text, createdAt }) => {
+      const convoItems = document.querySelectorAll(
+        "#conversation-list > div"
+      );
+
+      convoItems.forEach((item) => {
+        const convId = item.getAttribute("data-conversation-id");
+        if (convId === conversationId) {
+          const preview = item.querySelector("[data-preview]");
+          const time = item.querySelector("[data-time]");
+
+          if (preview) preview.textContent = text;
+          if (time) {
+            const date = new Date(createdAt);
+            time.textContent = date.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+          }
+
+          // ✅ Move this conversation div to the top of the list
+          const container = document.getElementById("conversation-list");
+          container.prepend(item);
         }
       });
+    });
+  </script>
 
-      // Scroll when button clicked
-      scrollBtn.addEventListener("click", () => {
-        chatBox.scrollTop = chatBox.scrollHeight;
-      });
+  <script>
+    const scrollBtn = document.getElementById("scroll-bottom-btn");
 
-      // Optional: auto-scroll when sending or receiving a message
-      function scrollToBottom() {
-        chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
+    // Show button if not at bottom
+    chatBox.addEventListener("scroll", () => {
+      const isAtBottom =
+        chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight + 10;
 
-        // Trigger real-time read
+      if (isAtBottom) {
         socket.emit("markAsRead", { conversationId, userId });
       }
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const craftsmanId = localStorage.getItem("craftsmanId");
-        const profilePicDiv = document.getElementById("profile-pic");
+    });
 
-        if (!craftsmanId || !profilePicDiv) return;
+    // Scroll when button clicked
+    scrollBtn.addEventListener("click", () => {
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
 
-        // Try cached image first
-        const cachedImage = localStorage.getItem("profileImage");
-        if (cachedImage) {
-          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-        }
+    // Optional: auto-scroll when sending or receiving a message
+    function scrollToBottom() {
+      chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
 
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
+      // Trigger real-time read
+      socket.emit("markAsRead", { conversationId, userId });
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const craftsmanId = localStorage.getItem("craftsmanId");
+      const profilePicDiv = document.getElementById("profile-pic");
 
-          const data = await res.json();
-          const profileImage =
-            data.profileImage.trim() || "/uploads/default.png";
+      if (!craftsmanId || !profilePicDiv) return;
 
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+      // Try cached image first
+      const cachedImage = localStorage.getItem("profileImage");
+      if (cachedImage) {
+        profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+      }
 
-          // Update cache
-          localStorage.setItem("profileImage", profileImage);
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
-      });
-    </script>
-    <script>
-      // for disapper proposals if client
-      document.addEventListener("DOMContentLoaded", () => {
-        const userRole = localStorage.getItem("userRole");
-        const proposalsLink = document.getElementById("proposals-link");
+      try {
+        const res = await fetch(`/api/profile/${craftsmanId}`);
+        if (!res.ok) throw new Error("Failed fetching profile");
 
-        if (userRole === "client" && proposalsLink) {
-          proposalsLink.style.display = "none";
-        }
-      });
-    </script>
-  </body>
+        const data = await res.json();
+        const profileImage =
+          data.profileImage.trim() || "/uploads/default.png";
+
+        profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+
+        // Update cache
+        localStorage.setItem("profileImage", profileImage);
+      } catch (error) {
+        console.error("❌ Error loading profile:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Profile Load Error",
+          text: "Could not load your profile picture or details.",
+          background: "#fff1f2",
+          backdrop: "rgba(252,165,165,0.3)",
+          confirmButtonColor: "#ef4444"
+        });
+
+      }
+    });
+  </script>
+  <script>
+    // for disapper proposals if client
+    document.addEventListener("DOMContentLoaded", () => {
+      const userRole = localStorage.getItem("userRole");
+      const proposalsLink = document.getElementById("proposals-link");
+
+      if (userRole === "client" && proposalsLink) {
+        proposalsLink.style.display = "none";
+      }
+    });
+  </script>
+</body>
+
 </html>
