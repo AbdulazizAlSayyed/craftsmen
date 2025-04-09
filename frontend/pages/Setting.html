@@ -90,176 +90,130 @@
           <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
             Profile
           </h3>
+          <!-- Name -->
           <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
             <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Name
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                John Doe
-              </p>
+              <p class="text-black text-base font-medium leading-normal">Name</p>
+              <p id="fullName" class="text-[#93adc8] text-sm font-normal leading-normal"></p>
             </div>
             <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Edit</span>
-              </button>
-            </div>
-          </div>
-          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
-            <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Username
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                @johndoe
-              </p>
-            </div>
-            <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Edit</span>
-              </button>
-            </div>
-          </div>
-          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
-            <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Bio
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                I'm a craftsman. I make things.
-              </p>
-            </div>
-            <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Edit</span>
-              </button>
+              <button id="editNameBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Edit</button>
             </div>
           </div>
 
+          <!-- Username -->
           <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
             <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Profile Picture
-              </p>
+              <p class="text-black text-base font-medium leading-normal">Username</p>
+              <p id="username" class="text-[#93adc8] text-sm font-normal leading-normal"></p>
+            </div>
+            <div class="shrink-0">
+              <button id="editUsernameBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Edit</button>
+            </div>
+          </div>
 
+          <!-- Bio -->
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal">Bio</p>
+              <p id="bio" class="text-[#93adc8] text-sm font-normal leading-normal"></p>
+            </div>
+            <div class="shrink-0">
+              <button id="editBioBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Edit</button>
+            </div>
+          </div>
+
+          <!-- Profile Picture -->
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal">Profile Picture</p>
               <input type="file" id="upload-input" class="mt-1 text-sm text-gray-600" />
             </div>
             <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Upload</span>
-              </button>
+              <button id="uploadPictureBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Upload</button>
             </div>
           </div>
+
+          <!-- Location -->
           <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
             <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Location
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                San Francisco, CA
-              </p>
+              <p class="text-black text-base font-medium leading-normal">Location</p>
+              <p id="location" class="text-[#93adc8] text-sm font-normal leading-normal"></p>
             </div>
             <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Edit</span>
-              </button>
+              <button id="editLocationBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Edit</button>
             </div>
           </div>
-          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
-            <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Website
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                johndoecrafts.com
-              </p>
-            </div>
-            <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Edit</span>
-              </button>
-            </div>
-          </div>
+
 
           <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
             Account
           </h3>
-          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14 justify-between">
-            <p class="text-black text-base font-normal leading-normal flex-1 truncate">
-              Email
-            </p>
-            <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Edit</span>
-              </button>
-            </div>
-          </div>
+          <!-- Email -->
           <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
             <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Password
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                ••••••••••••
-              </p>
+              <p class="text-black text-base font-medium leading-normal">Email</p>
+              <p id="email" class="text-[#93adc8] text-sm font-normal leading-normal"></p>
             </div>
             <div class="shrink-0">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
-                <span class="truncate">Change</span>
-              </button>
+              <button id="editEmailBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Edit</button>
+            </div>
+          </div>
+
+
+          <!-- Password -->
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal">Password</p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal">•••••••••••</p>
+            </div>
+            <div class="shrink-0">
+              <button id="changePasswordBtn"
+                class="flex min-w-[84px] h-8 px-4 bg-[#243547] text-white text-sm font-medium rounded-xl">Change</button>
             </div>
           </div>
           <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
             Preferences
           </h3>
+          <!-- Dark Mode Toggle -->
           <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
             <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Dark Mode
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                Use dark mode to reduce eye strain
-              </p>
+              <p class="text-black text-base font-medium leading-normal">Dark Mode</p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal">Use dark mode to reduce eye strain</p>
             </div>
             <div class="shrink-0">
               <label
                 class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#243547] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#197ce6]">
-                <div class="h-full w-[27px] rounded-full bg-white" style="
-                        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px,
-                          rgba(0, 0, 0, 0.06) 0px 3px 1px;
-                      "></div>
-                <input type="checkbox" class="invisible absolute" />
+                <div class="h-full w-[27px] rounded-full bg-white"
+                  style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+                <input type="checkbox" id="darkModeToggle" class="invisible absolute" />
               </label>
             </div>
           </div>
+
+          <!-- Receive Email Notifications Toggle -->
           <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
             <div class="flex flex-col justify-center">
-              <p class="text-black text-base font-medium leading-normal line-clamp-1">
-                Receive email notifications
-              </p>
-              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
-                Get notified about activity on Craftsman
-              </p>
+              <p class="text-black text-base font-medium leading-normal">Receive email notifications</p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal">Get notified about activity on Craftsman</p>
             </div>
             <div class="shrink-0">
               <label
                 class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#243547] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#197ce6]">
-                <div class="h-full w-[27px] rounded-full bg-white" style="
-                        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px,
-                          rgba(0, 0, 0, 0.06) 0px 3px 1px;
-                      "></div>
-                <input type="checkbox" class="invisible absolute" />
+                <div class="h-full w-[27px] rounded-full bg-white"
+                  style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+                <input type="checkbox" id="emailNotifToggle" class="invisible absolute" />
               </label>
             </div>
           </div>
+
+
           <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
             Legal
           </h3>
@@ -430,6 +384,151 @@
       }
     });
   </script>
+
+
+  <!-- abd  -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const craftsmanId = localStorage.getItem("craftsmanId");
+
+      if (!craftsmanId) return;
+
+      // Set initial data
+      fetch(`/api/profile/${craftsmanId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById("fullName").textContent = data.fullName || "Not set";
+          document.getElementById("username").textContent = data.username || "Not set";
+          document.getElementById("bio").textContent = data.bio || "Not set";
+          document.getElementById("location").textContent = data.location || "Not set";
+          document.getElementById("email").textContent = data.email || "Not set";
+        })
+        .catch((err) => console.error("Error loading settings data:", err));
+
+      // Reusable update function
+      const handleUpdate = async (key, fieldId, endpointPath, label = "") => {
+        const current = document.getElementById(fieldId).textContent.trim();
+        const { value: updatedValue } = await Swal.fire({
+          title: `Edit ${label || key}`,
+          input: "text",
+          inputLabel: `Enter new ${label || key}`,
+          inputValue: current,
+          showCancelButton: true,
+          confirmButtonText: "Save",
+          background: "#fcfaf8",
+          color: "#1b150d",
+          confirmButtonColor: "#243547",
+        });
+
+        if (updatedValue) {
+          try {
+            const res = await fetch(`/api/settings/${craftsmanId}/${endpointPath}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ [key]: updatedValue }),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) throw new Error(result.error || "Update failed");
+
+            document.getElementById(fieldId).textContent = updatedValue;
+
+            Swal.fire({
+              icon: "success",
+              title: `${label || key} updated!`,
+              background: "#fcfaf8",
+              color: "#1b150d",
+              confirmButtonColor: "#243547",
+            });
+          } catch (err) {
+            Swal.fire({
+              icon: "error",
+              title: "Update failed",
+              text: err.message || "Something went wrong",
+              background: "#fcfaf8",
+              color: "#1b150d",
+              confirmButtonColor: "#ec8e13",
+            });
+          }
+        }
+      };
+
+      // Name
+      document.getElementById("editNameBtn")?.addEventListener("click", () =>
+        handleUpdate("name", "fullName", "name", "Name")
+      );
+
+      // Username
+      document.getElementById("editUsernameBtn")?.addEventListener("click", () =>
+        handleUpdate("username", "username", "username", "Username")
+      );
+
+      // Bio
+      document.getElementById("editBioBtn")?.addEventListener("click", () =>
+        handleUpdate("bio", "bio", "bio", "Bio")
+      );
+
+      // Location
+      document.getElementById("editLocationBtn")?.addEventListener("click", () =>
+        handleUpdate("location", "location", "location", "Location")
+      );
+
+      // Email
+      document.getElementById("editEmailBtn")?.addEventListener("click", () =>
+        handleUpdate("email", "email", "email", "Email")
+      );
+
+      // Password (separate logic with confirmation)
+      document.getElementById("changePasswordBtn")?.addEventListener("click", async () => {
+        const { value: password } = await Swal.fire({
+          title: "Change Password",
+          input: "password",
+          inputLabel: "Enter new password",
+          inputPlaceholder: "At least 6 characters",
+          inputAttributes: { minlength: 6, required: true },
+          showCancelButton: true,
+          confirmButtonText: "Save",
+          background: "#fcfaf8",
+          color: "#1b150d",
+          confirmButtonColor: "#243547",
+        });
+
+        if (password) {
+          try {
+            const res = await fetch(`/api/settings/${craftsmanId}/password`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ newPassword: password }),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) throw new Error(result.error || "Failed to change password");
+
+            Swal.fire({
+              icon: "success",
+              title: "Password updated!",
+              background: "#fcfaf8",
+              color: "#1b150d",
+              confirmButtonColor: "#243547",
+            });
+          } catch (err) {
+            Swal.fire({
+              icon: "error",
+              title: "Update failed",
+              text: err.message || "Something went wrong",
+              background: "#fcfaf8",
+              color: "#1b150d",
+              confirmButtonColor: "#ec8e13",
+            });
+          }
+        }
+      });
+    });
+  </script>
+
+
 </body>
 
 </html>
