@@ -457,16 +457,7 @@
     const openCommentSections = new Set(); // 👈 ADD THIS HERE
     async function fetchDiscussions() {
       try {
-        Swal.fire({
-          title: "Loading discussions...",
-          allowOutsideClick: false,
-          showConfirmButton: false,
-          willOpen: () => {
-            Swal.showLoading();
-          },
-          background: "#fefce8",
-          backdrop: "rgba(253,224,71,0.2)"
-        });
+
 
         const res = await fetch("/api/posts");
         const posts = await res.json();

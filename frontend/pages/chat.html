@@ -127,21 +127,23 @@
           </button>
 
           <!-- Message input -->
-          <div class="flex items-center gap-3 px-4 py-3">
+          <!-- Message input section (initially hidden) -->
+          <div id="message-input-section" class="flex items-center gap-3 px-4 py-3 hidden">
             <input id="message-input" placeholder="Type a message"
               class="form-input flex-1 rounded-xl bg-[#f4f2f0] text-[#181411] px-4 py-2 text-base break-words" />
             <button id="send-button" class="px-4 py-2 rounded-xl bg-[#ec7113] text-white text-sm font-medium">
               Send
             </button>
           </div>
+
         </div>
       </div>
     </div>
   </div>
   <script>
+    const socket = io("http://localhost:5001");
     const renderedMessages = new Set();
     // 🧠 Required: Socket.IO setup and API interaction
-    const socket = io("http://localhost:5001");
 
     // 🧠 Utility to extract query params from URL
     function getQueryParam(param) {
@@ -152,17 +154,7 @@
     const conversationId = getQueryParam("conversationId");
     const userId = localStorage.getItem("userId");
     const receiverId = getQueryParam("receiverId");
-    if (!userId || !conversationId) {
-      Swal.fire({
-        icon: "warning",
-        title: "Missing Chat Info",
-        text: "Please make sure you're accessing a valid conversation.",
-        background: "#fef9c3",
-        backdrop: "rgba(253,224,71,0.3)",
-        confirmButtonColor: "#facc15"
-      });
-      return;
-    }
+
 
 
     const sendButton = document.getElementById("send-button");
@@ -271,6 +263,9 @@
 
     if (conversationId) {
       loadMessages().then(() => {
+        // Show message input section when a conversation is selected
+        document.getElementById("message-input-section").classList.remove("hidden");
+
         socket.emit("markAsRead", { conversationId, userId });
         markMessagesAsRead(); // ✅ ADD THIS LINE
       });
@@ -481,6 +476,21 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
+      if (!userId || !conversationId) {
+        document.getElementById("conversation-title").textContent = "Select a conversation";
+        document.getElementById("chat-box").innerHTML = `
+    <div class="flex justify-center items-center h-full text-gray-400 text-xl italic">
+      No conversation selected.
+    </div>
+  `;
+
+        // 🔒 Hide message input
+        document.getElementById("message-input-section").classList.add("hidden");
+
+        return;
+      }
+
+
       let craftsmanId = new URLSearchParams(window.location.search).get(
         "craftsmanId"
       );
@@ -569,6 +579,7 @@
 
   <script>
     const scrollBtn = document.getElementById("scroll-bottom-btn");
+
 
     // Show button if not at bottom
     chatBox.addEventListener("scroll", () => {

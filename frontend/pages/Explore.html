@@ -557,6 +557,14 @@
         }
       } catch (error) {
         console.error("❌ Error loading profile:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Profile Load Error",
+          text: "Could not load your profile picture or details.",
+          background: "#fff1f2",
+          backdrop: "rgba(252,165,165,0.3)",
+          confirmButtonColor: "#ef4444"
+        });
       }
     });
   </script>
