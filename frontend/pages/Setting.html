@@ -1,577 +1,435 @@
 <html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
 
-    <title>Galileo Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div
-      class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
-      style="font-family: Inter, 'Noto Sans', sans-serif"
-    >
-      <div class="layout-container flex h-full grow flex-col">
-        <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
-        >
-          <div class="flex items-center gap-8">
-            <div class="flex items-center gap-4 text-[#1b150d]">
-              <div class="size-4">
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </div>
-              <h2
-                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
-              >
-                Craftsman
-              </h2>
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
+    style="font-family: Inter, 'Noto Sans', sans-serif">
+    <div class="layout-container flex h-full grow flex-col">
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3">
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4 text-[#1b150d]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                  fill="currentColor"></path>
+              </svg>
             </div>
-            <div class="flex items-center gap-9">
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="dashboard.html"
-                >Dashboard</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="job.html"
-                >Hire</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="Apply.html"
-                >Apply</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="myjob.html"
-                >My Jobs</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="proposal.html"
-                id="proposals-link"
-                >Proposals</a
-              >
-            </div>
+            <h2 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]">
+              Craftsman
+            </h2>
           </div>
-          <div class="flex flex-1 justify-end gap-8">
-            <div class="flex gap-2">
-              <a href="Notification.html">
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="Bell"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-              <a href="chat.html">
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="ChatCircleDots"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-              <a
-                href="Setting.html"
-                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
-              >
-                ⚙️
-              </a>
-            </div>
-            <a href="#" id="profile-link">
-              <div
-                id="profile-pic"
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                style="background-image: url('/uploads/default.png')"
-              ></div>
+          <div class="flex items-center gap-9">
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="dashboard.html">Dashboard</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="job.html">Hire</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="Apply.html">Apply</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="myjob.html">My Jobs</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="proposal.html"
+              id="proposals-link">Proposals</a>
+          </div>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+          <div class="flex gap-2">
+            <a href="Notification.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="Bell" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="chat.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
+              ⚙️
             </a>
           </div>
-        </header>
+          <a href="#" id="profile-link">
+            <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style="background-image: url('/uploads/default.png')"></div>
+          </a>
+        </div>
+      </header>
 
-        <div class="px-40 flex flex-1 justify-center py-5">
-          <div
-            class="layout-content-container flex flex-col max-w-[960px] flex-1"
-          >
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-              <p
-                class="text-black tracking-light text-[32px] font-bold leading-tight min-w-72"
-              >
-                Settings
+      <div class="px-40 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <div class="flex flex-wrap justify-between gap-3 p-4">
+            <p class="text-black tracking-light text-[32px] font-bold leading-tight min-w-72">
+              Settings
+            </p>
+          </div>
+          <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+            Profile
+          </h3>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Name
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                John Doe
               </p>
             </div>
-            <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-            >
-              Profile
-            </h3>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Name
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  John Doe
-                </p>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Edit</span>
-                </button>
-              </div>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Edit</span>
+              </button>
             </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Username
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  @johndoe
-                </p>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Edit</span>
-                </button>
-              </div>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Username
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                @johndoe
+              </p>
             </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Bio
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  I'm a craftsman. I make things.
-                </p>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Edit</span>
-                </button>
-              </div>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Edit</span>
+              </button>
             </div>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Bio
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                I'm a craftsman. I make things.
+              </p>
+            </div>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Edit</span>
+              </button>
+            </div>
+          </div>
 
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Profile Picture
-                </p>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Profile Picture
+              </p>
 
-                <input
-                  type="file"
-                  id="upload-input"
-                  class="mt-1 text-sm text-gray-600"
-                />
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Upload</span>
-                </button>
-              </div>
+              <input type="file" id="upload-input" class="mt-1 text-sm text-gray-600" />
             </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Location
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  San Francisco, CA
-                </p>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Edit</span>
-                </button>
-              </div>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Upload</span>
+              </button>
             </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Website
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  johndoecrafts.com
-                </p>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Edit</span>
-                </button>
-              </div>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Location
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                San Francisco, CA
+              </p>
             </div>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Edit</span>
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Website
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                johndoecrafts.com
+              </p>
+            </div>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Edit</span>
+              </button>
+            </div>
+          </div>
 
-            <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-            >
-              Account
-            </h3>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14 justify-between"
-            >
-              <p
-                class="text-black text-base font-normal leading-normal flex-1 truncate"
-              >
-                Email
+          <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+            Account
+          </h3>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14 justify-between">
+            <p class="text-black text-base font-normal leading-normal flex-1 truncate">
+              Email
+            </p>
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Edit</span>
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Password
               </p>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Edit</span>
-                </button>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Password
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  ••••••••••••
-                </p>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">Change</span>
-                </button>
-              </div>
-            </div>
-            <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-            >
-              Preferences
-            </h3>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Dark Mode
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  Use dark mode to reduce eye strain
-                </p>
-              </div>
-              <div class="shrink-0">
-                <label
-                  class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#243547] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#197ce6]"
-                >
-                  <div
-                    class="h-full w-[27px] rounded-full bg-white"
-                    style="
-                      box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px,
-                        rgba(0, 0, 0, 0.06) 0px 3px 1px;
-                    "
-                  ></div>
-                  <input type="checkbox" class="invisible absolute" />
-                </label>
-              </div>
-            </div>
-            <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
-            >
-              <div class="flex flex-col justify-center">
-                <p
-                  class="text-black text-base font-medium leading-normal line-clamp-1"
-                >
-                  Receive email notifications
-                </p>
-                <p
-                  class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2"
-                >
-                  Get notified about activity on Craftsman
-                </p>
-              </div>
-              <div class="shrink-0">
-                <label
-                  class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#243547] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#197ce6]"
-                >
-                  <div
-                    class="h-full w-[27px] rounded-full bg-white"
-                    style="
-                      box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px,
-                        rgba(0, 0, 0, 0.06) 0px 3px 1px;
-                    "
-                  ></div>
-                  <input type="checkbox" class="invisible absolute" />
-                </label>
-              </div>
-            </div>
-            <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-            >
-              Legal
-            </h3>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
-              <p
-                class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
-              >
-                Privacy Policy
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                ••••••••••••
               </p>
             </div>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
-              <p
-                class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
-              >
-                Terms of Service
+            <div class="shrink-0">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit">
+                <span class="truncate">Change</span>
+              </button>
+            </div>
+          </div>
+          <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+            Preferences
+          </h3>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Dark Mode
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                Use dark mode to reduce eye strain
               </p>
             </div>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
-              <p
-                class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
-              >
-                Cookie Policy
+            <div class="shrink-0">
+              <label
+                class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#243547] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#197ce6]">
+                <div class="h-full w-[27px] rounded-full bg-white" style="
+                        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px,
+                          rgba(0, 0, 0, 0.06) 0px 3px 1px;
+                      "></div>
+                <input type="checkbox" class="invisible absolute" />
+              </label>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between">
+            <div class="flex flex-col justify-center">
+              <p class="text-black text-base font-medium leading-normal line-clamp-1">
+                Receive email notifications
+              </p>
+              <p class="text-[#93adc8] text-sm font-normal leading-normal line-clamp-2">
+                Get notified about activity on Craftsman
               </p>
             </div>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
-              <p
-                class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
-              >
-                Do Not Sell My Personal Information
-              </p>
+            <div class="shrink-0">
+              <label
+                class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#243547] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#197ce6]">
+                <div class="h-full w-[27px] rounded-full bg-white" style="
+                        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px,
+                          rgba(0, 0, 0, 0.06) 0px 3px 1px;
+                      "></div>
+                <input type="checkbox" class="invisible absolute" />
+              </label>
             </div>
+          </div>
+          <h3 class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+            Legal
+          </h3>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <p class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate">
+              Privacy Policy
+            </p>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <p class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate">
+              Terms of Service
+            </p>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <p class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate">
+              Cookie Policy
+            </p>
+          </div>
+          <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <p class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate">
+              Do Not Sell My Personal Information
+            </p>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      document
-        .getElementById("upload-input")
-        .addEventListener("change", async function () {
-          const file = this.files[0];
-          const craftsmanId = localStorage.getItem("craftsmanId");
-          if (!file || !craftsmanId) return;
-
-          const formData = new FormData();
-          formData.append("profileImage", file);
-
-          try {
-            const response = await fetch(`/api/profile/${craftsmanId}/image`, {
-              method: "POST",
-              body: formData,
-            });
-
-            if (!response.ok) throw new Error("Upload failed");
-
-            const result = await response.json();
-            const newImageUrl = result.imageUrl;
-
-            if (newImageUrl) {
-              // Update profile picture immediately
-              const profilePicDiv = document.getElementById("profile-pic");
-              profilePicDiv.style.backgroundImage = `url('${newImageUrl}')`;
-
-              // Cache the new image URL
-              localStorage.setItem("profileImage", newImageUrl);
-
-              alert("✅ Profile picture updated!");
-            } else {
-              throw new Error("Missing image URL in response");
-            }
-          } catch (error) {
-            console.error("❌ Upload error:", error);
-            alert("❌ Failed to upload profile picture.");
-          }
-        });
-    </script>
-
-    <script>
-      window.addEventListener("DOMContentLoaded", async () => {
-        const profilePicDiv = document.getElementById("profile-pic");
+  <script>
+    document
+      .getElementById("upload-input")
+      .addEventListener("change", async function () {
+        const file = this.files[0];
         const craftsmanId = localStorage.getItem("craftsmanId");
+        if (!file || !craftsmanId) return;
 
-        if (!profilePicDiv || !craftsmanId) return;
+        const formData = new FormData();
+        formData.append("profileImage", file);
 
         try {
-          const response = await fetch(`/api/profile/${craftsmanId}`);
-          if (!response.ok) throw new Error("Failed to fetch profile");
+          const response = await fetch(`/api/profile/${craftsmanId}/image`, {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!response.ok) throw new Error("Upload failed");
 
           const result = await response.json();
-          if (result.imageUrl) {
-            profilePicDiv.style.backgroundImage = `url('${result.imageUrl}')`;
+          const newImageUrl = result.imageUrl;
+
+          if (newImageUrl) {
+            // Update profile picture immediately
+            const profilePicDiv = document.getElementById("profile-pic");
+            profilePicDiv.style.backgroundImage = `url('${newImageUrl}')`;
+
+            // Cache the new image URL
+            localStorage.setItem("profileImage", newImageUrl);
+
+            Swal.fire({
+              icon: "success",
+              title: "Profile picture updated!",
+              background: "#fcfaf8",
+              color: "#1b150d",
+              confirmButtonColor: "#243547",
+            });
+          } else {
+            throw new Error("Missing image URL in response");
           }
         } catch (error) {
-          console.error("Could not load profile picture:", error);
+          console.error("❌ Upload error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Upload failed",
+            text: "Could not update profile picture. Please try again.",
+            background: "#fcfaf8",
+            color: "#1b150d",
+            confirmButtonColor: "#ec8e13",
+          });
         }
       });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const craftsmanId = localStorage.getItem("craftsmanId");
-        const profilePicDiv = document.getElementById("profile-pic");
+  </script>
 
-        if (!craftsmanId || !profilePicDiv) return;
+  <script>
+    window.addEventListener("DOMContentLoaded", async () => {
+      const profilePicDiv = document.getElementById("profile-pic");
+      const craftsmanId = localStorage.getItem("craftsmanId");
 
-        // Try cached image first
-        const cachedImage = localStorage.getItem("profileImage");
-        if (cachedImage) {
-          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+      if (!profilePicDiv || !craftsmanId) return;
+
+      try {
+        const response = await fetch(`/api/profile/${craftsmanId}`);
+        if (!response.ok) throw new Error("Failed to fetch profile");
+
+        const result = await response.json();
+        if (result.imageUrl) {
+          profilePicDiv.style.backgroundImage = `url('${result.imageUrl}')`;
         }
+      } catch (error) {
+        console.error("Could not load profile picture:", error);
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const craftsmanId = localStorage.getItem("craftsmanId");
+      const profilePicDiv = document.getElementById("profile-pic");
 
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
+      if (!craftsmanId || !profilePicDiv) return;
 
-          const data = await res.json();
-          const profileImage =
-            data.profileImage.trim() || "/uploads/default.png";
+      // Try cached image first
+      const cachedImage = localStorage.getItem("profileImage");
+      if (cachedImage) {
+        profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+      }
 
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+      try {
+        const res = await fetch(`/api/profile/${craftsmanId}`);
+        if (!res.ok) throw new Error("Failed fetching profile");
 
-          // Update cache
-          localStorage.setItem("profileImage", profileImage);
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
-      });
-    </script>
+        const data = await res.json();
+        const profileImage =
+          data.profileImage.trim() || "/uploads/default.png";
 
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const craftsmanId = localStorage.getItem("craftsmanId");
-        const profileLink = document.getElementById("profile-link");
+        profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
 
-        if (!craftsmanId || !profileLink) return;
+        // Update cache
+        localStorage.setItem("profileImage", profileImage);
+      } catch (error) {
+        console.error("❌ Error loading profile:", error);
+      }
+    });
+  </script>
 
-        try {
-          const response = await fetch(`/api/profile/${craftsmanId}`);
-          if (!response.ok) throw new Error("Failed to fetch profile");
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const craftsmanId = localStorage.getItem("craftsmanId");
+      const profileLink = document.getElementById("profile-link");
 
-          const data = await response.json();
+      if (!craftsmanId || !profileLink) return;
 
-          const mainSkill =
-            data.skills && data.skills.length > 0
-              ? data.skills[0].name
-              : "General";
+      try {
+        const response = await fetch(`/api/profile/${craftsmanId}`);
+        if (!response.ok) throw new Error("Failed to fetch profile");
 
-          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-            mainSkill
-          )}`;
-        } catch (error) {
-          console.error("❌ Error loading profile link:", error);
-        }
-      });
-    </script>
-    <script>
-      // for disapper proposals if client
-      document.addEventListener("DOMContentLoaded", () => {
-        const userRole = localStorage.getItem("userRole");
-        const proposalsLink = document.getElementById("proposals-link");
+        const data = await response.json();
 
-        if (userRole === "client" && proposalsLink) {
-          proposalsLink.style.display = "none";
-        }
-      });
-    </script>
-  </body>
+        const mainSkill =
+          data.skills && data.skills.length > 0
+            ? data.skills[0].name
+            : "General";
+
+        profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+          mainSkill
+        )}`;
+      } catch (error) {
+        console.error("❌ Error loading profile link:", error);
+      }
+    });
+  </script>
+  <script>
+    // for disapper proposals if client
+    document.addEventListener("DOMContentLoaded", () => {
+      const userRole = localStorage.getItem("userRole");
+      const proposalsLink = document.getElementById("proposals-link");
+
+      if (userRole === "client" && proposalsLink) {
+        proposalsLink.style.display = "none";
+      }
+    });
+  </script>
+</body>
+
 </html>
