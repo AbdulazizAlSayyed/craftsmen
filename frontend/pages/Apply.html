@@ -8,6 +8,7 @@
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
   <script src="../js/seemorejob.js"></script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -253,6 +254,18 @@
         const jobs = await response.json();
         const jobList = document.getElementById("job-list");
 
+        // Show loading alert
+        Swal.fire({
+          title: "Loading Jobs...",
+          text: "Please wait while we fetch the job listings.",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          background: "#fefce8",
+          backdrop: "rgba(253,224,71,0.2)",
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
         jobs.forEach((job) => {
           const jobCard = document.createElement("div");
           jobCard.className =
@@ -369,6 +382,17 @@
       const jobList = document.getElementById("job-list");
       jobList.innerHTML = "";
 
+      if (jobs.length === 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "No Jobs Found",
+          text: "Try adjusting your filters or search keywords.",
+          background: "#fffbea",
+          backdrop: "rgba(253,224,71,0.3)",
+          confirmButtonColor: "#facc15"
+        });
+        return;
+      }
       jobs.forEach((job) => {
         const jobCard = document.createElement("div");
         jobCard.className =
