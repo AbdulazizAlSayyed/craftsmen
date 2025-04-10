@@ -9,6 +9,9 @@
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
 </head>
 
 <body>
@@ -163,6 +166,14 @@
                 <h4 class="text-[#1b150d] text-md font-semibold mb-2">Proposals With Bidding</h4>
                 <div class="submitted-proposals-list-bid space-y-3"></div>
               </div>
+              <div>
+                <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                  Job Invitations
+                </h3>
+                <div id="invite-list" class="px-4 pb-4 space-y-4">
+                  <p id="no-invites" class="text-sm text-gray-500 hidden">No job invitations at the moment.</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -230,32 +241,43 @@
           </footer>
         </div>
       </div>
+      <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
       <script>
         let socket;
 
-        function connectWebSocket() {
+        function connectSocketIO() {
           const userId = localStorage.getItem("userId");
           if (!userId) {
             console.warn("⚠️ No userId found in localStorage.");
             return;
           }
 
-          socket = new WebSocket("ws://localhost:5001/ws");
+          socket = io("http://localhost:5001", {
+            reconnection: true, // Enables reconnection
+            reconnectionAttempts: 5, // Retry up to 5 times
+            reconnectionDelay: 2000, // 2 seconds delay between attempts
+          });
 
-          socket.onopen = () => {
-            socket.send(JSON.stringify({ type: "AUTH", token: localStorage.getItem("token") }));
-          };
+          socket.on("connect", () => {
+            socket.emit("addUser", userId);
+            console.log("✅ Connected to Socket.IO with ID:", socket.id);
+          });
 
-          socket.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            if (message.type === "BID_UPDATE") {
-              updateBidDisplay(message.data);
-            }
-          };
+          socket.on("BID_UPDATE", (data) => {
+            updateBidDisplay(data);
+          });
 
-          socket.onclose = () => {
-            setTimeout(connectWebSocket, 5000);
-          };
+          socket.on("disconnect", () => {
+            console.warn("⚠️ Socket.IO disconnected, attempting to reconnect...");
+          });
+
+          socket.on("reconnect_attempt", () => {
+            console.log("⚠️ Reconnecting...");
+          });
+
+          socket.on("reconnect_failed", () => {
+            console.error("❌ Socket.IO failed to reconnect.");
+          });
         }
 
         function updateBidDisplay(updatedBid) {
@@ -278,7 +300,24 @@
             card.classList.remove("bg-blue-50", "bid-update");
           }, 2000);
         }
+        // Time ago function to show relative time
+        function timeAgo(date) {
+          const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+          const days = Math.floor(seconds / 86400);
+          if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
 
+          const hours = Math.floor(seconds / 3600);
+          if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+
+          const minutes = Math.floor(seconds / 60);
+          if (minutes > 0) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+
+          return "Just now";
+        }
+
+
+
+        // Function to handle the response to a bid update
         async function respondToBid(applicationId, status, newBid = null) {
           try {
             const res = await fetch(`/api/applications/${applicationId}/status`, {
@@ -288,29 +327,31 @@
             });
 
             const result = await res.json();
-            if (res.ok) {
-              Swal.fire({
-                icon: "success",
-                title: "Response Sent",
-                text: `You ${status === "pending" ? "updated" : status} the bid.`,
-                timer: 1500,
-                showConfirmButton: false
-              });
-
-              updateBidDisplay({ ...result, _id: applicationId });
-            } else {
-              throw new Error(result.error || "Unknown error");
+            if (!res.ok) {
+              throw new Error(result.error || "Unknown error while responding to bid");
             }
+
+            Swal.fire({
+              icon: "success",
+              title: "Response Sent",
+              text: `You have ${status === "pending" ? "updated" : status} the bid.`,
+              timer: 1500,
+              showConfirmButton: false,
+            });
+
+            updateBidDisplay({ ...result, _id: applicationId });
           } catch (err) {
             console.error("❌ Error responding to bid:", err);
             Swal.fire({
               icon: "error",
               title: "Failed",
               text: err.message,
-              confirmButtonColor: "#ef4444"
+              confirmButtonColor: "#ef4444",
             });
           }
         }
+
+        // Function to respond to a job invitation
 
         function getStatusColor(status) {
           switch (status) {
@@ -325,21 +366,144 @@
           }
         }
 
-        function timeAgo(date) {
-          const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-          const days = Math.floor(seconds / 86400);
-          if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
-          const hours = Math.floor(seconds / 3600);
-          if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-          const minutes = Math.floor(seconds / 60);
-          return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+        document.addEventListener("DOMContentLoaded", () => {
+          connectSocketIO();
+          loadApplications();
+          loadJobInvites(); // Add this line
+
+          // Update profile picture
+          const profilePic = document.getElementById("profile-pic");
+          const userData = JSON.parse(localStorage.getItem("user"));
+          if (userData?.profileImage) {
+            profilePic.style.backgroundImage = `url('${userData.profileImage}')`;
+          }
+        });
+
+
+        async function loadJobInvites() {
+          const userId = localStorage.getItem("userId");
+          const inviteList = document.getElementById("invite-list");
+          const noInvites = document.getElementById("no-invites");
+
+          if (!userId) {
+            inviteList.innerHTML = `<div class="p-4 text-center text-red-500">Not logged in</div>`;
+            return;
+          }
+
+          noInvites.classList.add("hidden");
+          inviteList.innerHTML = `<div class="p-4 text-center">Loading invitations...</div>`;
+
+          try {
+            const res = await fetch(`/api/invite/craftsman/${userId}`);
+            if (!res.ok) {
+              const error = await res.text();
+              throw new Error(`Server error: ${error}`);
+            }
+
+            const invites = await res.json();
+            console.log("Received invites:", invites);
+
+            inviteList.innerHTML = ""; // 🧼 Clear existing invites
+
+            if (invites.length === 0) {
+              noInvites.classList.remove("hidden");
+              return;
+            }
+
+            // ✅ Render new invites
+            inviteList.innerHTML = invites.map(invite => `
+            <div class="invite-card border rounded-xl p-4 bg-white shadow mb-4 transition-opacity duration-500">
+
+        <h3 class="font-bold text-lg">${invite.jobId?.title || 'No title'}</h3>
+        <p class="text-gray-600 mt-2">${invite.jobId?.description || 'No description'}</p>
+        <div class="mt-4 flex justify-between items-center">
+          <span class="font-medium">$${invite.jobId?.budget || '0'}</span>
+          <div class="flex gap-2">
+            <button onclick="respondToInvite(this, '${invite._id}', 'rejected')" 
+                    class="px-3 py-1 bg-red-100 text-red-700 rounded">
+              Reject
+            </button>
+            <button onclick="respondToInvite(this, '${invite._id}', 'accepted')" 
+                    class="px-3 py-1 bg-green-100 text-green-700 rounded">
+              Accept
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+          } catch (err) {
+            console.error("Failed to load invites:", err);
+            inviteList.innerHTML = `
+      <div class="p-4 bg-red-50 text-red-700 rounded">
+        Failed to load invitations: ${err.message}
+      </div>
+    `;
+          }
+        }
+        // Update respondToInvite function
+        async function respondToInvite(button, inviteId, response) {
+          const originalText = button.textContent;
+          button.disabled = true;
+          button.innerHTML = `<span class="inline-block animate-spin">↻</span> ${response === 'accepted' ? "Accepting..." : "Rejecting..."}`;
+
+          try {
+            const res = await fetch(`/api/invite/respond/${inviteId}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ response }),
+            });
+
+            if (!res.ok) {
+              const errorText = await res.text();
+              throw new Error(errorText);
+            }
+
+            const result = await res.json();
+
+            // ✅ Fade out the card
+            const card = button.closest(".invite-card");
+            if (card) {
+              card.classList.add("opacity-50"); // Makes it semi-transparent
+            }
+
+            // 🎉 Toast feedback
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: `Invite ${response === "accepted" ? "accepted" : "rejected"}`,
+            });
+
+            // Wait for animation before reloading invites (500ms)
+            setTimeout(() => {
+              loadJobInvites();
+            }, 500);
+
+          } catch (err) {
+            console.error("❌ Error responding to invite:", err);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: err.message || "Failed to respond to invite",
+            });
+          } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+          }
         }
 
-        document.addEventListener("DOMContentLoaded", async () => {
+
+
+        async function loadApplications() {
           const userId = localStorage.getItem("userId");
           if (!userId) return;
-
-          connectWebSocket();
 
           const containerNoBid = document.querySelector(".submitted-proposals-list-no-bid");
           const containerBid = document.querySelector(".submitted-proposals-list-bid");
@@ -348,13 +512,13 @@
             const response = await fetch(`/api/applications/craftsman/${userId}`);
             const applications = await response.json();
 
-            if (!Array.isArray(applications) || applications.length === 0) {
+            if (!applications.length) {
               containerNoBid.innerHTML = `
-          <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
-            <p class="font-medium">You haven’t submitted any proposals yet.</p>
-            <a href="Apply.html" class="text-[#ec8e13] underline font-semibold mt-2 inline-block">Find Jobs to Apply</a>
-          </div>
-        `;
+        <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
+          <p class="font-medium">You haven’t submitted any proposals yet.</p>
+          <a href="Apply.html" class="text-[#ec8e13] underline font-semibold mt-2 inline-block">Find Jobs to Apply</a>
+        </div>
+      `;
               return;
             }
 
@@ -364,39 +528,12 @@
             applications.forEach((app) => {
               const job = app.jobId;
               const html = `
-  <div id="proposal-${app._id}" class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
-    <div class="flex justify-between items-start">
-      <div>
-        <h3 class="text-lg font-bold text-[#1b150d] mb-1">${job.title}</h3>
-        <p class="text-sm text-[#9a784c]">
-          Skills: <span class="text-[#1b150d] font-medium">${job.skillsRequired.join(", ") || "None"}</span>
-        </p>
-      </div>
-      <div class="text-right text-sm text-[#9a784c] whitespace-nowrap">
-        Submitted ${timeAgo(app.appliedAt)}
-      </div>
-    </div>
-
-    <div class="text-sm text-[#1b150d]">
-      <span class="font-semibold">Cover Letter:</span>
-      <p class="mt-1 whitespace-pre-line">${app.coverLetter || "No cover letter provided."}</p>
-    </div>
-
-    <div class="flex flex-wrap justify-between items-center pt-2 border-t border-[#eee]">
-      <div class="text-sm space-y-1 text-[#1b150d]">
-        <p><span class="font-semibold">Original Budget:</span> $${job.budget}</p>
-        ${app.bidAmount ? `<p><span class="font-semibold">Your Bid:</span> <span class="your-bid">$${app.bidAmount}</span></p>` : ""}
-      </div>
-      <div class="flex flex-col items-end gap-2">
-        <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)} status-badge">
-          ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
-        </span>
-        <span class="text-sm font-medium text-[#9a784c]">${job.jobRank}</span>
-        <div class="pending-actions hidden flex-col gap-2 mt-2"></div>
-      </div>
-    </div>
-  </div>
-        `;
+        <div id="proposal-${app._id}" class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
+          <h3 class="font-bold">${job.title}</h3>
+          ${app.bidAmount ? `<p>Your Bid: <span class="your-bid">$${app.bidAmount}</span></p>` : ""}
+          <span class="${getStatusColor(app.status)} status-badge">${app.status}</span>
+        </div>
+      `;
 
               if (app.bidAmount) {
                 containerBid.insertAdjacentHTML("beforeend", html);
@@ -407,8 +544,10 @@
           } catch (error) {
             console.error("❌ Error loading applications:", error);
           }
-        });
+        }
+
       </script>
+
 </body>
 
 </html>

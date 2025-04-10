@@ -214,18 +214,19 @@
 
         // ✅ Update Skill Section
         if (data.skills && data.skills.length > 0) {
-          let skill = data.skills.find((s) => s.name === skillName);
-          if (!skill && data.skills.length > 0) {
-            skill = data.skills[0]; // fallback to first skill
+          let skill = skillName === "General"
+            ? data.skills[0]
+            : data.skills.find(s => s.name === skillName);
+
+          if (!skill) {
+            skill = data.skills[0];
             console.warn(`⚠️ No skill matched '${skillName}', falling back to first skill.`);
           }
-          if (skill) {
+          else {
             document.getElementById("skill-name").textContent = skill.name;
             document.getElementById("skill-rank").textContent = `Rank: ${skill.rank}`;
             document.getElementById("skill-experience").textContent = `Experience: ${skill.xpPoints} XP`;
             document.getElementById("skill-rating").textContent = `Rating: ${skill.rating.toFixed(1)}⭐ (${skill.numberOfRatedJobs} rated jobs)`;
-          } else {
-            console.warn(`⚠️ No skill found matching '${skillName}'`);
           }
         } else {
           console.warn("⚠️ No skills found for this craftsman");
@@ -406,7 +407,7 @@
       const sendInvite = document.getElementById("send-invite");
       const jobSelect = document.getElementById("job-select");
       const craftsmanId = new URLSearchParams(location.search).get("craftsmanId");
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId"); // Get clientId from localStorage
 
       inviteBtn.addEventListener("click", async () => {
         inviteModal.classList.remove("hidden");
@@ -433,29 +434,40 @@
       });
 
       sendInvite.addEventListener("click", async () => {
-        const jobId = jobSelect.value;
         try {
-          const res = await fetch("/api/notifications/invite", {
+          const jobId = jobSelect.value;
+          const res = await fetch("/api/invite", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ craftsmanId, jobId, senderId: userId })
+            body: JSON.stringify({ jobId, craftsmanId, clientId: userId }),
           });
+
           const result = await res.json();
 
-          if (res.ok) {
-            Swal.fire("✅ Invite Sent", result.message, "success");
-            inviteModal.classList.add("hidden");
-          } else {
-            Swal.fire("❌ Error", result.error || "Failed to send invite", "error");
+          if (!res.ok) {
+            throw new Error(result.error || "Failed to send invite");
           }
+
+          Swal.fire({
+            icon: 'success',
+            title: '✅ Invite Sent',
+            text: result.message,
+          });
+          inviteModal.classList.add("hidden");
+
         } catch (err) {
-          console.error(err);
-          Swal.fire("❌ Error", "Failed to send invite", "error");
+          Swal.fire({
+            icon: 'error',
+            title: '❌ Failed',
+            text: err.message,
+          });
+          console.error("Invite error:", err);
         }
       });
     });
 
   </script>
+
 </body>
 
 </html>
