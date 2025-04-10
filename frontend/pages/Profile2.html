@@ -104,7 +104,7 @@
                   <span class="truncate">Hire Me</span>
                 </button>
                 <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#ec7113] text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto">
+                  class="invite-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#ec7113] text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto">
                   <span class="truncate">Invite to Job</span>
                 </button>
               </div>
@@ -232,60 +232,56 @@
         }
 
         // ✅ Fetch Completed Jobs Related to the Skill
-        const jobRes = await fetch(`/api/jobs/completed/${craftsmanId}/${encodeURIComponent(skillName)}`);
+        // ✅ Fetch Completed Jobs Related to the Skill
+        if (skillName !== "General") {
+          try {
+            const jobRes = await fetch(`/api/jobs/completed/${craftsmanId}/${encodeURIComponent(skillName)}`);
 
-        if (!jobRes.ok) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Failed to Load Jobs',
-            text: `Could not load jobs for skill: ${skillName}`,
-          });
-        }
+            if (!jobRes.ok) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Failed to Load Jobs',
+                text: `Could not load jobs for skill: ${skillName}`,
+              });
+              return;
+            }
 
-        const completedJobs = await jobRes.json();
-        const jobList = document.getElementById("job-list");
-        jobList.innerHTML = ""; // Clear previous content
+            const completedJobs = await jobRes.json();
+            const jobList = document.getElementById("job-list");
+            jobList.innerHTML = "";
 
-        if (completedJobs.length > 0) {
-          completedJobs.forEach((job) => {
-            const jobElement = document.createElement("div");
-            jobElement.className = "p-3 border rounded-lg shadow bg-gray-100 mb-3";
-
-            jobElement.innerHTML = `
+            if (completedJobs.length > 0) {
+              completedJobs.forEach((job) => {
+                const jobElement = document.createElement("div");
+                jobElement.className = "p-3 border rounded-lg shadow bg-gray-100 mb-3";
+                jobElement.innerHTML = `
           <h3 class="font-bold text-lg">${job.title}</h3>
           <p class="text-sm text-gray-600">${job.description || "No description available."}</p>
           <p class="text-sm text-gray-700">💰 Budget: $${job.budget}</p>
           <p class="text-sm text-gray-700">📊 Level: ${job.jobRank}</p>
           ${job.ratings > 0
-                ? `<p class="text-sm text-yellow-500">⭐ Rating: ${job.ratings.toFixed(1)} / 5</p>`
-                : `<p class="text-sm text-gray-500">⭐ No rating available</p>`
-              }
+                    ? `<p class="text-sm text-yellow-500">⭐ Rating: ${job.ratings.toFixed(1)} / 5</p>`
+                    : `<p class="text-sm text-gray-500">⭐ No rating available</p>`}
         `;
-
-            jobList.appendChild(jobElement);
-          });
-        } else {
-          if (completedJobs.length === 0) {
-            Swal.fire({
-              icon: 'info',
-              title: 'No Jobs Found',
-              text: `No completed jobs found for ${skillName}.`,
-              confirmButtonColor: '#ee7f2b',
-              backdrop: true,
-              background: '#fffaf3'
-            });
-
-            jobList.innerHTML = `
-  <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
-    <p class="font-medium">No completed jobs found for <strong>${skillName}</strong>.</p>
-  </div>
-`;
-
-            return;
+                jobList.appendChild(jobElement);
+              });
+            } else {
+              jobList.innerHTML = `
+        <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
+          <p class="font-medium">No completed jobs found for <strong>${skillName}</strong>.</p>
+        </div>
+      `;
+            }
+          } catch (error) {
+            console.error("❌ Error fetching completed jobs:", error);
           }
-
         }
-      } catch (error) {
+
+
+      }
+
+
+      catch (error) {
         console.error("❌ Failed to fetch profile data:", error);
       }
     });
@@ -387,6 +383,78 @@
         proposalsLink.style.display = "none";
       }
     });
+  </script>
+  <!-- Invite to Job Modal -->
+  <div id="invite-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-full max-w-md shadow-lg">
+      <h2 class="text-lg font-bold mb-4">Invite to Job</h2>
+      <label class="block mb-2 text-sm font-medium">Select Job</label>
+      <select id="job-select" class="w-full p-2 border rounded mb-4">
+        <option disabled selected>Loading your jobs...</option>
+      </select>
+      <div class="flex justify-end gap-2">
+        <button id="cancel-invite" class="px-4 py-2 bg-gray-200 rounded">Cancel</button>
+        <button id="send-invite" class="px-4 py-2 bg-orange-600 text-white rounded">Send Invite</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const inviteBtn = document.querySelector(".invite-btn");
+      const inviteModal = document.getElementById("invite-modal");
+      const cancelInvite = document.getElementById("cancel-invite");
+      const sendInvite = document.getElementById("send-invite");
+      const jobSelect = document.getElementById("job-select");
+      const craftsmanId = new URLSearchParams(location.search).get("craftsmanId");
+      const userId = localStorage.getItem("userId");
+
+      inviteBtn.addEventListener("click", async () => {
+        inviteModal.classList.remove("hidden");
+
+        // Load your posted jobs
+        try {
+          const res = await fetch(`/api/jobs/posted/${userId}`);
+          const jobs = await res.json();
+          jobSelect.innerHTML = "";
+          jobs.forEach((job) => {
+            const option = document.createElement("option");
+            option.value = job._id;
+            option.textContent = job.title;
+            jobSelect.appendChild(option);
+          });
+        } catch (err) {
+          console.error("❌ Failed to load jobs", err);
+          jobSelect.innerHTML = `<option disabled>Unable to load jobs</option>`;
+        }
+      });
+
+      cancelInvite.addEventListener("click", () => {
+        inviteModal.classList.add("hidden");
+      });
+
+      sendInvite.addEventListener("click", async () => {
+        const jobId = jobSelect.value;
+        try {
+          const res = await fetch("/api/notifications/invite", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ craftsmanId, jobId, senderId: userId })
+          });
+          const result = await res.json();
+
+          if (res.ok) {
+            Swal.fire("✅ Invite Sent", result.message, "success");
+            inviteModal.classList.add("hidden");
+          } else {
+            Swal.fire("❌ Error", result.error || "Failed to send invite", "error");
+          }
+        } catch (err) {
+          console.error(err);
+          Swal.fire("❌ Error", "Failed to send invite", "error");
+        }
+      });
+    });
+
   </script>
 </body>
 

@@ -39,5 +39,30 @@ router.put("/mark/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to toggle mark" });
   }
 });
+// POST: Send job invite notification
+router.post("/invite", async (req, res) => {
+  const { craftsmanId, jobId, senderId } = req.body;
+
+  try {
+    const job = await require("../models/Job").findById(jobId);
+    if (!job) return res.status(404).json({ error: "Job not found" });
+
+    const notification = new Notification({
+      user: craftsmanId,
+      type: "job_invite",
+      content: `You have been invited to apply for "${job.title}"`,
+      relatedJob: jobId,
+      sender: senderId,
+      isRead: false,
+      isMarked: false,
+    });
+
+    await notification.save();
+    res.status(201).json({ message: "Invite sent as notification" });
+  } catch (err) {
+    console.error("❌ Invite Error:", err);
+    res.status(500).json({ error: "Failed to send invite" });
+  }
+});
 
 module.exports = router;
