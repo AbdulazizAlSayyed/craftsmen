@@ -13,6 +13,10 @@ const profileRoutes = require("./routes/profile");
 const applicationRoutes = require("./routes/application");
 const settingRoutes = require("./routes/setting");
 const Message = require("./models/message");
+const Notification = require("./models/Notification");
+
+const notificationRoutes = require("./routes/notification");
+
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ noServer: true });
 
@@ -52,6 +56,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api", chatRoutes);
 app.use("/api/settings", settingRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/notifications", notificationRoutes);
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI)

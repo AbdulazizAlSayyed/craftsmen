@@ -1,432 +1,421 @@
 <html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
 
-    <title>Galileo Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div
-      class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
-      style="font-family: Inter, 'Noto Sans', sans-serif"
-    >
-      <div class="layout-container flex h-full grow flex-col">
-        <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
-        >
-          <div class="flex items-center gap-8">
-            <div class="flex items-center gap-4 text-[#1b150d]">
-              <div class="size-4">
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </div>
-              <h2
-                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
-              >
-                Craftsman
-              </h2>
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+
+<body>
+  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
+    style="font-family: Inter, 'Noto Sans', sans-serif">
+    <div class="layout-container flex h-full grow flex-col">
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3">
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4 text-[#1b150d]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                  fill="currentColor"></path>
+              </svg>
             </div>
-            <div class="flex items-center gap-9">
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="dashboard.html"
-                >Dashboard</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="job.html"
-                >Hire</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="Apply.html"
-                >Apply</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="myjob.html"
-                >My Jobs</a
-              >
-              <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
-                href="proposal.html"
-                id="proposals-link"
-                >Proposals</a
-              >
-            </div>
+            <h2 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]">
+              Craftsman
+            </h2>
           </div>
-          <div class="flex flex-1 justify-end gap-8">
-            <div class="flex gap-2">
-              <a href="Notification.html">
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="Bell"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-              <a href="chat.html">
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-                >
-                  <div
-                    class="text-[#1b150d]"
-                    data-icon="ChatCircleDots"
-                    data-size="20px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20px"
-                      height="20px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </a>
-              <a
-                href="Setting.html"
-                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
-              >
-                ⚙️
-              </a>
-            </div>
-            <a href="#" id="profile-link">
-              <div
-                id="profile-pic"
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              ></div>
+          <div class="flex items-center gap-9">
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="dashboard.html">Dashboard</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="job.html">Hire</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="Apply.html">Apply</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="myjob.html">My Jobs</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="proposal.html"
+              id="proposals-link">Proposals</a>
+          </div>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+          <div class="flex gap-2">
+            <a href="Notification.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="Bell" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="chat.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
+              ⚙️
             </a>
           </div>
-        </header>
-        <div class="px-40 flex flex-1 justify-center py-5">
-          <div
-            class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1"
-          >
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-              <p
-                class="text-[#111922] tracking-light text-[32px] font-bold leading-tight min-w-72"
-              >
-                Notifications
-              </p>
-            </div>
-            <div class="pb-3">
-              <div class="flex border-b border-[#344c65] px-4 justify-between">
-                <a
-                  class="flex flex-col items-center justify-center border-b-[3px] border-b-[#197ce6] text-white pb-[13px] pt-4 flex-1"
-                  href="#"
-                >
-                  <p
-                    class="text-[#111922] text-sm font-bold leading-normal tracking-[0.015em]"
-                  >
-                    All
-                  </p>
-                </a>
-                <a
-                  class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#93adc8] pb-[13px] pt-4 flex-1"
-                  href="#"
-                >
-                  <p
-                    class="text-[#93adc8] text-sm font-bold leading-normal tracking-[0.015em]"
-                  >
-                    Unread
-                  </p>
-                </a>
-                <a
-                  class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#93adc8] pb-[13px] pt-4 flex-1"
-                  href="#"
-                >
-                  <p
-                    class="text-[#93adc8] text-sm font-bold leading-normal tracking-[0.015em]"
-                  >
-                    Marked
-                  </p>
-                </a>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3 justify-between">
-              <div class="flex items-start gap-4">
-                <div
-                  class="text-white flex items-center justify-center rounded-lg bg-[#243547] shrink-0 size-12"
-                  data-icon="Briefcase"
-                  data-size="24px"
-                  data-weight="regular"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24px"
-                    height="24px"
-                    fill="currentColor"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      d="M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="flex flex-1 flex-col justify-center">
-                  <p
-                    class="text-[#111922] text-base font-medium leading-normal"
-                  >
-                    Job Invite
-                  </p>
-                  <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                    2 days ago
-                  </p>
-                  <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                    We'd like to invite you to interview for the Software
-                    Engineer Intern role at Acme Co. Please let me know if you
-                    are interested in proceeding with the interview process.
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">View</span>
-                </button>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3 justify-between">
-              <div class="flex items-start gap-4">
-                <div
-                  class="text-white flex items-center justify-center rounded-lg bg-[#243547] shrink-0 size-12"
-                  data-icon="ChatCircleDots"
-                  data-size="24px"
-                  data-weight="regular"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24px"
-                    height="24px"
-                    fill="currentColor"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="flex flex-1 flex-col justify-center">
-                  <p
-                    class="text-[#111922] text-base font-medium leading-normal"
-                  >
-                    Message
-                  </p>
-                  <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                    2 days ago
-                  </p>
-                  <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                    Hey, we'd like to invite you to interview for the Software
-                    Engineer Intern role at Acme Co. Please let me know if you
-                    are interested in proceeding with the interview process.
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">View</span>
-                </button>
-              </div>
-            </div>
-            <div class="flex gap-4 bg-[#fcfaf8] px-4 py-3 justify-between">
-              <div class="flex items-start gap-4">
-                <div
-                  class="text-white flex items-center justify-center rounded-lg bg-[#243547] shrink-0 size-12"
-                  data-icon="FileText"
-                  data-size="24px"
-                  data-weight="regular"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24px"
-                    height="24px"
-                    fill="currentColor"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="flex flex-1 flex-col justify-center">
-                  <p
-                    class="text-[#111922] text-base font-medium leading-normal"
-                  >
-                    Status Update
-                  </p>
-                  <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                    2 days ago
-                  </p>
-                  <p class="text-[#93adc8] text-sm font-normal leading-normal">
-                    Your application for the Software Engineer Intern role at
-                    Acme Co has been reviewed by our team. We'd like to invite
-                    you to interview for this role.
-                  </p>
-                </div>
-              </div>
-              <div class="shrink-0">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#243547] text-white text-sm font-medium leading-normal w-fit"
-                >
-                  <span class="truncate">View</span>
-                </button>
-              </div>
+          <a href="#" id="profile-link">
+            <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"></div>
+          </a>
+        </div>
+      </header>
+      <div class="px-40 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
+          <div class="flex flex-wrap justify-between gap-3 p-4">
+            <p class="text-[#111922] tracking-light text-[32px] font-bold leading-tight min-w-72">
+              Notifications
+            </p>
+          </div>
+          <!-- Filters -->
+          <div class="pb-3">
+            <div class="flex border-b border-[#344c65] px-4 justify-between">
+              <button id="filter-all"
+                class="flex flex-col items-center justify-center border-b-[3px] border-b-[#197ce6] text-[#111922] pb-[13px] pt-4 flex-1 text-sm font-bold">
+                All
+              </button>
+              <button id="filter-unread"
+                class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#93adc8] pb-[13px] pt-4 flex-1 text-sm font-bold">
+                Unread
+              </button>
+              <button id="filter-marked"
+                class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#93adc8] pb-[13px] pt-4 flex-1 text-sm font-bold">
+                Marked
+              </button>
             </div>
           </div>
+
+          <!-- Loading Spinner -->
+          <div id="loading-spinner" class="text-center py-8 text-[#93adc8] text-sm hidden">
+            Loading notifications...
+          </div>
+
+          <!-- Notification List -->
+          <div id="notification-list" class="flex flex-col gap-3 px-4 min-h-[300px]">
+            <!-- Notifications will be injected here dynamically by JS -->
+          </div>
+
         </div>
       </div>
     </div>
+  </div>
+  <script>
+    // notifications.js
 
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        let craftsmanId = new URLSearchParams(window.location.search).get(
-          "craftsmanId"
-        );
+    // DOM Elements
+    const notificationList = document.getElementById("notification-list");
+    const loadingSpinner = document.getElementById("loading-spinner");
+    const filterAllBtn = document.getElementById("filter-all");
+    const filterUnreadBtn = document.getElementById("filter-unread");
+    const filterMarkedBtn = document.getElementById("filter-marked");
 
+    let allNotifications = [];
+
+    // Fetch notifications from backend
+    async function fetchNotifications() {
+      const craftsmanId = localStorage.getItem("craftsmanId");
+      if (!craftsmanId) return console.error("Missing craftsmanId");
+
+      try {
+        loadingSpinner.classList.remove("hidden");
+        const res = await fetch(`/api/notifications/${craftsmanId}`);
+        if (!res.ok) throw new Error("Failed to fetch notifications");
+        const data = await res.json();
+        allNotifications = data;
+        renderNotifications(allNotifications);
+      } catch (err) {
+        console.error("Error loading notifications:", err);
+        notificationList.innerHTML =
+          '<p class="text-[#93adc8] text-sm">Failed to load notifications.</p>';
+      } finally {
+        loadingSpinner.classList.add("hidden");
+      }
+    }
+
+    // Render notifications to the DOM
+    function renderNotifications(list) {
+      if (!Array.isArray(list) || list.length === 0) {
+        notificationList.innerHTML =
+          '<p class="text-[#93adc8] text-sm">No notifications found.</p>';
+        return;
+      }
+
+      notificationList.innerHTML = "";
+      list.forEach((n) => {
+        const div = document.createElement("div");
+        div.className = `
+  flex gap-4 px-4 py-3 justify-between border rounded-xl
+  ${n.isRead ? 'bg-[#fcfaf8] border-[#f3eee7]' : 'bg-blue-50 border-blue-200'}
+`;
+        div.innerHTML = `
+      <div class="flex items-start gap-4">
+        <div class="text-white flex items-center justify-center rounded-lg bg-[#243547] shrink-0 size-12">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+            <path d="${getIconPath(n.type)}"></path>
+          </svg>
+        </div>
+        <div class="flex flex-1 flex-col justify-center">
+          <p class="text-[#111922] text-base font-medium leading-normal">${n.type}</p>
+          <p class="text-[#93adc8] text-sm">${formatTimeAgo(n.createdAt)}</p>
+          <p class="text-[#93adc8] text-sm leading-normal">${n.content}</p>
+        </div>
+      </div>
+     <div class="flex items-center gap-2">
+      <button data-id="${n._id}" 
+  class="mark-btn px-2 py-1 text-sm rounded-lg 
+  ${n.isMarked ? 'bg-yellow-400' : 'bg-yellow-200'} text-black">
+  ⭐
+</button>
+
+  <button data-id="${n._id}" class="view-btn px-4 py-1 bg-[#243547] text-white text-sm font-medium rounded-xl">View</button>
+</div>
+
+
+    `;
+        notificationList.appendChild(div);
+      });
+    }
+    document.addEventListener("click", async (e) => {
+      if (e.target.classList.contains("view-btn")) {
+        const notifId = e.target.dataset.id;
+
+        try {
+          await fetch(`/api/notifications/read/${notifId}`, { method: "PUT" });
+
+          allNotifications = allNotifications.map((n) => {
+            if (n._id === notifId) return { ...n, isRead: true };
+            return n;
+          });
+
+          const activeTab = document.querySelector("button.active-tab");
+
+          if (activeTab === filterUnreadBtn) {
+            renderNotifications(allNotifications.filter((n) => !n.isRead));
+          } else if (activeTab === filterMarkedBtn) {
+            renderNotifications(allNotifications.filter((n) => n.isMarked));
+          } else {
+            renderNotifications(allNotifications);
+          }
+
+          console.log("👁️ Marked as read");
+        } catch (err) {
+          console.error("❌ Failed to mark as read:", err);
+        }
+      }
+    });
+
+    document.addEventListener("click", async (e) => {
+      if (e.target.classList.contains("mark-btn")) {
+        const notifId = e.target.dataset.id;
+        try {
+          const res = await fetch(`/api/notifications/mark/${notifId}`, { method: "PUT" });
+          const { isMarked } = await res.json();
+
+          // Update local state
+          allNotifications = allNotifications.map((n) =>
+            n._id === notifId ? { ...n, isMarked } : n
+          );
+
+          // Re-render based on active tab
+          const activeTab = document.querySelector("button.active-tab");
+          if (activeTab === filterMarkedBtn) {
+            renderNotifications(allNotifications.filter((n) => n.isMarked));
+          } else if (activeTab === filterUnreadBtn) {
+            renderNotifications(allNotifications.filter((n) => !n.isRead));
+          } else {
+            renderNotifications(allNotifications);
+          }
+
+          console.log("⭐ Toggled mark");
+        } catch (err) {
+          console.error("❌ Failed to toggle mark:", err);
+        }
+      }
+    });
+
+    // Helper: Choose icon path
+    function getIconPath(type) {
+      switch (type) {
+        case "job_invite":
+          return "M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56Z";
+        case "message":
+          return "M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Z";
+        case "status_update":
+          return "M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34Z";
+        default:
+          return "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z";
+      }
+    }
+
+
+    // Helper: Format date to "X days ago"
+    function formatTimeAgo(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 0) return "Today";
+      if (diffDays === 1) return "Yesterday";
+      return `${diffDays} days ago`;
+    }
+
+    // Filter Handler
+    filterAllBtn.addEventListener("click", () => {
+      renderNotifications(allNotifications);
+      toggleActive(filterAllBtn);
+    });
+
+    filterUnreadBtn.addEventListener("click", () => {
+      const unread = allNotifications.filter((n) => !n.isRead);
+      renderNotifications(unread);
+      toggleActive(filterUnreadBtn);
+    });
+
+    filterMarkedBtn.addEventListener("click", () => {
+      const marked = allNotifications.filter((n) => n.isMarked);
+      renderNotifications(marked);
+      toggleActive(filterMarkedBtn);
+    });
+
+    function toggleActive(activeBtn) {
+      [filterAllBtn, filterUnreadBtn, filterMarkedBtn].forEach((btn) => {
+        btn.classList.remove("border-b-[#197ce6]", "text-[#111922]", "active-tab");
+        btn.classList.add("border-b-transparent", "text-[#93adc8]");
+      });
+      activeBtn.classList.add("border-b-[#197ce6]", "text-[#111922]", "active-tab");
+      activeBtn.classList.remove("text-[#93adc8]");
+    }
+
+
+    // Init
+    fetchNotifications();
+
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      let craftsmanId = new URLSearchParams(window.location.search).get(
+        "craftsmanId"
+      );
+
+      if (!craftsmanId) {
+        craftsmanId = localStorage.getItem("craftsmanId");
         if (!craftsmanId) {
-          craftsmanId = localStorage.getItem("craftsmanId");
-          if (!craftsmanId) {
-            console.error("❌ Missing craftsmanId in URL and Local Storage!");
-            return;
-          }
+          console.error("❌ Missing craftsmanId in URL and Local Storage!");
+          return;
+        }
+      }
+
+      localStorage.setItem("craftsmanId", craftsmanId);
+
+      try {
+        const res = await fetch(`/api/profile/${craftsmanId}`);
+
+        if (!res.ok)
+          throw new Error(
+            `Failed to fetch profile: ${response.status} ${response.statusText}`
+          );
+
+        const data = await res.json();
+
+        console.log("✅ API Response:", data); // Debugging log
+
+        if (!data || !data.profileImage) {
+          console.error("❌ Profile image is missing in API response");
+          return;
         }
 
-        localStorage.setItem("craftsmanId", craftsmanId);
+        const profileImage = data.profileImage.trim()
+          ? data.profileImage
+          : "/uploads/default.png";
+        console.log("✅ Profile Image URL:", profileImage);
 
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-
-          if (!res.ok)
-            throw new Error(
-              `Failed to fetch profile: ${response.status} ${response.statusText}`
-            );
-
-          const data = await res.json();
-
-          console.log("✅ API Response:", data); // Debugging log
-
-          if (!data || !data.profileImage) {
-            console.error("❌ Profile image is missing in API response");
-            return;
-          }
-
-          const profileImage = data.profileImage.trim()
-            ? data.profileImage
-            : "/uploads/default.png";
-          console.log("✅ Profile Image URL:", profileImage);
-
-          const profilePicDiv = document.getElementById("profile-pic");
-          if (profilePicDiv) {
-            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-          } else {
-            console.error("❌ profile-pic element not found");
-          }
-
-          document.getElementById(
-            "profile-pic"
-          ).style.backgroundImage = `url(${profileImage})`;
-
-          const mainSkill =
-            data.skills && data.skills.length > 0
-              ? data.skills[0].name
-              : "General";
-          const profileLink = document.getElementById("profile-link");
-
-          if (profileLink) {
-            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-              mainSkill
-            )}`;
-          } else {
-            console.error("❌ profile-link element not found");
-          }
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const craftsmanId = localStorage.getItem("craftsmanId");
         const profilePicDiv = document.getElementById("profile-pic");
-
-        if (!craftsmanId || !profilePicDiv) return;
-
-        // Try cached image first
-        const cachedImage = localStorage.getItem("profileImage");
-        if (cachedImage) {
-          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+        if (profilePicDiv) {
+          profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+        } else {
+          console.error("❌ profile-pic element not found");
         }
 
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
+        document.getElementById(
+          "profile-pic"
+        ).style.backgroundImage = `url(${profileImage})`;
 
-          const data = await res.json();
-          const profileImage =
-            data.profileImage.trim() || "/uploads/default.png";
+        const mainSkill =
+          data.skills && data.skills.length > 0
+            ? data.skills[0].name
+            : "General";
+        const profileLink = document.getElementById("profile-link");
 
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-
-          // Update cache
-          localStorage.setItem("profileImage", profileImage);
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
+        if (profileLink) {
+          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+            mainSkill
+          )}`;
+        } else {
+          console.error("❌ profile-link element not found");
         }
-      });
-    </script>
-    <script>
-      // for disapper proposals if client
-      document.addEventListener("DOMContentLoaded", () => {
-        const userRole = localStorage.getItem("userRole");
-        const proposalsLink = document.getElementById("proposals-link");
+      } catch (error) {
+        console.error("❌ Error loading profile:", error);
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const craftsmanId = localStorage.getItem("craftsmanId");
+      const profilePicDiv = document.getElementById("profile-pic");
 
-        if (userRole === "client" && proposalsLink) {
-          proposalsLink.style.display = "none";
-        }
-      });
-    </script>
-  </body>
+      if (!craftsmanId || !profilePicDiv) return;
+
+      // Try cached image first
+      const cachedImage = localStorage.getItem("profileImage");
+      if (cachedImage) {
+        profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+      }
+
+      try {
+        const res = await fetch(`/api/profile/${craftsmanId}`);
+        if (!res.ok) throw new Error("Failed fetching profile");
+
+        const data = await res.json();
+        const profileImage =
+          data.profileImage.trim() || "/uploads/default.png";
+
+        profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+
+        // Update cache
+        localStorage.setItem("profileImage", profileImage);
+      } catch (error) {
+        console.error("❌ Error loading profile:", error);
+      }
+    });
+  </script>
+  <script>
+    // for disapper proposals if client
+    document.addEventListener("DOMContentLoaded", () => {
+      const userRole = localStorage.getItem("userRole");
+      const proposalsLink = document.getElementById("proposals-link");
+
+      if (userRole === "client" && proposalsLink) {
+        proposalsLink.style.display = "none";
+      }
+    });
+  </script>
+</body>
+
 </html>
