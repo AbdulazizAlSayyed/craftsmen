@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/userRoutes");
@@ -12,6 +13,20 @@ const profileRoutes = require("./routes/profile");
 const applicationRoutes = require("./routes/application");
 const settingRoutes = require("./routes/setting");
 const Message = require("./models/message");
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ noServer: true });
+
+const clients = new Map();
+
+wss.on("connection", (ws, userId) => {
+  console.log("✅ WebSocket connected:", userId);
+  clients.set(userId, ws);
+
+  ws.on("close", () => {
+    console.log("❌ WebSocket disconnected:", userId);
+    clients.delete(userId);
+  });
+});
 
 const { Server } = require("socket.io");
 const http = require("http");
@@ -78,9 +93,74 @@ pages.forEach((page) => {
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "pages", "guest.html"));
 });
+const server = http.createServer(app); // ✅ First define server
+
+// ✅ THEN define the WebSocket server
+
+function authenticateUser(request) {
+  try {
+    const { searchParams } = new URL(
+      request.url,
+      `http://${request.headers.host}`
+    );
+    const token = searchParams.get("token");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded?.userId || decoded?.id; // depends on how you signed it
+  } catch (err) {
+    console.error("JWT Error:", err.message);
+    return null;
+  }
+}
+
+// Function to broadcast updates
+function broadcastBidUpdate(application) {
+  // Notify the craftsman who submitted the bid
+  console.log("📣 Broadcasting update to WebSocket:", application);
+
+  const craftsmanWs = clients.get(application.craftsmanId.toString());
+  if (craftsmanWs) {
+    craftsmanWs.send(
+      JSON.stringify({
+        type: "BID_UPDATE",
+        data: application,
+      })
+    );
+  }
+  // Notify the client who owns the job
+  const clientWs = clients.get(application.jobId.clientId.toString());
+  if (clientWs) {
+    clientWs.send(
+      JSON.stringify({
+        type: "BID_UPDATE",
+        data: application,
+      })
+    );
+  }
+}
+
+server.on("upgrade", (request, socket, head) => {
+  const { pathname, searchParams } = new URL(
+    request.url,
+    `http://${request.headers.host}`
+  );
+
+  // Only handle upgrade requests to "/ws"
+  if (pathname === "/ws") {
+    const userId = searchParams.get("token");
+    if (!userId) {
+      socket.destroy();
+      return;
+    }
+
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit("connection", ws, userId);
+    });
+  } else {
+    socket.destroy(); // reject upgrade to invalid path
+  }
+});
 
 // Create HTTP server + Socket.IO
-const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",

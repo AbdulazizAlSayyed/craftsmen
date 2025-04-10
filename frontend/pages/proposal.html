@@ -230,181 +230,185 @@
               </div>
             </footer>
           </div>
-        </div>
-        <script>
-          function getStatusColor(status) {
-            switch (status) {
-              case "accepted":
-                return "bg-green-100 text-green-800";
-              case "rejected":
-                return "bg-red-100 text-red-700";
-              case "in progress":
-                return "bg-blue-100 text-blue-800";
-              default:
-                return "bg-yellow-100 text-yellow-800"; // pending
-            }
+        </div><script>
+  let socket;
 
-          }
-
-
-
-
-          function timeAgo(date) {
-            const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-            const days = Math.floor(seconds / 86400);
-            if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
-            const hours = Math.floor(seconds / 3600);
-            if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-            const minutes = Math.floor(seconds / 60);
-            return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
-          }
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const containerNoBid = document.querySelector(".submitted-proposals-list-no-bid");
-  const containerBid = document.querySelector(".submitted-proposals-list-bid");
-  const userId = localStorage.getItem("userId");
-
-  if (!userId) {
-    containerNoBid.innerHTML = "<p>Please log in to see your proposals.</p>";
-    containerBid.innerHTML = "";
-    return;
-  }
-
-  try {
-    const response = await fetch(`/api/applications/craftsman/${userId}`);
-    const applications = await response.json();
-
-    if (!Array.isArray(applications) || applications.length === 0) {
-      containerNoBid.innerHTML = `
-        <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
-          <p class="font-medium">You haven’t submitted any proposals yet.</p>
-          <a href="Apply.html" class="text-[#ec8e13] underline font-semibold mt-2 inline-block">Find Jobs to Apply</a>
-        </div>
-      `;
+  function connectWebSocket() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      console.warn("⚠️ No userId found in localStorage.");
       return;
     }
 
-    containerNoBid.innerHTML = "";
-    containerBid.innerHTML = "";
+    socket = new WebSocket("ws://localhost:5001/ws");
 
-    applications.forEach((app) => {
-      const job = app.jobId;
-      const html = `
-        <div class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
-          <div class="flex justify-between items-start">
-            <div>
-              <h3 class="text-lg font-bold text-[#1b150d] mb-1">${job.title}</h3>
-              <p class="text-sm text-[#9a784c]">
-                Skills: <span class="text-[#1b150d] font-medium">${job.skillsRequired.join(", ") || "None"}</span>
-              </p>
-            </div>
-            <div class="text-right text-sm text-[#9a784c] whitespace-nowrap">
-              Submitted ${timeAgo(app.appliedAt)}
-            </div>
-          </div>
+    socket.onopen = () => {
+      socket.send(JSON.stringify({ type: "AUTH", token: localStorage.getItem("token") }));
+    };
 
-          <div class="text-sm text-[#1b150d]">
-            <span class="font-semibold">Cover Letter:</span>
-            <p class="mt-1 whitespace-pre-line">${app.coverLetter || "No cover letter provided."}</p>
-          </div>
-
-          <div class="flex flex-wrap justify-between items-center pt-2 border-t border-[#eee]">
-            <div class="text-sm space-y-1 text-[#1b150d]">
-              <p><span class="font-semibold">Original Budget:</span> $${job.budget}</p>
-              ${app.bidAmount ? `<p><span class="font-semibold">Your Bid:</span> $${app.bidAmount}</p>` : ""}
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)}">
-                ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
-              </span>
-              <span class="text-sm font-medium text-[#9a784c]">${job.jobRank}</span>
-            </div>
-          </div>
-        </div>
-      `;
-
-      if (app.bidAmount) {
-        containerBid.insertAdjacentHTML("beforeend", html);
-      } else {
-        containerNoBid.insertAdjacentHTML("beforeend", html);
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type === "BID_UPDATE") {
+        updateBidDisplay(message.data);
       }
-    });
+    };
 
-  } catch (error) {
-    console.error("❌ Error loading applications:", error);
+    socket.onclose = () => {
+      setTimeout(connectWebSocket, 5000);
+    };
   }
-});
 
+  function updateBidDisplay(updatedBid) {
+    const card = document.getElementById(`proposal-${updatedBid._id}`);
+    if (!card) return;
 
+    const bidEl = card.querySelector(".your-bid");
+    if (bidEl && updatedBid.bidAmount !== undefined) {
+      bidEl.textContent = `$${updatedBid.bidAmount}`;
+    }
 
-       
-          document.addEventListener("DOMContentLoaded", async () => {
-            const craftsmanId = localStorage.getItem("craftsmanId");
-            const profilePicDiv = document.getElementById("profile-pic");
+    const statusEl = card.querySelector(".status-badge");
+    if (statusEl) {
+      statusEl.className = `text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(updatedBid.status)} status-badge`;
+      statusEl.textContent = updatedBid.status.charAt(0).toUpperCase() + updatedBid.status.slice(1);
+    }
 
-            if (!craftsmanId || !profilePicDiv) return;
+    card.classList.add("bg-blue-50", "bid-update");
+    setTimeout(() => {
+      card.classList.remove("bg-blue-50", "bid-update");
+    }, 2000);
+  }
 
-            // Try cached image first
-            const cachedImage = localStorage.getItem("profileImage");
-            if (cachedImage) {
-              profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-            }
+  async function respondToBid(applicationId, status, newBid = null) {
+    try {
+      const res = await fetch(`/api/applications/${applicationId}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, bidAmount: newBid }),
+      });
 
-            try {
-              const res = await fetch(`/api/profile/${craftsmanId}`);
-              if (!res.ok) throw new Error("Failed fetching profile");
+      const result = await res.json();
+      if (res.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Response Sent",
+          text: `You ${status === "pending" ? "updated" : status} the bid.`,
+          timer: 1500,
+          showConfirmButton: false
+        });
 
-              const data = await res.json();
-              const profileImage =
-                data.profileImage.trim() || "/uploads/default.png";
+        updateBidDisplay({ ...result, _id: applicationId });
+      } else {
+        throw new Error(result.error || "Unknown error");
+      }
+    } catch (err) {
+      console.error("❌ Error responding to bid:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: err.message,
+        confirmButtonColor: "#ef4444"
+      });
+    }
+  }
 
-              profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+  function getStatusColor(status) {
+    switch (status) {
+      case "accepted":
+        return "bg-green-100 text-green-800";
+      case "rejected":
+        return "bg-red-100 text-red-700";
+      case "in progress":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-yellow-100 text-yellow-800";
+    }
+  }
 
-              // Update cache
-              localStorage.setItem("profileImage", profileImage);
-            } catch (error) {
-              console.error("❌ Error loading profile:", error);
-            }
-          });
-        </script>
+  function timeAgo(date) {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    const days = Math.floor(seconds / 86400);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    const hours = Math.floor(seconds / 3600);
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    const minutes = Math.floor(seconds / 60);
+    return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+  }
 
-        <script>
-          document.addEventListener("DOMContentLoaded", async () => {
-            const craftsmanId = localStorage.getItem("craftsmanId");
-            const profileLink = document.getElementById("profile-link");
+  document.addEventListener("DOMContentLoaded", async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
 
-            if (!craftsmanId || !profileLink) return;
+    connectWebSocket();
 
-            try {
-              const response = await fetch(`/api/profile/${craftsmanId}`);
-              if (!response.ok) throw new Error("Failed to fetch profile");
+    const containerNoBid = document.querySelector(".submitted-proposals-list-no-bid");
+    const containerBid = document.querySelector(".submitted-proposals-list-bid");
 
-              const data = await response.json();
+    try {
+      const response = await fetch(`/api/applications/craftsman/${userId}`);
+      const applications = await response.json();
 
-              const mainSkill =
-                data.skills && data.skills.length > 0
-                  ? data.skills[0].name
-                  : "General";
+      if (!Array.isArray(applications) || applications.length === 0) {
+        containerNoBid.innerHTML = `
+          <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
+            <p class="font-medium">You haven’t submitted any proposals yet.</p>
+            <a href="Apply.html" class="text-[#ec8e13] underline font-semibold mt-2 inline-block">Find Jobs to Apply</a>
+          </div>
+        `;
+        return;
+      }
 
-              profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-                mainSkill
-              )}`;
-            } catch (error) {
-              console.error("❌ Error loading profile link:", error);
-            }
-          });
-        </script>
-        <script>
-          // for disapper proposals if client
-          document.addEventListener("DOMContentLoaded", () => {
-            const userRole = localStorage.getItem("userRole");
-            const proposalsLink = document.getElementById("proposals-link");
+      containerNoBid.innerHTML = "";
+      containerBid.innerHTML = "";
 
-            if (userRole === "client" && proposalsLink) {
-              proposalsLink.style.display = "none";
-            }
-          });
-        </script>
+      applications.forEach((app) => {
+        const job = app.jobId;
+        const html = `
+  <div id="proposal-${app._id}" class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
+    <div class="flex justify-between items-start">
+      <div>
+        <h3 class="text-lg font-bold text-[#1b150d] mb-1">${job.title}</h3>
+        <p class="text-sm text-[#9a784c]">
+          Skills: <span class="text-[#1b150d] font-medium">${job.skillsRequired.join(", ") || "None"}</span>
+        </p>
+      </div>
+      <div class="text-right text-sm text-[#9a784c] whitespace-nowrap">
+        Submitted ${timeAgo(app.appliedAt)}
+      </div>
+    </div>
+
+    <div class="text-sm text-[#1b150d]">
+      <span class="font-semibold">Cover Letter:</span>
+      <p class="mt-1 whitespace-pre-line">${app.coverLetter || "No cover letter provided."}</p>
+    </div>
+
+    <div class="flex flex-wrap justify-between items-center pt-2 border-t border-[#eee]">
+      <div class="text-sm space-y-1 text-[#1b150d]">
+        <p><span class="font-semibold">Original Budget:</span> $${job.budget}</p>
+        ${app.bidAmount ? `<p><span class="font-semibold">Your Bid:</span> <span class="your-bid">$${app.bidAmount}</span></p>` : ""}
+      </div>
+      <div class="flex flex-col items-end gap-2">
+        <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)} status-badge">
+          ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+        </span>
+        <span class="text-sm font-medium text-[#9a784c]">${job.jobRank}</span>
+        <div class="pending-actions hidden flex-col gap-2 mt-2"></div>
+      </div>
+    </div>
+  </div>
+        `;
+
+        if (app.bidAmount) {
+          containerBid.insertAdjacentHTML("beforeend", html);
+        } else {
+          containerNoBid.insertAdjacentHTML("beforeend", html);
+        }
+      });
+    } catch (error) {
+      console.error("❌ Error loading applications:", error);
+    }
+  });
+</script>
 </body>
 
 </html>

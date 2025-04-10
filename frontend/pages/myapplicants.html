@@ -10,7 +10,22 @@
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+  /* Add to your CSS */
+@keyframes highlight {
+  0% { background-color: rgba(59, 130, 246, 0.1); }
+  100% { background-color: transparent; }
+}
 
+.bid-update {
+  animation: highlight 2s ease-out;
+}
+
+/* Make sure cards are properly styled for both views */
+.app-card {
+  transition: all 0.3s ease;
+}
+</style>
 </head>
 
 <body>
@@ -106,32 +121,27 @@
 
       if (!confirmResult.isConfirmed) return;
 
-      try {
-        const res = await fetch(`/api/applications/${appId}/status`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: newStatus, bidAmount: customBid }),
-        });
+       try {
+    const res = await fetch(`/api/applications/${appId}/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        status: newStatus, 
+        bidAmount: customBid 
+      }),
+    });
 
-        const updated = await res.json();
+    const updated = await res.json();
 
-        if (res.ok) {
- const statusEl = document.getElementById(`status-${appId}`);
-      if (statusEl) statusEl.textContent = updated.status;
-
-            // Update bid amount if changed
-      if (updated.bidAmount !== undefined) {
-        const bidEl = document.getElementById(`bid-${appId}`);
-        if (bidEl) bidEl.textContent = `$${updated.bidAmount}`;
-      }
-
-          Swal.fire({
-            icon: "success",
-            title: "Update Successful",
-            text: `${fullName || "The application"} has been ${newStatus}.`,
-            timer: 2000,
-            showConfirmButton: false
-          });
+    if (res.ok) {
+      // The WebSocket message will handle the UI update
+      Swal.fire({
+        icon: "success",
+        title: "Update Sent",
+        text: "The update is being processed...",
+        timer: 1500,
+        showConfirmButton: false
+      });
 
         } else {
           Swal.fire({
@@ -316,7 +326,80 @@ if (hasBid) {  // If there's a bid amount, it goes in bidding section regardless
     });
   </script>
    <script>
+  
+// Connect to WebSocket
+let socket;
+function connectWebSocket(userId) {
+  const token = localStorage.getItem("token");
+
+  console.log("Current userId:", userId);
+  console.log("Current token:", token);
+
+  socket = new WebSocket(`ws://localhost:5001/ws?token=${token}`);
+
+  socket.onopen = () => {
+    console.log("✅ WebSocket connected, authenticating...");
+    socket.send(JSON.stringify({
+      type: "AUTH",
+      token,
+      userId
+    }));
+  };
+
+  socket.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    console.log("📨 Message from server:", message);
+    if (message.type === "BID_UPDATE") {
+      handleBidUpdate(message.data);
+    }
+  };
+
+  socket.onerror = (err) => {
+    console.error("❌ TEST: WebSocket error", err);
+  };
+
+  socket.onclose = () => {
+    console.log("TEST: WebSocket closed");
+    setTimeout(() => connectWebSocket(userId), 5000);
+  };
+}
+
+function handleBidUpdate(updatedBid) {
+  // Check if this bid exists in the UI
+  const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
+  
+  if (existingCard) {
+    // Update existing card
+    const statusEl = document.getElementById(`status-${updatedBid._id}`);
+    if (statusEl) statusEl.textContent = updatedBid.status;
+    
+    const bidEl = document.getElementById(`bid-${updatedBid._id}`);
+    if (bidEl) bidEl.textContent = `$${updatedBid.bidAmount}`;
+    
+    // Visual feedback
+    existingCard.classList.add('bg-blue-50');
+    setTimeout(() => existingCard.classList.remove('bg-blue-50'), 1000);
+  } else if (updatedBid.status === 'pending') {
+    // New bid - add it to the UI
+    renderBid(updatedBid);
+  }
+}
     document.addEventListener("DOMContentLoaded", async () => {
+  const userId = localStorage.getItem("userId");
+  // Debug logs
+  console.log('Current userId:', userId);
+  console.log('Current token:', localStorage.getItem('token'));
+  
+  if (!userId) {
+    console.warn("⚠️ No userId in localStorage.");
+    return;
+  }
+ // Test WebSocket connection
+  window.testSocket = new WebSocket('ws://localhost:5001/ws');
+  window.testSocket.onopen = () => console.log('TEST: WebSocket connected');
+  window.testSocket.onerror = (e) => console.error('TEST: WebSocket error', e);
+  window.testSocket.onclose = () => console.log('TEST: WebSocket closed');
+  connectWebSocket(userId);
       const craftsmanId = localStorage.getItem("craftsmanId");
       const profilePicDiv = document.getElementById("profile-pic");
 

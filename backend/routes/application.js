@@ -109,5 +109,41 @@ router.get("/job/:jobId", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+router.post("/api/applications", async (req, res) => {
+  try {
+    const application = await Application.create(req.body);
 
+    // Notify both parties via WebSocket
+    broadcastBidUpdate(application);
+
+    res.status(201).json(application);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+router.patch("/api/applications/:id/status", async (req, res) => {
+  try {
+    const application = await Application.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: req.body.status,
+        ...(req.body.bidAmount && { bidAmount: req.body.bidAmount }),
+      },
+      { new: true }
+    )
+      .populate("craftsmanId")
+      .populate("jobId");
+
+    if (!application) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
+    // Notify both parties via WebSocket
+    broadcastBidUpdate(application);
+
+    res.json(application);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 module.exports = router;
