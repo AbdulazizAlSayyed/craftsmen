@@ -12,6 +12,7 @@ const profileRoutes = require("./routes/profile");
 const applicationRoutes = require("./routes/application");
 const settingRoutes = require("./routes/setting");
 const inviteRoute = require("./routes/invite");
+const adminDashboardRoutes = require("./routes/Admindashboard");
 
 const notificationRoutes = require("./routes/notification");
 const Message = require("./models/message");
@@ -38,6 +39,7 @@ app.use("/api/settings", settingRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/invite", inviteRoute);
+app.use("/api/dashboard", adminDashboardRoutes);
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB connected!"))

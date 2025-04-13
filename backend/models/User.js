@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   },
   skills: [skillSchema], // Each skill has its own rank, experience, and rating
   bio: { type: String },
-  age: { type: Number, default: 0 }, // here should change the default value to another value talk with tala abiut the new value
+  age: { type: Number, default: 18 }, // here should change the default value to another value talk with tala abiut the new value
   location: { type: String },
   newsletterSubscribed: { type: Boolean, default: false },
   profileImage: { type: String, default: "" },
@@ -34,6 +34,8 @@ const userSchema = new mongoose.Schema({
   verificationCodeSentAt: { type: Date },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  lastLogin: { type: Date, default: null },
+
   createdAt: { type: Date, default: Date.now },
 });
 
