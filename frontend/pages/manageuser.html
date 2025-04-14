@@ -1,715 +1,230 @@
 <html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
 
-    <title>Galileo Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div
-      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-      style="font-family: Inter, 'Noto Sans', sans-serif"
-    >
-      <div class="layout-container flex h-full grow flex-col">
-        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-          <div class="layout-content-container flex flex-col w-80">
-            <div
-              class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4"
-            >
-              <div class="flex flex-col gap-4">
-                <div class="flex gap-3">
-                  <div
-                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                    style="
-                      background-image: url('https://cdn.usegalileo.ai/sdxl10/8c0eaf84-7c1a-4948-acc8-168d95a16deb.png');
-                    "
-                  ></div>
-                  <h1
-                    class="text-[#111517] text-base font-medium leading-normal"
-                  >
-                    Craftsmen Network Admin
-                  </h1>
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    .bg-active {
+      background-color: #f0f2f4;
+      font-weight: 600;
+      border-left: 4px solid #2563eb;
+      /* blue-600 */
+    }
+  </style>
+</head>
+
+<body class="bg-white font-sans">
+  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+    style="font-family: Inter, 'Noto Sans', sans-serif">
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col w-80">
+          <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
+            <div class="flex flex-col gap-4">
+              <div class="flex gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                  style="background-image: url('https://cdn.usegalileo.ai/sdxl10/8df52227-0586-455a-ba76-fef9fda944ea.png');">
                 </div>
-                <div class="flex flex-col gap-2">
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Dashboard
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Service Requests
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Projects
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Contracts
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Payments
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Disputes
-                    </p>
-                  </div>
-                  <div
-                    class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0f2f4]"
-                  >
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Users
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Settings
-                    </p>
-                  </div>
-                </div>
+                <h1 class="text-gray-800 text-base font-medium leading-normal">
+                  Craftsmen Network
+                </h1>
               </div>
-            </div>
-          </div>
-          <div
-            class="layout-content-container flex flex-col max-w-[960px] flex-1"
-          >
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-              <div class="flex min-w-72 flex-col gap-3">
-                <p
-                  class="text-[#111517] text-4xl font-black leading-tight tracking-[-0.033em]"
-                >
-                  Manage Users
-                </p>
-                <p class="text-[#647787] text-base font-normal leading-normal">
-                  View and manage all user accounts within the network. You can
-                  change roles, ban/unban users, and remove inactive or spam
-                  accounts.
-                </p>
-              </div>
-            </div>
-            <div class="px-4 py-3">
-              <label class="flex flex-col min-w-40 h-12 w-full">
-                <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-                  <div
-                    class="text-[#647787] flex border-none bg-[#f0f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0"
-                    data-icon="MagnifyingGlass"
-                    data-size="24px"
-                    data-weight="regular"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24px"
-                      height="24px"
-                      fill="currentColor"
-                      viewBox="0 0 256 256"
-                    >
+              <div class="flex flex-col gap-2">
+                <a href="/dashboardAdmin.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Dashboard icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+                      viewBox="0 0 256 256">
                       <path
-                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
-                      ></path>
+                        d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z">
+                      </path>
                     </svg>
                   </div>
-                  <input
-                    placeholder="Search by username, email, or full name"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111517] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#647787] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                    value=""
-                  />
-                </div>
-              </label>
-            </div>
-            <div class="pb-3">
-              <div class="flex border-b border-[#dce1e5] px-4 gap-8">
-                <a
-                  class="flex flex-col items-center justify-center border-b-[3px] border-b-[#111517] text-[#111517] pb-[13px] pt-4"
-                  href="#"
-                >
-                  <p
-                    class="text-[#111517] text-sm font-bold leading-normal tracking-[0.015em]"
-                  >
-                    All Users (342)
-                  </p>
+
+                  <p class="text-sm font-medium text-gray-800">Dashboard</p>
                 </a>
-                <a
-                  class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#647787] pb-[13px] pt-4"
-                  href="#"
-                >
-                  <p
-                    class="text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                  >
-                    Active (285)
-                  </p>
+
+                <a href="/ContentModeration.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Broom Icon (Content Moderation) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M231.3,24.69a8,8,0,0,0-11.31,0l-64,64L146.34,82.34l9.36-9.37a8,8,0,0,0-11.32-11.31l-9.36,9.36L64,17.37A8,8,0,0,0,52.69,28.69L126.63,102.6l-93.6,93.6a8,8,0,0,0,11.31,11.31l93.6-93.6L227.31,40A8,8,0,0,0,231.3,24.69Z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-medium text-gray-800">Content Moderation</p>
+
                 </a>
-                <a
-                  class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#647787] pb-[13px] pt-4"
-                  href="#"
-                >
-                  <p
-                    class="text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                  >
-                    Inactive/Spam (57)
-                  </p>
+
+
+                <a href="/ManageUser.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- User icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z">
+                      </path>
+                    </svg>
+                  </div>
+                  <p class="text-sm font-medium text-gray-800"> Manage Users</p>
+
+                </a>
+
+                <a href="/reportAdmin.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Report icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M224,48V168a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C97.87,162,74.79,150.61,48,171.77V216a8,8,0,0,1-16,0V48a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C159,54.46,182.79,66.2,210.76,42A8,8,0,0,1,224,48Z">
+                      </path>
+                    </svg>
+                  </div>
+
+                  <p class="text-sm font-medium text-gray-800">Reports</p>
+                </a>
+
+                <a href="/skilladmin.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Settings icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z">
+                      </path>
+                    </svg>
+                  </div>
+
+                  <p class="text-sm font-medium text-gray-800">Skills & Categories</p>
+
                 </a>
               </div>
-            </div>
-            <div class="px-4 py-3 @container">
-              <div
-                class="flex overflow-hidden rounded-xl border border-[#dce1e5] bg-white"
-              >
-                <table class="flex-1">
-                  <thead>
-                    <tr class="bg-white">
-                      <th
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 px-4 py-3 text-left text-[#111517] w-14 text-sm font-medium leading-normal"
-                      >
-                        User
-                      </th>
-                      <th
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 px-4 py-3 text-left text-[#111517] w-[400px] text-sm font-medium leading-normal"
-                      >
-                        Full Name
-                      </th>
-                      <th
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 px-4 py-3 text-left text-[#111517] w-[400px] text-sm font-medium leading-normal"
-                      >
-                        Email
-                      </th>
-                      <th
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 px-4 py-3 text-left text-[#111517] w-60 text-sm font-medium leading-normal"
-                      >
-                        Role
-                      </th>
-                      <th
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 px-4 py-3 text-left text-[#111517] w-60 text-sm font-medium leading-normal"
-                      >
-                        Status
-                      </th>
-                      <th
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 px-4 py-3 text-left text-[#111517] w-60 text-[#647787] text-sm font-medium leading-normal"
-                      >
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/d8cd5942-6cb0-492c-9470-32c7c13bb9cf.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Isabella Moretti
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        isabella.moretti@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Craftsman</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/8e31dffd-b626-4f1a-9c3b-d630945656f0.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Marcus Johnson
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        marcus.johnson@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Client</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/a5def1bc-4d71-42f6-8389-a367a64a85d7.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Elena Rodriguez
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        elena.rodriguez@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Craftsman</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/28ed0ec4-468e-4e56-862f-a4e25d434152.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Noah Thompson
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        noah.thompson@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Client</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/1152db08-5971-457f-8b60-387a81dd3808.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Olivia Davies
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        olivia.davies@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Craftsman</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Banned</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Unban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/2370984e-52dc-43ce-a369-ace933fad6ca.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Liam Miller
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        liam.miller@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Client</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/5f59fa6d-2a9a-458f-afec-c251ff385b8a.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Ethan Carter
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        ethan.carter@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Craftsman</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Spam</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/1bc11b01-8ef5-4bc7-b1b3-7bd9f9be7db8.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Sofia Walker
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        sofia.walker@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Client</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/0adcfb95-ce23-499f-854d-ceca7e03eb01.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Daniel Clark
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        daniel.clark@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Craftsman</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal"
-                      >
-                        <div
-                          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                          style="
-                            background-image: url('https://cdn.usegalileo.ai/sdxl10/384b1c70-e5de-46f3-8941-1a43b883c25b.png');
-                          "
-                        ></div>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        Ava Martinez
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        ava.martinez@email.com
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Client</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Active</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        Edit | Ban | Remove
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <style>
-                @container (max-width:56px) {
-                  .table-e16f3903-edc8-4784-9b26-4212746eb385-column-56 {
-                    display: none;
-                  }
-                }
-                @container (max-width:176px) {
-                  .table-e16f3903-edc8-4784-9b26-4212746eb385-column-176 {
-                    display: none;
-                  }
-                }
-                @container (max-width:296px) {
-                  .table-e16f3903-edc8-4784-9b26-4212746eb385-column-296 {
-                    display: none;
-                  }
-                }
-                @container (max-width:416px) {
-                  .table-e16f3903-edc8-4784-9b26-4212746eb385-column-416 {
-                    display: none;
-                  }
-                }
-                @container (max-width:536px) {
-                  .table-e16f3903-edc8-4784-9b26-4212746eb385-column-536 {
-                    display: none;
-                  }
-                }
-                @container (max-width:656px) {
-                  .table-e16f3903-edc8-4784-9b26-4212746eb385-column-656 {
-                    display: none;
-                  }
-                }
-              </style>
             </div>
           </div>
         </div>
+
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <h1 class="text-2xl font-bold text-gray-800 mb-4">Manage Users</h1>
+
+          <div class="mb-4">
+            <input id="searchInput" type="text" placeholder="Search by name or email..."
+              class="w-full max-w-md p-2 border border-gray-300 rounded" />
+          </div>
+
+          <div class="overflow-x-auto rounded border bg-white">
+            <table class="min-w-full">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-3 text-left text-sm font-medium text-gray-700">User</th>
+                  <th class="p-3 text-left text-sm font-medium text-gray-700">Full Name</th>
+                  <th class="p-3 text-left text-sm font-medium text-gray-700">Email</th>
+                  <th class="p-3 text-left text-sm font-medium text-gray-700">Role</th>
+                  <th class="p-3 text-left text-sm font-medium text-gray-700">Status</th>
+                  <th class="p-3 text-left text-sm font-medium text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="userTableBody">
+                <tr>
+                  <td colspan="6" class="p-4 text-center text-gray-500">Loading users...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
-  </body>
+  </div>
+  <script>
+    // Load all users on page load
+    document.addEventListener('DOMContentLoaded', loadUsers);
+
+    async function loadUsers() {
+      try {
+        const res = await fetch('/api/admin/users/all');
+        const users = await res.json();
+
+        const tbody = document.querySelector('tbody');
+        tbody.innerHTML = ''; // Clear existing rows
+
+        users.forEach(user => {
+          tbody.innerHTML += `
+            <tr class="border-t border-t-[#dce1e5]">
+              <td class="px-4 py-2 w-14">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10" 
+                style="background-image: url('https://cdn-icons-png.flaticon.com/512/149/149071.png');"></div>
+              </td>
+              <td class="px-4 py-2 text-sm text-[#111517]">${user.fullName}</td>
+              <td class="px-4 py-2 text-sm text-[#647787]">${user.email}</td>
+              <td class="px-4 py-2 text-sm">
+                <button class="rounded-xl bg-[#f0f2f4] px-4 py-1" onclick="editRole('${user._id}', '${user.role}')">${user.role}</button>
+              </td>
+              <td class="px-4 py-2 text-sm">
+                <button class="rounded-xl bg-[#f0f2f4] px-4 py-1" onclick="toggleBan('${user._id}', '${user.status}')">${user.status}</button>
+              </td>
+              <td class="px-4 py-2 text-sm text-[#647787] font-bold">
+                <button class="text-blue-600 hover:underline" onclick="editRole('${user._id}', '${user.role}')">Edit</button> |
+                <button class="text-red-600 hover:underline" onclick="toggleBan('${user._id}', '${user.status}')">${user.status === 'Banned' ? 'Unban' : 'Ban'}</button> |
+                <button class="text-gray-600 hover:underline" onclick="deleteUser('${user._id}')">Remove</button>
+              </td>
+            </tr>`;
+        });
+      } catch (error) {
+        console.error('Failed to load users:', error);
+      }
+    }
+
+    async function editRole(id, currentRole) {
+      const newRole = prompt('Enter new role (Admin, Client, Craftsman):', currentRole);
+      if (!newRole || newRole === currentRole) return;
+      await fetch(`/api/admin/users/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: newRole })
+      });
+      loadUsers();
+    }
+
+    async function toggleBan(id, currentStatus) {
+      const newStatus = currentStatus === 'Banned' ? 'Active' : 'Banned';
+      await fetch(`/api/admin/users/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+      loadUsers();
+    }
+
+    async function deleteUser(id) {
+      if (!confirm('Are you sure you want to delete this user?')) return;
+      await fetch(`/api/admin/users/${id}`, {
+        method: 'DELETE'
+      });
+      loadUsers();
+    }
+  </script>
+  <script>
+    const path = window.location.pathname;
+    document.querySelectorAll("a").forEach(link => {
+      if (link.getAttribute("href") === path) {
+        link.classList.add("bg-active", "text-blue-600");
+      }
+    });
+  </script>
+
+</body>
+
 </html>

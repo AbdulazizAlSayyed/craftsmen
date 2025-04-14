@@ -13,6 +13,7 @@ const applicationRoutes = require("./routes/application");
 const settingRoutes = require("./routes/setting");
 const inviteRoute = require("./routes/invite");
 const adminDashboardRoutes = require("./routes/Admindashboard");
+const adminUserRoutes = require("./routes/adminUser");
 
 const categoryRoutes = require("./routes/categories");
 
@@ -42,6 +43,7 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/invite", inviteRoute);
 app.use("/api/dashboard", adminDashboardRoutes);
+app.use("/api/admin/users", adminUserRoutes);
 
 app.use("/api/categories", categoryRoutes);
 mongoose

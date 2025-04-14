@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema({
     enum: ["client", "craftsman", "admin"],
     default: "client",
   },
+
+  status: {
+    type: String,
+    enum: ["Active", "Banned", "Spam"],
+    default: "Active",
+  },
   skills: [skillSchema], // Each skill has its own rank, experience, and rating
   bio: { type: String },
   age: { type: Number, default: 18 }, // here should change the default value to another value talk with tala abiut the new value
