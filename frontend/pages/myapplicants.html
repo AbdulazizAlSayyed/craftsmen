@@ -1,0 +1,433 @@
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+  /* Add to your CSS */
+@keyframes highlight {
+  0% { background-color: rgba(59, 130, 246, 0.1); }
+  100% { background-color: transparent; }
+}
+
+.bid-update {
+  animation: highlight 2s ease-out;
+}
+
+/* Make sure cards are properly styled for both views */
+.app-card {
+  transition: all 0.3s ease;
+}
+</style>
+</head>
+
+<body>
+  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
+    style="font-family: Inter, 'Noto Sans', sans-serif">
+    <div class="layout-container flex h-full grow flex-col">
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3">
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4 text-[#1b150d]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                  fill="currentColor"></path>
+              </svg>
+            </div>
+            <h2 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]">
+              Craftsman
+            </h2>
+          </div>
+          <div class="flex items-center gap-9">
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="dashboard.html">Dashboard</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="job.html">Hire</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="Apply.html">Apply</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="myjob.html">My Jobs</a>
+            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="proposal.html"
+              id="proposals-link">Proposals</a>
+          </div>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+          <div class="flex gap-2">
+            <a href="Notification.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="Bell" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="chat.html">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                    viewBox="0 0 256 256">
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+            <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
+              ⚙️
+            </a>
+          </div>
+          <a href="#" id="profile-link">
+            <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"></div>
+          </a>
+        </div>
+      </header>
+
+    <!-- Two Columns: Applicants + Bidding -->
+    <div class="flex flex-col md:flex-row grow w-full h-full">
+      <!-- Left: All Applicants -->
+      <div id="applicant-list" class="w-full md:w-1/2 p-6 border-r border-[#f3eee7] overflow-y-auto max-h-screen"></div>
+
+      <!-- Right: Pending Bidding -->
+      <div id="bidding-list" class="w-full md:w-1/2 p-6 overflow-y-auto max-h-screen"></div>
+    </div>
+  </div>
+  <!-- Script to Load Applicants and Separate into Two Divs -->
+  <script>
+    // ✅ Make these global so buttons can access them
+    async function updateStatus(appId, newStatus, customBid = null, fullName = "") {
+      const actionVerb = newStatus === "accepted" ? "accept" : newStatus === "rejected" ? "reject" : "update the bid for";
+
+      const confirmResult = await Swal.fire({
+        title: `Are you sure you want to ${actionVerb}?`,
+        text: fullName ? `This action will ${actionVerb} ${fullName}.` : "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#f43f5e",
+        confirmButtonText: "Yes, proceed"
+      });
+
+      if (!confirmResult.isConfirmed) return;
+
+       try {
+    const res = await fetch(`/api/applications/${appId}/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        status: newStatus, 
+        bidAmount: customBid 
+      }),
+    });
+
+    const updated = await res.json();
+
+    if (res.ok) {
+      // The WebSocket message will handle the UI update
+      Swal.fire({
+        icon: "success",
+        title: "Update Sent",
+        text: "The update is being processed...",
+        timer: 1500,
+        showConfirmButton: false
+      });
+
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Update Failed",
+            text: updated.error || "Unknown error occurred.",
+            confirmButtonColor: "#ef4444"
+          });
+        }
+      } catch (err) {
+        console.error("Error updating status:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Network Error",
+          text: "Failed to update. Please try again.",
+          confirmButtonColor: "#ef4444"
+        });
+      }
+    }
+
+
+    async function confirmAndReject(appId) {
+      const confirmResult = await Swal.fire({
+        title: "Reject Bid?",
+        text: "Are you sure you want to reject this bid?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#9ca3af",
+        confirmButtonText: "Yes, reject"
+      });
+      if (!confirmResult.isConfirmed) return;
+
+
+      try {
+        const res = await fetch(`/api/applications/${appId}/status`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "rejected" }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          Swal.fire({
+            icon: "error",
+            title: "Rejection Failed",
+            text: data.error || "Unknown error",
+            confirmButtonColor: "#ef4444"
+          });
+          return;
+        }
+ if (res.ok) {
+      const card = document.getElementById(`app-card-${appId}`);
+ if (card) {
+  // Update the card instead of removing it
+        const statusEl = document.getElementById(`status-${appId}`);
+        if (statusEl) statusEl.textContent = "rejected";
+        card.style.opacity = '0.7';
+        card.style.borderLeft = '4px solid #EF4444';
+
+      }    
+        }
+            Swal.fire({
+          icon: "success",
+          title: "Bid Rejected",
+          text: "The bid has been rejected successfully.",
+          timer: 2000,
+          showConfirmButton: false
+        }); 
+      } catch (err) {
+        console.error("Error rejecting bid:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Network Error",
+          text: "Something went wrong while rejecting the bid.",
+          confirmButtonColor: "#ef4444"
+        });
+      }
+    }
+
+    // ✅ DOMContentLoaded starts here
+    document.addEventListener("DOMContentLoaded", async () => {
+      const jobId = new URLSearchParams(window.location.search).get("jobId");
+      const applicantContainer = document.getElementById("applicant-list");
+      const biddingContainer = document.getElementById("bidding-list");
+
+      if (!jobId) {
+        applicantContainer.innerHTML = "<p>No job ID found.</p>";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/applications/job/${jobId}`);
+        const applicants = await res.json();
+
+        if (!Array.isArray(applicants) || applicants.length === 0) {
+          applicantContainer.innerHTML = "<p>No applicants yet.</p>";
+          return;
+        }
+
+        applicantContainer.innerHTML =
+          "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
+        biddingContainer.innerHTML =
+          "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
+
+        applicants.forEach((app) => {
+          const user = app.craftsmanId;
+          const hasBid =
+            typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
+          const isPending = app.status === "pending";
+
+          const userInfo = `
+          <div class="flex-1">
+            <div class="flex items-center gap-4 mb-2">
+              <img src="${user.profileImage || "/uploads/default.png"
+            }" class="w-12 h-12 rounded-full object-cover" />
+              <div>
+                <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName
+            }</h3>
+                <p class="text-sm text-gray-500">${user.email}</p>
+              </div>
+            </div>
+            <p class="text-sm text-[#1b150d]"><strong>Status:</strong> <span id="status-${app._id
+            }">${app.status}</span></p>
+            <p class="mt-2 text-sm text-[#1b150d]"><strong>Cover Letter:</strong><br/>${app.coverLetter
+            }</p>
+          </div>
+        `;
+
+          const acceptRejectBtns = `
+          <div class="flex flex-col items-center justify-center gap-2 min-w-[140px]">
+            <button onclick="updateStatus('${app._id
+            }', 'accepted', null, '${user.fullName.replace(/'/g, "\\'")}')"
+              class="bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1 rounded text-sm font-semibold">
+              Accept
+            </button>
+            <button onclick="updateStatus('${app._id
+            }', 'rejected', null, '${user.fullName.replace(/'/g, "\\'")}')"
+              class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1 rounded text-sm font-semibold">
+              Reject
+            </button>
+          </div>
+        `;
+
+          const biddingSection = `
+          <div class="flex flex-col justify-between items-center gap-3 text-sm min-w-[140px]">
+            <p class="text-[#1b150d] font-semibold">Bid: <span id="bid-${app._id}" class="text-black font-normal">$${app.bidAmount}</span></p>
+            <div class="flex gap-2">
+              <button onclick="updateStatus('${app._id}', 'accepted')" title="Accept"
+                class="bg-green-100 text-green-700 hover:bg-green-200 px-2 py-1 rounded">Accept</button>
+              <button onclick="confirmAndReject('${app._id}')" title="Reject"
+                class="bg-red-100 text-red-700 hover:bg-red-200 px-2 py-1 rounded">Reject</button>
+            </div>
+            <div class="flex gap-1 mt-1">
+              <input id="new-bid-${app._id}" type="number" class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
+              <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
+                class="text-[#ec8e13] hover:underline font-semibold">Update</button>
+            </div>
+          </div>
+        `;
+
+          const html = `
+          <div id="app-card-${app._id
+            }" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
+            ${userInfo}
+            ${hasBid ? biddingSection : acceptRejectBtns}
+          </div>
+        `;
+
+         
+// With this new condition:
+if (hasBid) {  // If there's a bid amount, it goes in bidding section regardless of status
+  biddingContainer.insertAdjacentHTML("beforeend", html);
+} else {
+  applicantContainer.insertAdjacentHTML("beforeend", html);
+}
+        });
+      } catch (error) {
+        console.error(error);
+        applicantContainer.innerHTML = "<p>Error loading applicants.</p>";
+      }
+    });
+  </script>
+   <script>
+  
+// Connect to WebSocket
+let socket;
+function connectWebSocket(userId) {
+  const token = localStorage.getItem("token");
+
+  console.log("Current userId:", userId);
+  console.log("Current token:", token);
+
+  socket = new WebSocket(`ws://localhost:5001/ws?token=${token}`);
+
+  socket.onopen = () => {
+    console.log("✅ WebSocket connected, authenticating...");
+    socket.send(JSON.stringify({
+      type: "AUTH",
+      token,
+      userId
+    }));
+  };
+
+  socket.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    console.log("📨 Message from server:", message);
+    if (message.type === "BID_UPDATE") {
+      handleBidUpdate(message.data);
+    }
+  };
+
+  socket.onerror = (err) => {
+    console.error("❌ TEST: WebSocket error", err);
+  };
+
+  socket.onclose = () => {
+    console.log("TEST: WebSocket closed");
+    setTimeout(() => connectWebSocket(userId), 5000);
+  };
+}
+
+function handleBidUpdate(updatedBid) {
+  // Check if this bid exists in the UI
+  const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
+  
+  if (existingCard) {
+    // Update existing card
+    const statusEl = document.getElementById(`status-${updatedBid._id}`);
+    if (statusEl) statusEl.textContent = updatedBid.status;
+    
+    const bidEl = document.getElementById(`bid-${updatedBid._id}`);
+    if (bidEl) bidEl.textContent = `$${updatedBid.bidAmount}`;
+    
+    // Visual feedback
+    existingCard.classList.add('bg-blue-50');
+    setTimeout(() => existingCard.classList.remove('bg-blue-50'), 1000);
+  } else if (updatedBid.status === 'pending') {
+    // New bid - add it to the UI
+    renderBid(updatedBid);
+  }
+}
+    document.addEventListener("DOMContentLoaded", async () => {
+  const userId = localStorage.getItem("userId");
+  // Debug logs
+  console.log('Current userId:', userId);
+  console.log('Current token:', localStorage.getItem('token'));
+  
+  if (!userId) {
+    console.warn("⚠️ No userId in localStorage.");
+    return;
+  }
+ // Test WebSocket connection
+  window.testSocket = new WebSocket('ws://localhost:5001/ws');
+  window.testSocket.onopen = () => console.log('TEST: WebSocket connected');
+  window.testSocket.onerror = (e) => console.error('TEST: WebSocket error', e);
+  window.testSocket.onclose = () => console.log('TEST: WebSocket closed');
+  connectWebSocket(userId);
+      const craftsmanId = localStorage.getItem("craftsmanId");
+      const profilePicDiv = document.getElementById("profile-pic");
+
+      if (!craftsmanId || !profilePicDiv) return;
+
+      // Try cached image first
+      const cachedImage = localStorage.getItem("profileImage");
+      if (cachedImage) {
+        profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+      }
+
+      try {
+        const res = await fetch(`/api/profile/${craftsmanId}`);
+        if (!res.ok) throw new Error("Failed fetching profile");
+
+        const data = await res.json();
+        const profileImage =
+          data.profileImage.trim() || "/uploads/default.png";
+
+        profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+
+        // Update cache
+        localStorage.setItem("profileImage", profileImage);
+      } catch (error) {
+        console.error("❌ Error loading profile:", error);
+      }
+    });
+  </script>
+</body>
+
+</html>

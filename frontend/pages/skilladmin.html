@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills & Categories</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+
+<body class="bg-[#FBF8EF] text-[#201A09] font-[Inter, 'Noto Sans', sans-serif]">
+  <div class="p-6 max-w-5xl mx-auto">
+    <h1 class="text-3xl font-bold mb-2">Manage Job Categories</h1>
+    <p class="text-[#A07D1C] mb-6">Add, edit, search or delete categories below.</p>
+
+    <!-- Search Bar -->
+    <div class="mb-4 flex gap-2">
+      <input id="category-search" type="text" oninput="filterCategories()" placeholder="Search categories..."
+        class="w-full p-2 rounded border border-yellow-700 bg-[#F5EFDB] placeholder:text-[#A07D1C]" />
+    </div>
+
+    <!-- Add New -->
+    <!-- Add New -->
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <input id="new-category-name" placeholder="Category name" class="p-2 border border-gray-300 rounded w-[30%]" />
+      <input id="new-category-desc" placeholder="Description" class="p-2 border border-gray-300 rounded w-[35%]" />
+      <input id="new-category-image" placeholder="Image URL (optional)"
+        class="p-2 border border-gray-300 rounded w-[25%]" />
+      <button onclick="addCategory()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded">
+        + Add
+      </button>
+    </div>
+
+
+    <!-- Category List -->
+    <div id="category-list" class="space-y-4"></div>
+  </div>
+
+  <script>
+    async function fetchCategories() {
+      const res = await fetch('http://localhost:5001/api/categories');
+
+      const categories = await res.json();
+
+      const container = document.getElementById('category-list');
+      container.innerHTML = '';
+
+      categories.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = "portfolio-card w-full max-w-5xl mx-auto";
+
+        div.innerHTML = `
+  <div class="flex justify-between gap-4 items-center bg-white p-4 border border-[#F5EFDB] rounded shadow">
+    <div class="flex items-center gap-4">
+      <div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-xl"
+           style="background-image: url('${cat.image || "/assets/default.png"}');"></div>
+      <div class="flex flex-col">
+        <p class="text-[#1b150d] text-lg font-semibold">${cat.name}</p>
+        <p class="text-[#637588] text-sm">${cat.followerCount.toLocaleString()} followers</p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2 items-end">
+      <button onclick="editCategory('${cat._id}', '${cat.name}', '${cat.description}')" class="text-blue-600 hover:underline text-sm">Edit</button>
+      <button onclick="deleteCategory('${cat._id}')" class="text-red-600 hover:underline text-sm">Delete</button>
+    </div>
+  </div>
+`;
+
+
+
+        container.appendChild(div);
+      });
+
+    }
+
+    async function addCategory() {
+      const name = document.getElementById('new-category-name').value.trim();
+      const description = document.getElementById('new-category-desc').value.trim();
+      const image = document.getElementById('new-category-image').value.trim();
+
+      if (!name) return alert("Category name is required");
+
+      await fetch('/api/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description, image })  // <-- include image
+      });
+
+      // Reset inputs
+      document.getElementById('new-category-name').value = '';
+      document.getElementById('new-category-desc').value = '';
+      document.getElementById('new-category-image').value = '';
+
+      fetchCategories();
+    }
+
+
+    async function deleteCategory(id) {
+      if (!confirm('Are you sure you want to delete this category?')) return;
+      await fetch(`/api/categories/${id}`, { method: 'DELETE' });
+      fetchCategories();
+    }
+
+    function editCategory(id, oldName, oldDesc) {
+      const newName = prompt('Edit Category Name:', oldName);
+      const newDesc = prompt('Edit Description:', oldDesc);
+      if (newName) {
+        fetch(`/api/categories/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: newName, description: newDesc })
+        }).then(fetchCategories);
+      }
+    }
+
+    function filterCategories() {
+      const query = document.getElementById('category-search').value.toLowerCase();
+      const all = document.querySelectorAll('#category-list > div');
+      all.forEach(div => {
+        const text = div.innerText.toLowerCase();
+        div.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchCategories);
+  </script>
+</body>
+
+</html>
