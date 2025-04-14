@@ -35,9 +35,14 @@ router.get("/", async (req, res) => {
       { $sort: { count: -1 } },
       { $limit: 5 },
     ]);
+    const totalUsersCount = await User.countDocuments();
+    const totalJobsCount = await Job.countDocuments();
+
     const popularSkills = skillsAgg.map((s) => ({
       name: s._id || "Unspecified",
-      percentage: Math.min(100, Math.round((s.count / totalUsers) * 100)),
+      count: s.count,
+      percentage:
+        totalUsersCount > 0 ? Math.round((s.count / totalUsersCount) * 100) : 0,
     }));
 
     const jobAgg = await Job.aggregate([
@@ -46,9 +51,12 @@ router.get("/", async (req, res) => {
       { $sort: { count: -1 } },
       { $limit: 5 },
     ]);
+
     const jobCategories = jobAgg.map((j) => ({
       name: j._id,
-      percentage: Math.min(100, Math.round((j.count / jobsPosted) * 100)),
+      count: j.count,
+      percentage:
+        totalJobsCount > 0 ? Math.round((j.count / totalJobsCount) * 100) : 0,
     }));
 
     const reviews = await Job.find({

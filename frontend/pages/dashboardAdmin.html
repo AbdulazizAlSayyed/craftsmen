@@ -6,74 +6,201 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    .bg-active {
+      background-color: #f0f2f4;
+      font-weight: 600;
+      border-left: 4px solid #2563eb;
+      /* blue-600 */
+    }
+  </style>
 </head>
 
 <body class="bg-white font-sans">
-  <div class="p-6">
-    <h1 class="text-4xl font-bold text-gray-800 mb-6">Dashboard</h1>
+  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+    style="font-family: Inter, 'Noto Sans', sans-serif">
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col w-80">
+          <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
+            <div class="flex flex-col gap-4">
+              <div class="flex gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                  style="background-image: url('https://cdn.usegalileo.ai/sdxl10/8df52227-0586-455a-ba76-fef9fda944ea.png');">
+                </div>
+                <h1 class="text-gray-800 text-base font-medium leading-normal">
+                  Craftsmen Network
+                </h1>
+              </div>
+              <div class="flex flex-col gap-2">
+                <a href="/dashboardAdmin.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Dashboard icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z">
+                      </path>
+                    </svg>
+                  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
-        <p class="text-gray-600 text-sm font-medium">Total Users</p>
-        <div class="flex items-end justify-between">
-          <p class="text-3xl font-mono font-semibold text-gray-800" id="totalUsers">0</p>
-        </div>
-      </div>
+                  <p class="text-sm font-medium text-gray-800">Dashboard</p>
+                </a>
 
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <p class="text-gray-700 font-medium">New Signups (Last 7 Days)</p>
-        <p id="newSignups" class="text-2xl font-bold text-gray-900">0</p>
-      </div>
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <p class="text-gray-700 font-medium">Jobs Posted (This Month)</p>
-        <p id="jobsPosted" class="text-2xl font-bold text-gray-900">0</p>
-      </div>
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <p class="text-gray-700 font-medium">Revenue Generated</p>
-        <p id="revenueGenerated" class="text-2xl font-bold text-gray-900">$0</p>
-      </div>
-    </div>
+                <a href="/ContentModeration.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Broom Icon (Content Moderation) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M231.3,24.69a8,8,0,0,0-11.31,0l-64,64L146.34,82.34l9.36-9.37a8,8,0,0,0-11.32-11.31l-9.36,9.36L64,17.37A8,8,0,0,0,52.69,28.69L126.63,102.6l-93.6,93.6a8,8,0,0,0,11.31,11.31l93.6-93.6L227.31,40A8,8,0,0,0,231.3,24.69Z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-medium text-gray-800">Content Moderation</p>
 
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">User Activity</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="border border-gray-300 p-6 rounded-xl">
-        <p class="text-gray-700 font-medium mb-2">Active Users (Last 30 Days)</p>
-        <p id="activeUsers" class="text-3xl font-bold text-gray-900 mb-4">0</p>
-      </div>
-      <div class="border border-gray-300 p-6 rounded-xl">
-        <p class="text-gray-700 font-medium mb-2">Clients vs. Craftsmen</p>
-        <p id="clientCraftsman" class="text-3xl font-bold text-gray-900 mb-4">0 vs. 0</p>
-      </div>
-
-      <div class="border border-gray-300 p-6 rounded-xl">
-        <p class="text-gray-700 font-medium mb-2">Users Posted Jobs vs. Got Hired</p>
-        <p id="postVsHire" class="text-3xl font-bold text-gray-900 mb-4">0 vs. 0</p>
-      </div>
+                </a>
 
 
-    </div>
+                <a href="/ManageUser.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- User icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z">
+                      </path>
+                    </svg>
+                  </div>
+                  <p class="text-sm font-medium text-gray-800"> Manage Users</p>
 
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Top Skills</h2>
-    <div id="skillsBars" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mb-10"></div>
+                </a>
 
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Top Job Categories</h2>
-    <div id="jobCategoriesBars" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mb-10"></div>
+                <a href="/Report.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Report icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M224,48V168a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C97.87,162,74.79,150.61,48,171.77V216a8,8,0,0,1-16,0V48a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C159,54.46,182.79,66.2,210.76,42A8,8,0,0,1,224,48Z">
+                      </path>
+                    </svg>
+                  </div>
 
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">User Reviews</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <p id="reviewScore" class="text-4xl font-extrabold text-gray-900">0.0</p>
-        <p id="reviewCount" class="text-base text-gray-600">0 reviews</p>
-        <div class="flex gap-2 mt-4">
-          <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div class="review-bar h-2 bg-gray-800" style="width: 0%"></div>
+                  <p class="text-sm font-medium text-gray-800">Reports</p>
+                </a>
+
+                <a href="/skilladmin.html"
+                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
+                  <div class="text-gray-800">
+                    <!-- Settings icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+                      viewBox="0 0 256 256">
+                      <path
+                        d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z">
+                      </path>
+                    </svg>
+                  </div>
+
+                  <p class="text-sm font-medium text-gray-800">Skills & Categories</p>
+
+                </a>
+              </div>
+            </div>
           </div>
-          <span class="text-sm text-gray-700">5</span>
+        </div>
+
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <h1 class="text-4xl font-bold text-gray-800 mb-6">Dashboard</h1>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+              <p class="text-gray-600 text-sm font-medium">Total Users</p>
+              <div class="flex items-end justify-between">
+                <p class="text-3xl font-mono font-semibold text-gray-800" id="totalUsers">0</p>
+              </div>
+            </div>
+
+            <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+              <p class="text-gray-600 text-sm font-medium">New Signups (Last 7 Days)</p>
+              <div class="flex items-end justify-between">
+                <p class="text-3xl font-mono font-semibold text-gray-800" id="newSignups">0</p>
+              </div>
+            </div>
+            <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+              <p class="text-gray-600 text-sm font-medium">Jobs Posted (This Month)</p>
+              <div class="flex items-end justify-between">
+                <p class="text-3xl font-mono font-semibold text-gray-800" id="jobsPosted">0</p>
+              </div>
+            </div>
+            <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+              <p class="text-gray-600 text-sm font-medium">Revenue Generated</p>
+              <div class="flex items-end justify-between">
+                <p class="text-3xl font-mono font-semibold text-gray-800" id="revenueGenerated">0</p>
+              </div>
+            </div>
+
+          </div>
+
+          <section class="mt-8 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">User Activity</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+                <p class="text-gray-600 text-sm font-medium mb-2">Active Users (Last 30 Days)</p>
+                <p id="activeUsers" class="text-3xl font-bold text-gray-900">0</p>
+              </div>
+
+              <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+                <p class="text-gray-600 text-sm font-medium mb-2">Clients vs. Craftsmen</p>
+                <p id="clientCraftsman" class="text-3xl font-bold text-gray-900">0 vs. 0</p>
+              </div>
+
+              <div class="bg-gray-100 shadow-md hover:shadow-lg transition-all p-6 rounded-xl border border-gray-200">
+                <p class="text-gray-600 text-sm font-medium mb-2">Users Posted Jobs vs. Got Hired</p>
+                <p id="postVsHire" class="text-3xl font-bold text-gray-900">0 vs. 0</p>
+              </div>
+            </div>
+          </section>
+
+
+          <section class="mt-10">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+
+              Top Skills</h2>
+            <div id="skillsBars" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mb-10"></div>
+          </section>
+
+          <section class="mt-10">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+
+              Top Job Categories</h2>
+            <div id="jobCategoriesBars" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mb-10"></div>
+
+            <section class="mt-10">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+
+                User Reviews</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p id="reviewScore" class="text-4xl font-extrabold text-gray-900">0.0</p>
+                  <p id="reviewCount" class="text-base text-gray-600">0 reviews</p>
+                  <div class="flex gap-2 mt-4">
+                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div class="review-bar h-2 bg-gray-800" style="width: 0%"></div>
+                    </div>
+                    <span class="text-sm text-gray-700">5</span>
+                  </div>
+                </div>
+              </div>
+            </section>
         </div>
       </div>
     </div>
   </div>
-
   <script>
     async function loadDashboardData() {
       try {
@@ -96,20 +223,26 @@
         skillsContainer.innerHTML = '';
         data.popularSkills.forEach(skill => {
           skillsContainer.innerHTML += `
-              <p class='text-sm font-bold text-gray-700'>${skill.name}</p>
-              <div class='w-full h-3 bg-gray-200 rounded-full'>
-                <div class='h-3 bg-gray-700 rounded-full' style='width: ${skill.percentage}%'></div>
-              </div>`;
+    <div class='flex items-center justify-between'>
+      <p class='text-sm font-bold text-gray-700'>${skill.name}</p>
+      <span class="text-xs text-gray-500 ml-2">(${skill.count})</span>
+    </div>
+    <div class='w-full h-3 bg-gray-200 rounded-full mb-2'>
+      <div class='h-3 bg-gray-700 rounded-full' style='width: ${skill.percentage}%'></div>
+    </div>`;
         });
 
         const jobContainer = document.getElementById("jobCategoriesBars");
         jobContainer.innerHTML = '';
         data.jobCategories.forEach(job => {
           jobContainer.innerHTML += `
-              <p class='text-sm font-bold text-gray-700'>${job.name}</p>
-              <div class='w-full h-3 bg-gray-200 rounded-full'>
-                <div class='h-3 bg-gray-700 rounded-full' style='width: ${job.percentage}%'></div>
-              </div>`;
+    <div class='flex items-center justify-between'>
+      <p class='text-sm font-bold text-gray-700'>${job.name}</p>
+      <span class="text-xs text-gray-500 ml-2">(${job.count})</span>
+    </div>
+    <div class='w-full h-3 bg-gray-200 rounded-full mb-2'>
+      <div class='h-3 bg-gray-700 rounded-full' style='width: ${job.percentage}%'></div>
+    </div>`;
         });
 
         const reviewBars = document.querySelectorAll(".review-bar");
@@ -125,6 +258,16 @@
 
     window.onload = loadDashboardData;
   </script>
+  <script>
+    const path = window.location.pathname;
+    document.querySelectorAll("a").forEach(link => {
+      if (link.getAttribute("href") === path) {
+        link.classList.add("bg-active", "text-blue-600");
+      }
+    });
+  </script>
+
+
 </body>
 
 </html>
