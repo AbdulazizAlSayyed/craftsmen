@@ -1,9 +1,0 @@
-# Ignore log files
-*.log
-backend/logs/
-
-# Ignore environment variables hydi kmn for security 
-.env
-
-# Ignore node_modules folders
-node_modules/
