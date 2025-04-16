@@ -10,6 +10,7 @@
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <style>
   /* Add to your CSS */
 @keyframes highlight {
@@ -24,6 +25,28 @@
 /* Make sure cards are properly styled for both views */
 .app-card {
   transition: all 0.3s ease;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-accepted {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
 }
 </style>
 </head>
@@ -103,9 +126,109 @@
       <div id="bidding-list" class="w-full md:w-1/2 p-6 overflow-y-auto max-h-screen"></div>
     </div>
   </div>
-  <!-- Script to Load Applicants and Separate into Two Divs -->
+
   <script>
-    // ✅ Make these global so buttons can access them
+    // Global socket variable
+    let socket;
+
+    // Function to connect to Socket.IO
+    function connectSocketIO() {
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        console.warn("⚠️ No userId found in localStorage.");
+        return;
+      }
+
+      socket = io("http://localhost:5001", {
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 2000,
+      });
+
+      socket.on("connect", () => {
+        socket.emit("addUser", userId);
+        console.log("✅ Connected to Socket.IO with ID:", socket.id);
+      });
+
+      socket.on("BID_UPDATE", (data) => {
+        handleBidUpdate(data);
+      });
+
+      socket.on("disconnect", () => {
+        console.warn("⚠️ Socket.IO disconnected, attempting to reconnect...");
+      });
+
+      socket.on("reconnect_attempt", () => {
+        console.log("⚠️ Reconnecting...");
+      });
+
+      socket.on("reconnect_failed", () => {
+        console.error("❌ Socket.IO failed to reconnect.");
+      });
+    }
+
+    // Handle bid updates from server
+    function handleBidUpdate(updatedBid) {
+      const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
+      
+      if (existingCard) {
+        // Update status
+        const statusEl = document.getElementById(`status-${updatedBid._id}`);
+        if (statusEl) {
+          statusEl.textContent = updatedBid.status;
+          statusEl.className = `status-badge status-${updatedBid.status}`;
+        }
+        
+        // Update bid amount if it exists
+        const bidEl = document.getElementById(`bid-${updatedBid._id}`);
+        if (bidEl && updatedBid.bidAmount !== undefined) {
+          bidEl.textContent = `$${updatedBid.bidAmount}`;
+        }
+        
+        // Visual feedback
+        existingCard.classList.add('bid-update');
+        setTimeout(() => existingCard.classList.remove('bid-update'), 2000);
+
+        // Update buttons based on status
+        updateCardButtons(existingCard, updatedBid.status);
+      }
+    }
+
+    // Update card buttons based on status
+function updateCardButtons(card, status) {
+  const buttonsContainer = card.querySelector('.action-buttons');
+  if (!buttonsContainer) return;
+
+  if (status === 'pending') {
+    buttonsContainer.innerHTML = `
+      <div class="text-yellow-600 font-medium">Waiting for client response</div>
+      <div class="flex gap-1 mt-1">
+        <input id="new-bid-${card.id.replace('app-card-', '')}" type="number" 
+          class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
+        <button onclick="updateStatus('${card.id.replace('app-card-', '')}', 'pending', 
+          parseFloat(document.getElementById('new-bid-${card.id.replace('app-card-', '')}').value))"
+          class="text-[#ec8e13] hover:underline font-semibold">Update</button>
+      </div>
+    `;
+  } else if (status === 'accepted') {
+    buttonsContainer.innerHTML = `
+      <div class="text-green-600 font-medium">Accepted</div>
+    `;
+  } else if (status === 'rejected') {
+    buttonsContainer.innerHTML = `
+      <div class="text-red-600 font-medium">Rejected</div>
+      <div class="flex gap-1 mt-1">
+        <input id="new-bid-${card.id.replace('app-card-', '')}" type="number" 
+          class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
+        <button onclick="updateStatus('${card.id.replace('app-card-', '')}', 'pending', 
+          parseFloat(document.getElementById('new-bid-${card.id.replace('app-card-', '')}').value))"
+          class="text-[#ec8e13] hover:underline font-semibold">Resubmit</button>
+      </div>
+    `;
+  }
+}
+
+    // Update application status
     async function updateStatus(appId, newStatus, customBid = null, fullName = "") {
       const actionVerb = newStatus === "accepted" ? "accept" : newStatus === "rejected" ? "reject" : "update the bid for";
 
@@ -121,7 +244,8 @@
 
       if (!confirmResult.isConfirmed) return;
 
-       try {
+     
+  try {
     const res = await fetch(`/api/applications/${appId}/status`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -134,15 +258,34 @@
     const updated = await res.json();
 
     if (res.ok) {
-      // The WebSocket message will handle the UI update
       Swal.fire({
         icon: "success",
-        title: "Update Sent",
-        text: "The update is being processed...",
+        title: newStatus === "pending" ? "Bid Updated" : "Status Updated",
+        text: newStatus === "pending" 
+          ? "Your bid has been updated and is waiting for client response" 
+          : `Application has been ${newStatus}`,
         timer: 1500,
         showConfirmButton: false
       });
 
+          // Update UI immediately
+           const card = document.getElementById(`app-card-${appId}`);
+      if (card) {
+        const statusEl = document.getElementById(`status-${appId}`);
+        if (statusEl) {
+          statusEl.textContent = newStatus;
+          statusEl.className = `status-badge status-${newStatus}`;
+        }
+
+        const bidEl = document.getElementById(`bid-${appId}`);
+        if (bidEl && customBid) {
+          bidEl.textContent = `$${customBid}`;
+        }
+
+        updateCardButtons(card, newStatus);
+        card.classList.add('bid-update');
+        setTimeout(() => card.classList.remove('bid-update'), 1500);
+      }
         } else {
           Swal.fire({
             icon: "error",
@@ -162,11 +305,11 @@
       }
     }
 
-
+    // Confirm and reject application
     async function confirmAndReject(appId) {
       const confirmResult = await Swal.fire({
-        title: "Reject Bid?",
-        text: "Are you sure you want to reject this bid?",
+        title: "Reject Applicant?",
+        text: "Are you sure you want to reject?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#ef4444",
@@ -174,7 +317,6 @@
         confirmButtonText: "Yes, reject"
       });
       if (!confirmResult.isConfirmed) return;
-
 
       try {
         const res = await fetch(`/api/applications/${appId}/status`, {
@@ -193,24 +335,27 @@
           });
           return;
         }
- if (res.ok) {
-      const card = document.getElementById(`app-card-${appId}`);
- if (card) {
-  // Update the card instead of removing it
-        const statusEl = document.getElementById(`status-${appId}`);
-        if (statusEl) statusEl.textContent = "rejected";
-        card.style.opacity = '0.7';
-        card.style.borderLeft = '4px solid #EF4444';
 
-      }    
+        const updated = await res.json();
+        const card = document.getElementById(`app-card-${appId}`);
+        if (card) {
+          const statusEl = document.getElementById(`status-${appId}`);
+          if (statusEl) {
+            statusEl.textContent = "rejected";
+            statusEl.className = "status-badge status-rejected";
+          }
+          updateCardButtons(card, "rejected");
+          card.classList.add('bid-update');
+          setTimeout(() => card.classList.remove('bid-update'), 1500);
         }
-            Swal.fire({
+
+        Swal.fire({
           icon: "success",
-          title: "Bid Rejected",
+          title: "Rejected",
           text: "The bid has been rejected successfully.",
           timer: 2000,
           showConfirmButton: false
-        }); 
+        });
       } catch (err) {
         console.error("Error rejecting bid:", err);
         Swal.fire({
@@ -222,8 +367,11 @@
       }
     }
 
-    // ✅ DOMContentLoaded starts here
+    // Load applicants when DOM is ready
     document.addEventListener("DOMContentLoaded", async () => {
+      // Connect to Socket.IO
+      connectSocketIO();
+
       const jobId = new URLSearchParams(window.location.search).get("jobId");
       const applicantContainer = document.getElementById("applicant-list");
       const biddingContainer = document.getElementById("bidding-list");
@@ -242,164 +390,80 @@
           return;
         }
 
-        applicantContainer.innerHTML =
-          "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
-        biddingContainer.innerHTML =
-          "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
+        applicantContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
+        biddingContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
 
         applicants.forEach((app) => {
           const user = app.craftsmanId;
-          const hasBid =
-            typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
-          const isPending = app.status === "pending";
+          const hasBid = typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
 
           const userInfo = `
-          <div class="flex-1">
-            <div class="flex items-center gap-4 mb-2">
-              <img src="${user.profileImage || "/uploads/default.png"
-            }" class="w-12 h-12 rounded-full object-cover" />
-              <div>
-                <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName
-            }</h3>
-                <p class="text-sm text-gray-500">${user.email}</p>
+            <div class="flex-1">
+              <div class="flex items-center gap-4 mb-2">
+                <img src="${user.profileImage || "/uploads/default.png"}" 
+                  class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName}</h3>
+                  <p class="text-sm text-gray-500">${user.email}</p>
+                </div>
               </div>
+              <p class="text-sm text-[#1b150d]">
+                <strong>Status:</strong> 
+                <span id="status-${app._id}" class="status-badge status-${app.status}">
+                  ${app.status}
+                </span>
+              </p>
+              ${hasBid ? `<p class="text-sm text-[#1b150d]"><strong>Bid Amount:</strong> <span id="bid-${app._id}">$${app.bidAmount}</span></p>` : ''}
+              <p class="mt-2 text-sm text-[#1b150d]">
+                <strong>Cover Letter:</strong><br/>${app.coverLetter}
+              </p>
             </div>
-            <p class="text-sm text-[#1b150d]"><strong>Status:</strong> <span id="status-${app._id
-            }">${app.status}</span></p>
-            <p class="mt-2 text-sm text-[#1b150d]"><strong>Cover Letter:</strong><br/>${app.coverLetter
-            }</p>
-          </div>
-        `;
+          `;
 
-          const acceptRejectBtns = `
-          <div class="flex flex-col items-center justify-center gap-2 min-w-[140px]">
-            <button onclick="updateStatus('${app._id
-            }', 'accepted', null, '${user.fullName.replace(/'/g, "\\'")}')"
-              class="bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1 rounded text-sm font-semibold">
-              Accept
-            </button>
-            <button onclick="updateStatus('${app._id
-            }', 'rejected', null, '${user.fullName.replace(/'/g, "\\'")}')"
-              class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1 rounded text-sm font-semibold">
-              Reject
-            </button>
-          </div>
-        `;
-
-          const biddingSection = `
-          <div class="flex flex-col justify-between items-center gap-3 text-sm min-w-[140px]">
-            <p class="text-[#1b150d] font-semibold">Bid: <span id="bid-${app._id}" class="text-black font-normal">$${app.bidAmount}</span></p>
-            <div class="flex gap-2">
-              <button onclick="updateStatus('${app._id}', 'accepted')" title="Accept"
-                class="bg-green-100 text-green-700 hover:bg-green-200 px-2 py-1 rounded">Accept</button>
-              <button onclick="confirmAndReject('${app._id}')" title="Reject"
-                class="bg-red-100 text-red-700 hover:bg-red-200 px-2 py-1 rounded">Reject</button>
+          const actionButtons = `
+            <div class="action-buttons flex flex-col items-center justify-center gap-2 min-w-[140px]">
+              ${app.status === 'pending' ? `
+                <div class="flex gap-2">
+                  <button onclick="updateStatus('${app._id}', 'accepted', null, '${user.fullName.replace(/'/g, "\\'")}')"
+                    class="bg-green-100 text-green-700 hover:bg-green-200 px-2 py-1 rounded">Accept</button>
+                  <button onclick="confirmAndReject('${app._id}')"
+                    class="bg-red-100 text-red-700 hover:bg-red-200 px-2 py-1 rounded">Reject</button>
+                </div>
+               
+              ` : app.status === 'accepted' ? `
+                <div class="text-green-600 font-medium">Accepted</div>
+              ` : `
+                <div class="text-red-600 font-medium">Rejected</div>
+                ${hasBid ? `
+                <div class="flex gap-1 mt-1">
+                  <input id="new-bid-${app._id}" type="number" class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
+                  <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
+                    class="text-[#ec8e13] hover:underline font-semibold">Resubmit</button>
+                </div>
+                ` : ''}
+              `}
             </div>
-            <div class="flex gap-1 mt-1">
-              <input id="new-bid-${app._id}" type="number" class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
-              <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
-                class="text-[#ec8e13] hover:underline font-semibold">Update</button>
-            </div>
-          </div>
-        `;
+          `;
 
           const html = `
-          <div id="app-card-${app._id
-            }" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
-            ${userInfo}
-            ${hasBid ? biddingSection : acceptRejectBtns}
-          </div>
-        `;
+            <div id="app-card-${app._id}" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
+              ${userInfo}
+              ${actionButtons}
+            </div>
+          `;
 
-         
-// With this new condition:
-if (hasBid) {  // If there's a bid amount, it goes in bidding section regardless of status
-  biddingContainer.insertAdjacentHTML("beforeend", html);
-} else {
-  applicantContainer.insertAdjacentHTML("beforeend", html);
-}
+          if (hasBid) {
+            biddingContainer.insertAdjacentHTML("beforeend", html);
+          } else {
+            applicantContainer.insertAdjacentHTML("beforeend", html);
+          }
         });
       } catch (error) {
         console.error(error);
         applicantContainer.innerHTML = "<p>Error loading applicants.</p>";
       }
-    });
-  </script>
-   <script>
-  
-// Connect to WebSocket
-let socket;
-function connectWebSocket(userId) {
-  const token = localStorage.getItem("token");
 
-  console.log("Current userId:", userId);
-  console.log("Current token:", token);
-
-  socket = new WebSocket(`ws://localhost:5001/ws?token=${token}`);
-
-  socket.onopen = () => {
-    console.log("✅ WebSocket connected, authenticating...");
-    socket.send(JSON.stringify({
-      type: "AUTH",
-      token,
-      userId
-    }));
-  };
-
-  socket.onmessage = (event) => {
-    const message = JSON.parse(event.data);
-    console.log("📨 Message from server:", message);
-    if (message.type === "BID_UPDATE") {
-      handleBidUpdate(message.data);
-    }
-  };
-
-  socket.onerror = (err) => {
-    console.error("❌ TEST: WebSocket error", err);
-  };
-
-  socket.onclose = () => {
-    console.log("TEST: WebSocket closed");
-    setTimeout(() => connectWebSocket(userId), 5000);
-  };
-}
-
-function handleBidUpdate(updatedBid) {
-  // Check if this bid exists in the UI
-  const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
-  
-  if (existingCard) {
-    // Update existing card
-    const statusEl = document.getElementById(`status-${updatedBid._id}`);
-    if (statusEl) statusEl.textContent = updatedBid.status;
-    
-    const bidEl = document.getElementById(`bid-${updatedBid._id}`);
-    if (bidEl) bidEl.textContent = `$${updatedBid.bidAmount}`;
-    
-    // Visual feedback
-    existingCard.classList.add('bg-blue-50');
-    setTimeout(() => existingCard.classList.remove('bg-blue-50'), 1000);
-  } else if (updatedBid.status === 'pending') {
-    // New bid - add it to the UI
-    renderBid(updatedBid);
-  }
-}
-    document.addEventListener("DOMContentLoaded", async () => {
-  const userId = localStorage.getItem("userId");
-  // Debug logs
-  console.log('Current userId:', userId);
-  console.log('Current token:', localStorage.getItem('token'));
-  
-  if (!userId) {
-    console.warn("⚠️ No userId in localStorage.");
-    return;
-  }
- // Test WebSocket connection
-  window.testSocket = new WebSocket('ws://localhost:5001/ws');
-  window.testSocket.onopen = () => console.log('TEST: WebSocket connected');
-  window.testSocket.onerror = (e) => console.error('TEST: WebSocket error', e);
-  window.testSocket.onclose = () => console.log('TEST: WebSocket closed');
-  connectWebSocket(userId);
+      // Load profile picture
       const craftsmanId = localStorage.getItem("craftsmanId");
       const profilePicDiv = document.getElementById("profile-pic");
 
@@ -416,12 +480,9 @@ function handleBidUpdate(updatedBid) {
         if (!res.ok) throw new Error("Failed fetching profile");
 
         const data = await res.json();
-        const profileImage =
-          data.profileImage.trim() || "/uploads/default.png";
+        const profileImage = data.profileImage.trim() || "/uploads/default.png";
 
         profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-
-        // Update cache
         localStorage.setItem("profileImage", profileImage);
       } catch (error) {
         console.error("❌ Error loading profile:", error);
