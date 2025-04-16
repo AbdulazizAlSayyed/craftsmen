@@ -146,4 +146,24 @@ router.patch("/api/applications/:id/status", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+// Assuming Express.js
+router.post("/:id/update-bid", async (req, res) => {
+  const { id } = req.params;
+  const { bidAmount } = req.body;
+
+  try {
+    const updatedApp = await Application.findByIdAndUpdate(
+      id,
+      { bidAmount, status: "pending" }, // Reset status after re-bidding if needed
+      { new: true }
+    );
+    if (!updatedApp) return res.status(404).send("Application not found.");
+    res.json(updatedApp);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error.");
+  }
+});
+
+
 module.exports = router;
