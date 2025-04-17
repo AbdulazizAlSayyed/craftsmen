@@ -268,6 +268,17 @@ function updateCardButtons(card, status) {
         showConfirmButton: false
       });
 
+        // Store rejected bids in localStorage
+      if (newStatus === 'rejected') {
+        const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids') || {});
+        rejectedBids[appId] = true;
+        localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
+      } else {
+        // Remove from localStorage if status changed from rejected
+        const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
+        delete rejectedBids[appId];
+        localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
+      }
           // Update UI immediately
            const card = document.getElementById(`app-card-${appId}`);
       if (card) {
@@ -337,6 +348,10 @@ function updateCardButtons(card, status) {
         }
 
         const updated = await res.json();
+         // Store rejected bid in localStorage
+    const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
+    rejectedBids[appId] = true;
+    localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
         const card = document.getElementById(`app-card-${appId}`);
         if (card) {
           const statusEl = document.getElementById(`status-${appId}`);
@@ -392,6 +407,7 @@ function updateCardButtons(card, status) {
 
         applicantContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
         biddingContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
+    const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
 
         applicants.forEach((app) => {
           const user = app.craftsmanId;

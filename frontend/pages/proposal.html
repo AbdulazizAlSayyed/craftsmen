@@ -282,26 +282,81 @@
           });
         }
 
-        function updateBidDisplay(updatedBid) {
-          const card = document.getElementById(`proposal-${updatedBid._id}`);
-          if (!card) return;
+    function updateBidDisplay(updatedBid) {
+  const card = document.getElementById(`proposal-${updatedBid._id}`);
+  if (!card) return;
 
-          const bidEl = card.querySelector(".your-bid");
-          if (bidEl && updatedBid.bidAmount !== undefined) {
-            bidEl.textContent = `$${updatedBid.bidAmount}`;
-          }
+  // Update bid amount display
+  const bidEl = card.querySelector(".your-bid");
+  if (bidEl && updatedBid.bidAmount !== undefined) {
+    bidEl.textContent = `$${updatedBid.bidAmount}`;
+  }
 
-          const statusEl = card.querySelector(".status-badge");
-          if (statusEl) {
-            statusEl.className = `text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(updatedBid.status)} status-badge`;
-            statusEl.textContent = updatedBid.status.charAt(0).toUpperCase() + updatedBid.status.slice(1);
-          }
+  // Update status badge
+  const statusEl = card.querySelector(".status-badge");
+  if (statusEl) {
+    statusEl.className = `text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(updatedBid.status)} status-badge`;
+    statusEl.textContent = updatedBid.status.charAt(0).toUpperCase() + updatedBid.status.slice(1);
+  }
 
-          card.classList.add("bg-blue-50", "bid-update");
-          setTimeout(() => {
-            card.classList.remove("bg-blue-50", "bid-update");
-          }, 2000);
-        }
+  // Find or create action buttons container
+  let actionContainer = card.querySelector(".action-buttons");
+  if (!actionContainer) {
+    // Create container if it doesn't exist
+    const statusContainer = card.querySelector(".flex.flex-col.items-end.gap-2");
+    if (statusContainer) {
+      actionContainer = document.createElement("div");
+      actionContainer.className = "action-buttons mt-2";
+      statusContainer.appendChild(actionContainer);
+    }
+  }
+
+  // Update action buttons based on status
+  if (actionContainer) {
+    if (updatedBid.status === "pending") {
+      actionContainer.innerHTML = `
+        <div class="flex gap-2">
+          <button onclick="respondToBid('${updatedBid._id}', 'accepted')" 
+            class="px-3 py-1 bg-green-100 text-green-700 rounded text-sm font-medium">
+            Accept
+          </button>
+          <button onclick="respondToBid('${updatedBid._id}', 'rejected')" 
+            class="px-3 py-1 bg-red-100 text-red-700 rounded text-sm font-medium">
+            Reject
+          </button>
+        </div>
+      `;
+    } else if (updatedBid.status === "rejected") {
+      actionContainer.innerHTML = `
+        <div class="flex flex-col gap-2">
+          <p class="text-red-600 text-sm font-medium">Bid was rejected</p>
+          <div class="flex gap-2 items-center">
+            <input type="number" id="newBid-${updatedBid._id}" 
+              class="border rounded px-2 py-1 w-20 text-sm" 
+              placeholder="New $" 
+              min="1" 
+              value="${updatedBid.bidAmount || ''}">
+            <button onclick="resendBid('${updatedBid._id}')" 
+              class="bg-[#9a784c] text-white px-3 py-1 rounded text-sm">
+              Resubmit
+            </button>
+          </div>
+        </div>
+      `;
+    } else if (updatedBid.status === "accepted") {
+      actionContainer.innerHTML = `
+        <p class="text-green-600 text-sm font-medium">Bid accepted!</p>
+      `;
+    }
+  }
+
+  // Visual feedback
+  card.classList.add("bg-blue-50", "bid-update");
+  setTimeout(() => {
+    card.classList.remove("bg-blue-50", "bid-update");
+  }, 2000);
+}
+
         // Time ago function to show relative time
         function timeAgo(date) {
           const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -516,10 +571,15 @@
 
             if (!applications.length) {
               containerNoBid.innerHTML = `
-        <div class="p-4 bg-orange-50 border border-orange-300 rounded-lg shadow-sm text-center text-orange-700">
-          <p class="font-medium">You haven’t submitted any proposals yet.</p>
-          <a href="Apply.html" class="text-[#ec8e13] underline font-semibold mt-2 inline-block">Find Jobs to Apply</a>
-        </div>
+        // In the HTML template within loadApplications()
+<div class="flex flex-col items-end gap-2">
+  <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)} status-badge">
+    ${(app.status || 'pending').charAt(0).toUpperCase() + (app.status || 'pending').slice(1)}
+  </span>
+  <span class="text-sm font-medium text-[#9a784c]">${job.jobRank || ''}</span>
+  <div class="action-buttons mt-2"></div> <!-- Add this empty container -->
+</div>
+
       `;
               return;
             }
