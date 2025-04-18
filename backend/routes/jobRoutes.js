@@ -148,6 +148,31 @@ router.get("/current/:craftsmanId", async (req, res) => {
   res.json(jobs);
 });
 
+// Submit a rating for a completed job
+router.post("/rating/:jobId", async (req, res) => {
+  const { jobId } = req.params;
+  const { rating } = req.body;
+
+  if (!rating || rating < 1 || rating > 5) {
+    return res.status(400).json({ message: "Invalid rating value" });
+  }
+
+  try {
+    const job = await Job.findById(jobId);
+    if (!job) return res.status(404).json({ message: "Job not found" });
+
+    job.ratings = rating;
+    job.ratingStatus = "rated";
+    job.isRatingEnforced = false; // Optional field you may have for blocking features until rating is done
+
+    await job.save();
+    res.json({ message: "Rating submitted" });
+  } catch (err) {
+    console.error("❌ Error submitting rating:", err);
+    res.status(500).json({ message: "Failed to submit rating" });
+  }
+});
+
 // ✅ POST: Mark a job as completed by craftsman and notify client to rate
 // ✅ POST: Mark a job as completed by craftsman and notify client to rate
 router.post("/complete", async (req, res) => {

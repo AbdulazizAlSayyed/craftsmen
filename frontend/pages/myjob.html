@@ -99,6 +99,10 @@
             </div>
           </div>
           <div id="posted-jobs-list"></div>
+          <div id="pending-rating-section" class="mt-6 space-y-4 hidden">
+            <h3 class="text-lg font-bold text-[#1b150d]">Pending Ratings</h3>
+            <div id="pending-rating-jobs" class="space-y-2"></div>
+          </div>
 
 
 
@@ -125,6 +129,7 @@
 
               localStorage.setItem("craftsmanId", craftsmanId);
               await fetchPostedJobs(craftsmanId);
+              await fetchUnratedCompletedJobs(craftsmanId);
 
               try {
                 const res = await fetch(`/api/profile/${craftsmanId}`);
@@ -291,6 +296,96 @@
                 });
               }
             });
+
+            async function fetchUnratedCompletedJobs(userId) {
+              try {
+                const res = await fetch(`/api/jobs/posted/${userId}`);
+                const jobs = await res.json();
+                const unrated = jobs.filter(
+                  job => job.status === "completed" && job.ratingStatus === "not-rated"
+                );
+
+                if (unrated.length === 0) return;
+
+                const section = document.getElementById("pending-rating-section");
+                const container = document.getElementById("pending-rating-jobs");
+
+                section.classList.remove("hidden");
+
+                container.innerHTML = unrated.map(job => `
+  <div class="flex justify-between items-center border p-4 rounded-lg bg-white shadow">
+    <div>
+      <p class="text-[#1b150d] font-medium">${job.title}</p>
+      <p class="text-sm text-[#9a784c]">Completed on ${new Date(job.autoCompletedAt).toLocaleDateString()}</p>
+    </div>
+    <button onclick="openRatingAlert('${job._id}')" class="bg-[#ec8e13] text-white px-4 py-1.5 rounded hover:bg-orange-600">
+      Rate Now
+    </button>
+  </div>
+`).join("");
+              } catch (err) {
+                console.error("❌ Error fetching unrated jobs:", err);
+              }
+            }
+
+            async function openRatingAlert(jobId) {
+              const { value: rating } = await Swal.fire({
+                title: 'Rate the Craftsman',
+                input: 'range',
+                inputAttributes: {
+                  min: 1,
+                  max: 5,
+                  step: 1
+                },
+                inputValue: 3,
+                confirmButtonText: 'Submit Rating',
+                confirmButtonColor: '#22c55e',
+                showCancelButton: true,
+                cancelButtonColor: '#ef4444',
+                background: '#fefce8',
+                backdrop: 'rgba(253, 224, 71, 0.3)',
+                preConfirm: (value) => {
+                  if (!value || value < 1 || value > 5) {
+                    Swal.showValidationMessage('Please select a valid rating between 1 and 5.');
+                  }
+                }
+              });
+
+              if (rating) {
+                try {
+                  const res = await fetch(`/api/jobs/rating/${jobId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rating: parseInt(rating) })
+                  });
+
+                  if (!res.ok) throw new Error("Failed to submit rating");
+
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Thank you!',
+                    text: 'Your rating has been submitted.',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    background: '#ecfdf5',
+                    backdrop: 'rgba(34,197,94,0.15)'
+                  });
+
+                  // Optional: reload jobs to hide the Rate button
+                  fetchPostedJobs(localStorage.getItem("craftsmanId"));
+
+                } catch (err) {
+                  console.error("❌ Error submitting rating:", err);
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: 'Could not submit your rating. Please try again.',
+                    confirmButtonColor: '#ef4444'
+                  });
+                }
+              }
+            }
+
           </script>
           <script>
             // for disapper proposals if client
