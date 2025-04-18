@@ -149,9 +149,10 @@ router.get("/current/:craftsmanId", async (req, res) => {
 });
 
 // Submit a rating for a completed job
+// ✅ Submit a rating for a completed job and notify the craftsman
 router.post("/rating/:jobId", async (req, res) => {
   const { jobId } = req.params;
-  const { rating } = req.body;
+  const { craftsmanId, rating } = req.body;
 
   if (!rating || rating < 1 || rating > 5) {
     return res.status(400).json({ message: "Invalid rating value" });
@@ -163,9 +164,20 @@ router.post("/rating/:jobId", async (req, res) => {
 
     job.ratings = rating;
     job.ratingStatus = "rated";
-    job.isRatingEnforced = false; // Optional field you may have for blocking features until rating is done
+    job.isRatingEnforced = false;
 
     await job.save();
+
+    // ✅ Send notification to craftsman
+    const Notification = require("../models/Notification");
+    await Notification.create({
+      user: craftsmanId,
+      type: "rating", // ✅ this will now work
+      content: `You received a new rating of ${rating} ⭐ for the job "${job.title}"`,
+      isRead: false,
+      isMarked: false,
+    });
+
     res.json({ message: "Rating submitted" });
   } catch (err) {
     console.error("❌ Error submitting rating:", err);
