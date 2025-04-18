@@ -1,19 +1,21 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
-
-    <title>Galileo Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skills & Categories</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+      .bg-active {
+        background-color: #f0f2f4;
+        font-weight: 600;
+        border-left: 4px solid #2563eb;
+        /* blue-600 */
+      }
+    </style>
   </head>
-  <body>
+
+  <body class="bg-white font-sans">
     <div
       class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
       style="font-family: Inter, 'Noto Sans', sans-serif"
@@ -33,19 +35,18 @@
                     "
                   ></div>
                   <h1
-                    class="text-[#111517] text-base font-medium leading-normal"
+                    class="text-gray-800 text-base font-medium leading-normal"
                   >
                     Craftsmen Network
                   </h1>
                 </div>
                 <div class="flex flex-col gap-2">
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="House"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
+                  <a
+                    href="/dashboardAdmin.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- Dashboard icon -->
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24px"
@@ -58,151 +59,67 @@
                         ></path>
                       </svg>
                     </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Dashboard
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="Presentation"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24px"
-                        height="24px"
-                        fill="currentColor"
-                        viewBox="0 0 256 256"
-                      >
-                        <path
-                          d="M216,40H136V24a8,8,0,0,0-16,0V40H40A16,16,0,0,0,24,56V176a16,16,0,0,0,16,16H79.36L57.75,219a8,8,0,0,0,12.5,10l29.59-37h56.32l29.59,37a8,8,0,1,0,12.5-10l-21.61-27H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,136H40V56H216V176Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Listings
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="ListBullets"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24px"
-                        height="24px"
-                        fill="currentColor"
-                        viewBox="0 0 256 256"
-                      >
-                        <path
-                          d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Categories
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="PuzzlePiece"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24px"
-                        height="24px"
-                        fill="currentColor"
-                        viewBox="0 0 256 256"
-                      >
-                        <path
-                          d="M220.27,158.54a8,8,0,0,0-7.7-.46,20,20,0,1,1,0-36.16A8,8,0,0,0,224,114.69V72a16,16,0,0,0-16-16H171.78a35.36,35.36,0,0,0,.22-4,36.11,36.11,0,0,0-11.36-26.24,36,36,0,0,0-60.55,23.62,36.56,36.56,0,0,0,.14,6.62H64A16,16,0,0,0,48,72v32.22a35.36,35.36,0,0,0-4-.22,36.12,36.12,0,0,0-26.24,11.36,35.7,35.7,0,0,0-9.69,27,36.08,36.08,0,0,0,33.31,33.6,35.68,35.68,0,0,0,6.62-.14V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V165.31A8,8,0,0,0,220.27,158.54ZM208,208H64V165.31a8,8,0,0,0-11.43-7.23,20,20,0,1,1,0-36.16A8,8,0,0,0,64,114.69V72h46.69a8,8,0,0,0,7.23-11.43,20,20,0,1,1,36.16,0A8,8,0,0,0,161.31,72H208v32.23a35.68,35.68,0,0,0-6.62-.14A36,36,0,0,0,204,176a35.36,35.36,0,0,0,4-.22Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Services
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="Users"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24px"
-                        height="24px"
-                        fill="currentColor"
-                        viewBox="0 0 256 256"
-                      >
-                        <path
-                          d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Users
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="Star"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24px"
-                        height="24px"
-                        fill="currentColor"
-                        viewBox="0 0 256 256"
-                      >
-                        <path
-                          d="M239.2,97.29a16,16,0,0,0-13.81-11L166,81.17,142.72,25.81h0a15.95,15.95,0,0,0-29.44,0L90.07,81.17,30.61,86.32a16,16,0,0,0-9.11,28.06L66.61,153.8,53.09,212.34a16,16,0,0,0,23.84,17.34l51-31,51.11,31a16,16,0,0,0,23.84-17.34l-13.51-58.6,45.1-39.36A16,16,0,0,0,239.2,97.29Zm-15.22,5-45.1,39.36a16,16,0,0,0-5.08,15.71L187.35,216v0l-51.07-31a15.9,15.9,0,0,0-16.54,0l-51,31h0L82.2,157.4a16,16,0,0,0-5.08-15.71L32,102.35a.37.37,0,0,1,0-.09l59.44-5.14a16,16,0,0,0,13.35-9.75L128,32.08l23.2,55.29a16,16,0,0,0,13.35,9.75L224,102.26S224,102.32,224,102.33Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Reviews
-                    </p>
-                  </div>
-                  <div
-                    class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0f2f4]"
+
+                    <p class="text-sm font-medium text-gray-800">Dashboard</p>
+                  </a>
+
+                  <a
+                    href="/ContentModeration.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
                   >
-                    <div
-                      class="text-[#111517]"
-                      data-icon="Flag"
-                      data-size="24px"
-                      data-weight="fill"
-                    >
+                    <div class="text-gray-800">
+                      <!-- Broom Icon (Content Moderation) -->
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
                         width="24px"
                         height="24px"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M231.3,24.69a8,8,0,0,0-11.31,0l-64,64L146.34,82.34l9.36-9.37a8,8,0,0,0-11.32-11.31l-9.36,9.36L64,17.37A8,8,0,0,0,52.69,28.69L126.63,102.6l-93.6,93.6a8,8,0,0,0,11.31,11.31l93.6-93.6L227.31,40A8,8,0,0,0,231.3,24.69Z"
+                        />
+                      </svg>
+                    </div>
+                    <p class="text-sm font-medium text-gray-800">
+                      Content Moderation
+                    </p>
+                  </a>
+
+                  <a
+                    href="/ManageUser.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- User icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
+                        width="24px"
+                        height="24px"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-medium text-gray-800">
+                      Manage Users
+                    </p>
+                  </a>
+
+                  <a
+                    href="/reportAdmin.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- Report icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        width="24px"
+                        height="24px"
                         viewBox="0 0 256 256"
                       >
                         <path
@@ -210,19 +127,16 @@
                         ></path>
                       </svg>
                     </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Reports
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div
-                      class="text-[#111517]"
-                      data-icon="Gear"
-                      data-size="24px"
-                      data-weight="regular"
-                    >
+
+                    <p class="text-sm font-medium text-gray-800">Reports</p>
+                  </a>
+
+                  <a
+                    href="/skilladmin.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- Settings icon -->
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24px"
@@ -231,16 +145,15 @@
                         viewBox="0 0 256 256"
                       >
                         <path
-                          d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"
+                          d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"
                         ></path>
                       </svg>
                     </div>
-                    <p
-                      class="text-[#111517] text-sm font-medium leading-normal"
-                    >
-                      Settings
+
+                    <p class="text-sm font-medium text-gray-800">
+                      Skills & Categories
                     </p>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
