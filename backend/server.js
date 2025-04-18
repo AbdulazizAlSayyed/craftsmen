@@ -15,7 +15,7 @@ const inviteRoute = require("./routes/invite");
 const adminDashboardRoutes = require("./routes/Admindashboard");
 const adminUserRoutes = require("./routes/adminUser");
 const categoryRoutes = require("./routes/categories");
-
+const dashboardStatsRoutes = require("./routes/dashboardStats");
 const notificationRoutes = require("./routes/notification");
 const Message = require("./models/message");
 const { Server } = require("socket.io");
@@ -44,7 +44,7 @@ app.use("/api/invite", inviteRoute);
 app.use("/api/dashboard", adminDashboardRoutes);
 app.use("/api/admin/users", adminUserRoutes);
 app.use("/api", require("./routes/blockCheck"));
-
+app.use("/api/dashboard", dashboardStatsRoutes);
 app.use("/api", require("./routes/rateJob"));
 
 app.use("/api/categories", categoryRoutes);

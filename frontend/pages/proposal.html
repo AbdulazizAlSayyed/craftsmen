@@ -102,42 +102,31 @@
           <div class="flex flex-wrap gap-4 p-4">
             <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-[#e7ddcf]">
               <p class="text-[#1b150d] text-base font-medium leading-normal">
-                Lifetime Earnings
+                Invitations
               </p>
-              <p class="text-[#1b150d] tracking-light text-2xl font-bold leading-tight">
-                $3,000
+              <p id="invitation-count" class="text-[#1b150d] tracking-light text-2xl font-bold leading-tight">
+                0
               </p>
             </div>
             <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-[#e7ddcf]">
               <p class="text-[#1b150d] text-base font-medium leading-normal">
                 Active Jobs
               </p>
-              <p class="text-[#1b150d] tracking-light text-2xl font-bold leading-tight">
-                12
+              <p id="active-jobs-count" class="text-[#1b150d] tracking-light text-2xl font-bold leading-tight">
+                0
               </p>
             </div>
             <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-[#e7ddcf]">
               <p class="text-[#1b150d] text-base font-medium leading-normal">
                 Proposals
               </p>
-              <p class="text-[#1b150d] tracking-light text-2xl font-bold leading-tight">
-                6
+              <p id="proposals-count" class="text-[#1b150d] tracking-light text-2xl font-bold leading-tight">
+                0
               </p>
             </div>
           </div>
-          <div class="flex flex-col gap-3 p-4">
-            <div class="flex gap-6 justify-between">
-              <p class="text-[#1b150d] text-base font-medium leading-normal">
-                Earnings needed to reach $3,000 goal
-              </p>
-              <p class="text-[#1b150d] text-sm font-normal leading-normal">
-                1500
-              </p>
-            </div>
-            <div class="rounded bg-[#e7ddcf]">
-              <div class="h-2 rounded bg-[#ec8e13]" style="width: 50%"></div>
-            </div>
-          </div>
+
+
           <div class="p-4 @container">
             <div
               class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-[#e7ddcf] bg-[#fcfaf8] p-5 @[480px]:flex-row @[480px]:items-center">
@@ -162,18 +151,24 @@
               <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
                 Current Work
               </h3>
-              <div id="current-work-list" class="px-4 pb-6 space-y-4">
-                <p class="text-gray-500 text-sm">Loading current work...</p>
+              <div id="no-current-work" class="hidden w-full flex justify-center py-4 px-4">
+                <p class="text-sm text-gray-500 text-center italic">You have no current jobs at the moment.</p>
               </div>
+
+              <div id="current-work-list" class="px-4 pb-6 space-y-4"></div>
+
             </div>
 
             <div>
               <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
                 Job Invitations
               </h3>
-              <div id="invite-list" class="px-4 pb-4 space-y-4">
-                <p id="no-invites" class="text-sm text-gray-500 hidden">No job invitations at the moment.</p>
+              <div id="no-invites" class="hidden w-full flex justify-center py-4 px-4">
+                <p class="text-sm text-gray-500 text-center italic">No job invitations at the moment.</p>
               </div>
+
+              <div id="invite-list" class="px-4 pb-4 space-y-4"></div>
+
             </div>
             <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
               Submitted Proposals
@@ -464,8 +459,8 @@
             return;
           }
 
-          noInvites.classList.add("hidden");
-          inviteList.innerHTML = `<div class="p-4 text-center">Loading invitations...</div>`;
+          inviteList.innerHTML = `<div class="p-4 text-center text-gray-500">Loading invitations...</div>`;
+
 
           try {
             const res = await fetch(`/api/invite/craftsman/${userId}`);
@@ -480,7 +475,7 @@
             inviteList.innerHTML = ""; // 🧼 Clear existing invites
 
             if (invites.length === 0) {
-              noInvites.classList.remove("hidden");
+              noInvites.classList.remove("hidden");  // 👈 THIS IS IT
               return;
             }
 
@@ -707,9 +702,12 @@
             const jobs = await res.json();
 
             if (!jobs.length) {
-              container.innerHTML = `<p class="text-gray-500">You have no current jobs at the moment.</p>`;
+              document.getElementById("no-current-work").classList.remove("hidden");
               return;
             }
+
+            document.getElementById("no-current-work").classList.add("hidden"); // Hide it if jobs exist
+
 
             container.innerHTML = jobs.map(job => `
       <div class="border rounded-xl p-4 bg-white shadow flex justify-between items-center">
@@ -777,6 +775,27 @@
 
 
       </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+          const craftsmanId = localStorage.getItem("craftsmanId");
+
+          if (!craftsmanId) return;
+
+          try {
+            const res = await fetch(`/api/dashboard/stats/${craftsmanId}`);
+            if (!res.ok) throw new Error("Failed to fetch dashboard stats");
+
+            const { activeJobs, invitations, proposals } = await res.json();
+
+            document.getElementById("invitation-count").textContent = invitations;
+            document.getElementById("active-jobs-count").textContent = activeJobs;
+            document.getElementById("proposals-count").textContent = proposals;
+          } catch (err) {
+            console.error("❌ Error fetching dashboard stats:", err);
+          }
+        });
+      </script>
+
 
 </body>
 

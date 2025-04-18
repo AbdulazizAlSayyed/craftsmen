@@ -16,7 +16,8 @@
 </head>
 
 <body>
-  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
+  <div
+    class="relative flex size-full min-h-screen flex-col bg-gradient-to-b from-[#fffefc] to-[#f9f4ee] overflow-x-hidden"
     style="font-family: Inter, 'Noto Sans', sans-serif">
     <div class="layout-container flex h-full grow flex-col">
       <header
@@ -98,10 +99,12 @@
               </p>
             </div>
           </div>
-          <div id="posted-jobs-list"></div>
+          <div id="posted-jobs-list" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
+
           <div id="pending-rating-section" class="mt-6 space-y-4 hidden">
             <h3 class="text-lg font-bold text-[#1b150d]">Pending Ratings</h3>
-            <div id="pending-rating-jobs" class="space-y-2"></div>
+            <div id="pending-rating-jobs" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
+
           </div>
 
 
@@ -213,7 +216,9 @@
 
                 jobs.forEach((job) => {
                   const jobCard = document.createElement("div");
-                  jobCard.className = "flex gap-4 bg-[#fcfaf8] px-4 py-3";
+                  jobCard.className = "flex gap-4 bg-white px-4 py-4 rounded-lg shadow border border-[#f3eee7] hover:shadow-md transition-transform transform hover:scale-[1.02]";
+
+
 
                   jobCard.innerHTML = `
         <div
@@ -227,9 +232,10 @@
           <p class="text-[#93adc8] text-sm font-normal leading-normal">
             ${job.description || "No description"}
           </p>
-          <p class="text-[#93adc8] text-sm font-normal leading-normal">
-            ${job.status} • ${new Date(job.createdAt).toLocaleDateString()}
-          </p>
+          <p class="text-sm text-gray-500 mt-1">
+  <span class="capitalize font-medium ${job.status === 'completed' ? 'text-green-600' : 'text-yellow-600'}">${job.status}</span> • 
+  <span>${new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+</p>
         </div>
       `;
                   container.appendChild(jobCard);
@@ -313,10 +319,16 @@
                 section.classList.remove("hidden");
 
                 container.innerHTML = unrated.map(job => `
-  <div class="flex justify-between items-center border p-4 rounded-lg bg-white shadow">
+                  <div class="flex justify-between items-center border p-4 rounded-xl bg-white shadow hover:shadow-md transition-transform transform hover:scale-[1.02]">
+
+
     <div>
       <p class="text-[#1b150d] font-medium">${job.title}</p>
-      <p class="text-sm text-[#9a784c]">Completed on ${new Date(job.autoCompletedAt).toLocaleDateString()}</p>
+      <p class="text-sm text-gray-500 mt-1">Completed on 
+  <span class="inline-block px-2 py-0.5 bg-[#fef3c7] text-[#92400e] rounded-full text-xs font-medium">
+    ${new Date(job.autoCompletedAt).toLocaleDateString()}
+  </span>
+</p>
     </div>
    <button onclick="openRatingAlert('${job._id}', '${job.craftsmanId}')" class="bg-[#ec8e13] text-white px-4 py-1.5 rounded hover:bg-orange-600">
       Rate Now
