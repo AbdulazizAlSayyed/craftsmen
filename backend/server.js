@@ -127,13 +127,14 @@ io.on("connection", (socket) => {
     "sendMessage",
     async ({ sender, receiver, text, conversationId, tempId }) => {
       const user = getUser(receiver);
+
       const messageData = {
         sender,
         receiver,
         text,
         conversationId,
         createdAt: new Date(),
-        read: !!user,
+        read: false, // ✅ DO NOT auto-read!
       };
 
       try {
@@ -145,11 +146,19 @@ io.on("connection", (socket) => {
           tempId,
         };
 
-        if (user) io.to(user.socketId).emit("getMessage", fullMessage);
-        const senderSocket = getUser(sender);
-        if (senderSocket)
-          io.to(senderSocket.socketId).emit("messageSaved", fullMessage);
+        // Send message to receiver
+        if (user) {
+          io.to(user.socketId).emit("getMessage", fullMessage);
+          io.to(user.socketId).emit("refreshConversations");
+        }
 
+        // Send confirmation to sender
+        const senderSocket = getUser(sender);
+        if (senderSocket) {
+          io.to(senderSocket.socketId).emit("messageSaved", fullMessage);
+        }
+
+        // Update last message preview
         [sender, receiver].forEach((uid) => {
           const u = getUser(uid);
           if (u) {
@@ -173,10 +182,27 @@ io.on("connection", (socket) => {
 
   socket.on("markAsRead", async ({ conversationId, userId }) => {
     try {
-      await Message.updateMany(
+      // Update read status in DB
+      const result = await Message.updateMany(
         { conversationId, receiver: userId, read: false },
         { $set: { read: true } }
       );
+
+      // Send real-time update to sender
+      const updatedMessages = await Message.find({
+        conversationId,
+        receiver: userId,
+        read: true,
+      });
+
+      updatedMessages.forEach((msg) => {
+        const sender = getUser(msg.sender.toString());
+        if (sender) {
+          io.to(sender.socketId).emit("messageReadUpdate", {
+            messageId: msg._id.toString(),
+          });
+        }
+      });
     } catch (err) {
       console.error("❌ Failed to update read status:", err);
     }

@@ -58,7 +58,6 @@ router.get("/conversations/:userId", async (req, res) => {
     const conversations = await Conversation.find({
       participants: req.params.userId,
     })
-      .sort({ updatedAt: -1 })
       .populate("participants")
       .lean();
 
@@ -69,9 +68,19 @@ router.get("/conversations/:userId", async (req, res) => {
         .sort({ createdAt: -1 })
         .lean();
 
+      const unreadCount = await Message.countDocuments({
+        conversationId: conv._id,
+        receiver: req.params.userId,
+        read: false,
+      });
+
       conv.lastMessage = lastMessage?.text || null;
       conv.lastTime = lastMessage?.createdAt || conv.updatedAt;
+      conv.unreadCount = unreadCount;
     }
+
+    // ✅ Sort by full date-time
+    conversations.sort((a, b) => new Date(b.lastTime) - new Date(a.lastTime));
 
     res.status(200).json(conversations);
   } catch (err) {

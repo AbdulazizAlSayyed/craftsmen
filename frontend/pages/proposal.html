@@ -11,6 +11,8 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="../js/chat-dot.js"></script>
+  <script src="../js/notifications-common.js"></script>
 
 </head>
 
@@ -44,32 +46,38 @@
         </div>
         <div class="flex flex-1 justify-end gap-8">
           <div class="flex gap-2">
-            <a href="Notification.html">
+            <a href="Notification.html" class="relative">
               <button
-                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                <div class="text-[#1b150d]" data-icon="Bell" data-size="20px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                    viewBox="0 0 256 256">
-                    <path
-                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
-                    </path>
-                  </svg>
-                </div>
+                class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]">
+                <!-- Red Dot for Unread -->
+                <span id="notif-dot"
+                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+
+                <!-- Bell Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  viewBox="0 0 256 256">
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                  </path>
+                </svg>
+              </button>
+
+            </a>
+            <a href="chat.html" class="relative">
+              <button
+                class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center">
+                <span id="chat-dot"
+                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  viewBox="0 0 256 256">
+                  <path
+                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                  </path>
+                </svg>
               </button>
             </a>
-            <a href="chat.html">
-              <button
-                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                    viewBox="0 0 256 256">
-                    <path
-                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
-                    </path>
-                  </svg>
-                </div>
-              </button>
-            </a>
+
             <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
               ⚙️
             </a>
@@ -151,19 +159,19 @@
 
             </div>
             <div>
-                <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
-                  Job Invitations
-                </h3>
-                <div id="invite-list" class="px-4 pb-4 space-y-4">
-                  <p id="no-invites" class="text-sm text-gray-500 hidden">No job invitations at the moment.</p>
-                </div>
+              <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                Job Invitations
+              </h3>
+              <div id="invite-list" class="px-4 pb-4 space-y-4">
+                <p id="no-invites" class="text-sm text-gray-500 hidden">No job invitations at the moment.</p>
               </div>
+            </div>
             <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
               Submitted Proposals
             </h3>
             <!-- Replace all static proposals with this -->
             <div class="px-4 pb-4 space-y-6">
-              
+
               <!-- Without bidding -->
               <div>
                 <h4 class="text-[#1b150d] text-md font-semibold mb-2">Proposals Without Bidding</h4>
@@ -175,7 +183,7 @@
                 <h4 class="text-[#1b150d] text-md font-semibold mb-2">Proposals With Bidding</h4>
                 <div class="submitted-proposals-list-bid space-y-3"></div>
               </div>
-              
+
             </div>
           </div>
 
@@ -282,39 +290,39 @@
           });
         }
 
-    function updateBidDisplay(updatedBid) {
-  const card = document.getElementById(`proposal-${updatedBid._id}`);
-  if (!card) return;
+        function updateBidDisplay(updatedBid) {
+          const card = document.getElementById(`proposal-${updatedBid._id}`);
+          if (!card) return;
 
-  // Update bid amount display
-  const bidEl = card.querySelector(".your-bid");
-  if (bidEl && updatedBid.bidAmount !== undefined) {
-    bidEl.textContent = `$${updatedBid.bidAmount}`;
-  }
+          // Update bid amount display
+          const bidEl = card.querySelector(".your-bid");
+          if (bidEl && updatedBid.bidAmount !== undefined) {
+            bidEl.textContent = `$${updatedBid.bidAmount}`;
+          }
 
-  // Update status badge
-  const statusEl = card.querySelector(".status-badge");
-  if (statusEl) {
-    statusEl.className = `text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(updatedBid.status)} status-badge`;
-    statusEl.textContent = updatedBid.status.charAt(0).toUpperCase() + updatedBid.status.slice(1);
-  }
+          // Update status badge
+          const statusEl = card.querySelector(".status-badge");
+          if (statusEl) {
+            statusEl.className = `text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(updatedBid.status)} status-badge`;
+            statusEl.textContent = updatedBid.status.charAt(0).toUpperCase() + updatedBid.status.slice(1);
+          }
 
-  // Find or create action buttons container
-  let actionContainer = card.querySelector(".action-buttons");
-  if (!actionContainer) {
-    // Create container if it doesn't exist
-    const statusContainer = card.querySelector(".flex.flex-col.items-end.gap-2");
-    if (statusContainer) {
-      actionContainer = document.createElement("div");
-      actionContainer.className = "action-buttons mt-2";
-      statusContainer.appendChild(actionContainer);
-    }
-  }
+          // Find or create action buttons container
+          let actionContainer = card.querySelector(".action-buttons");
+          if (!actionContainer) {
+            // Create container if it doesn't exist
+            const statusContainer = card.querySelector(".flex.flex-col.items-end.gap-2");
+            if (statusContainer) {
+              actionContainer = document.createElement("div");
+              actionContainer.className = "action-buttons mt-2";
+              statusContainer.appendChild(actionContainer);
+            }
+          }
 
-  // Update action buttons based on status
-  if (actionContainer) {
-    if (updatedBid.status === "pending") {
-      actionContainer.innerHTML = `
+          // Update action buttons based on status
+          if (actionContainer) {
+            if (updatedBid.status === "pending") {
+              actionContainer.innerHTML = `
         <div class="flex gap-2">
           <button onclick="respondToBid('${updatedBid._id}', 'accepted')" 
             class="px-3 py-1 bg-green-100 text-green-700 rounded text-sm font-medium">
@@ -326,8 +334,8 @@
           </button>
         </div>
       `;
-    } else if (updatedBid.status === "rejected") {
-      actionContainer.innerHTML = `
+            } else if (updatedBid.status === "rejected") {
+              actionContainer.innerHTML = `
         <div class="flex flex-col gap-2">
           <p class="text-red-600 text-sm font-medium">Bid was rejected</p>
           <div class="flex gap-2 items-center">
@@ -343,19 +351,19 @@
           </div>
         </div>
       `;
-    } else if (updatedBid.status === "accepted") {
-      actionContainer.innerHTML = `
+            } else if (updatedBid.status === "accepted") {
+              actionContainer.innerHTML = `
         <p class="text-green-600 text-sm font-medium">Bid accepted!</p>
       `;
-    }
-  }
+            }
+          }
 
-  // Visual feedback
-  card.classList.add("bg-blue-50", "bid-update");
-  setTimeout(() => {
-    card.classList.remove("bg-blue-50", "bid-update");
-  }, 2000);
-}
+          // Visual feedback
+          card.classList.add("bg-blue-50", "bid-update");
+          setTimeout(() => {
+            card.classList.remove("bg-blue-50", "bid-update");
+          }, 2000);
+        }
 
         // Time ago function to show relative time
         function timeAgo(date) {
@@ -588,9 +596,9 @@
             containerBid.innerHTML = "";
 
             applications.forEach((app) => {
-            const job = app.jobId;
-// Update the HTML template in the loadApplications function
-const html = `
+              const job = app.jobId;
+              // Update the HTML template in the loadApplications function
+              const html = `
   <div id="proposal-${app._id}" class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
     <div class="flex justify-between items-start">
       <div>
@@ -644,32 +652,32 @@ const html = `
             console.error("❌ Error loading applications:", error);
           }
         }
-function resendBid(appId) {
-  const newBidValue = document.getElementById(`newBid-${appId}`).value;
+        function resendBid(appId) {
+          const newBidValue = document.getElementById(`newBid-${appId}`).value;
 
-  if (!newBidValue || isNaN(newBidValue) || newBidValue <= 0) {
-    alert("Please enter a valid bid amount.");
-    return;
-  }
+          if (!newBidValue || isNaN(newBidValue) || newBidValue <= 0) {
+            alert("Please enter a valid bid amount.");
+            return;
+          }
 
-  // Example: POST request to update bid
-fetch(`/api/applications/${appId}/update-bid`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ bidAmount: newBidValue })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert("Bid updated successfully!");
-    location.reload(); // or update UI without reload
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Failed to resend bid.");
-  });
-}
+          // Example: POST request to update bid
+          fetch(`/api/applications/${appId}/update-bid`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ bidAmount: newBidValue })
+          })
+            .then(res => res.json())
+            .then(data => {
+              alert("Bid updated successfully!");
+              location.reload(); // or update UI without reload
+            })
+            .catch(err => {
+              console.error(err);
+              alert("Failed to resend bid.");
+            });
+        }
 
       </script>
 

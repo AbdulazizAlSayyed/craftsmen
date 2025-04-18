@@ -11,44 +11,51 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-<style>
-  /* Add to your CSS */
-@keyframes highlight {
-  0% { background-color: rgba(59, 130, 246, 0.1); }
-  100% { background-color: transparent; }
-}
+  <script src="../js/chat-dot.js"></script>
+  <script src="../js/notifications-common.js"></script>
+  <style>
+    /* Add to your CSS */
+    @keyframes highlight {
+      0% {
+        background-color: rgba(59, 130, 246, 0.1);
+      }
 
-.bid-update {
-  animation: highlight 2s ease-out;
-}
+      100% {
+        background-color: transparent;
+      }
+    }
 
-/* Make sure cards are properly styled for both views */
-.app-card {
-  transition: all 0.3s ease;
-}
+    .bid-update {
+      animation: highlight 2s ease-out;
+    }
 
-.status-badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
+    /* Make sure cards are properly styled for both views */
+    .app-card {
+      transition: all 0.3s ease;
+    }
 
-.status-pending {
-  background-color: #fef3c7;
-  color: #92400e;
-}
+    .status-badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
 
-.status-accepted {
-  background-color: #d1fae5;
-  color: #065f46;
-}
+    .status-pending {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
 
-.status-rejected {
-  background-color: #fee2e2;
-  color: #991b1b;
-}
-</style>
+    .status-accepted {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-rejected {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
 </head>
 
 <body>
@@ -81,32 +88,38 @@
         </div>
         <div class="flex flex-1 justify-end gap-8">
           <div class="flex gap-2">
-            <a href="Notification.html">
+            <a href="Notification.html" class="relative">
               <button
-                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                <div class="text-[#1b150d]" data-icon="Bell" data-size="20px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                    viewBox="0 0 256 256">
-                    <path
-                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
-                    </path>
-                  </svg>
-                </div>
+                class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]">
+                <!-- Red Dot for Unread -->
+                <span id="notif-dot"
+                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+
+                <!-- Bell Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  viewBox="0 0 256 256">
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                  </path>
+                </svg>
+              </button>
+
+            </a>
+            <a href="chat.html" class="relative">
+              <button
+                class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center">
+                <span id="chat-dot"
+                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  viewBox="0 0 256 256">
+                  <path
+                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                  </path>
+                </svg>
               </button>
             </a>
-            <a href="chat.html">
-              <button
-                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                    viewBox="0 0 256 256">
-                    <path
-                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
-                    </path>
-                  </svg>
-                </div>
-              </button>
-            </a>
+
             <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
               ⚙️
             </a>
@@ -117,90 +130,91 @@
         </div>
       </header>
 
-    <!-- Two Columns: Applicants + Bidding -->
-    <div class="flex flex-col md:flex-row grow w-full h-full">
-      <!-- Left: All Applicants -->
-      <div id="applicant-list" class="w-full md:w-1/2 p-6 border-r border-[#f3eee7] overflow-y-auto max-h-screen"></div>
+      <!-- Two Columns: Applicants + Bidding -->
+      <div class="flex flex-col md:flex-row grow w-full h-full">
+        <!-- Left: All Applicants -->
+        <div id="applicant-list" class="w-full md:w-1/2 p-6 border-r border-[#f3eee7] overflow-y-auto max-h-screen">
+        </div>
 
-      <!-- Right: Pending Bidding -->
-      <div id="bidding-list" class="w-full md:w-1/2 p-6 overflow-y-auto max-h-screen"></div>
+        <!-- Right: Pending Bidding -->
+        <div id="bidding-list" class="w-full md:w-1/2 p-6 overflow-y-auto max-h-screen"></div>
+      </div>
     </div>
-  </div>
 
-  <script>
-    // Global socket variable
-    let socket;
+    <script>
+      // Global socket variable
+      let socket;
 
-    // Function to connect to Socket.IO
-    function connectSocketIO() {
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        console.warn("⚠️ No userId found in localStorage.");
-        return;
+      // Function to connect to Socket.IO
+      function connectSocketIO() {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          console.warn("⚠️ No userId found in localStorage.");
+          return;
+        }
+
+        socket = io("http://localhost:5001", {
+          reconnection: true,
+          reconnectionAttempts: 5,
+          reconnectionDelay: 2000,
+        });
+
+        socket.on("connect", () => {
+          socket.emit("addUser", userId);
+          console.log("✅ Connected to Socket.IO with ID:", socket.id);
+        });
+
+        socket.on("BID_UPDATE", (data) => {
+          handleBidUpdate(data);
+        });
+
+        socket.on("disconnect", () => {
+          console.warn("⚠️ Socket.IO disconnected, attempting to reconnect...");
+        });
+
+        socket.on("reconnect_attempt", () => {
+          console.log("⚠️ Reconnecting...");
+        });
+
+        socket.on("reconnect_failed", () => {
+          console.error("❌ Socket.IO failed to reconnect.");
+        });
       }
 
-      socket = io("http://localhost:5001", {
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 2000,
-      });
+      // Handle bid updates from server
+      function handleBidUpdate(updatedBid) {
+        const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
 
-      socket.on("connect", () => {
-        socket.emit("addUser", userId);
-        console.log("✅ Connected to Socket.IO with ID:", socket.id);
-      });
+        if (existingCard) {
+          // Update status
+          const statusEl = document.getElementById(`status-${updatedBid._id}`);
+          if (statusEl) {
+            statusEl.textContent = updatedBid.status;
+            statusEl.className = `status-badge status-${updatedBid.status}`;
+          }
 
-      socket.on("BID_UPDATE", (data) => {
-        handleBidUpdate(data);
-      });
+          // Update bid amount if it exists
+          const bidEl = document.getElementById(`bid-${updatedBid._id}`);
+          if (bidEl && updatedBid.bidAmount !== undefined) {
+            bidEl.textContent = `$${updatedBid.bidAmount}`;
+          }
 
-      socket.on("disconnect", () => {
-        console.warn("⚠️ Socket.IO disconnected, attempting to reconnect...");
-      });
+          // Visual feedback
+          existingCard.classList.add('bid-update');
+          setTimeout(() => existingCard.classList.remove('bid-update'), 2000);
 
-      socket.on("reconnect_attempt", () => {
-        console.log("⚠️ Reconnecting...");
-      });
-
-      socket.on("reconnect_failed", () => {
-        console.error("❌ Socket.IO failed to reconnect.");
-      });
-    }
-
-    // Handle bid updates from server
-    function handleBidUpdate(updatedBid) {
-      const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
-      
-      if (existingCard) {
-        // Update status
-        const statusEl = document.getElementById(`status-${updatedBid._id}`);
-        if (statusEl) {
-          statusEl.textContent = updatedBid.status;
-          statusEl.className = `status-badge status-${updatedBid.status}`;
+          // Update buttons based on status
+          updateCardButtons(existingCard, updatedBid.status);
         }
-        
-        // Update bid amount if it exists
-        const bidEl = document.getElementById(`bid-${updatedBid._id}`);
-        if (bidEl && updatedBid.bidAmount !== undefined) {
-          bidEl.textContent = `$${updatedBid.bidAmount}`;
-        }
-        
-        // Visual feedback
-        existingCard.classList.add('bid-update');
-        setTimeout(() => existingCard.classList.remove('bid-update'), 2000);
-
-        // Update buttons based on status
-        updateCardButtons(existingCard, updatedBid.status);
       }
-    }
 
-    // Update card buttons based on status
-function updateCardButtons(card, status) {
-  const buttonsContainer = card.querySelector('.action-buttons');
-  if (!buttonsContainer) return;
+      // Update card buttons based on status
+      function updateCardButtons(card, status) {
+        const buttonsContainer = card.querySelector('.action-buttons');
+        if (!buttonsContainer) return;
 
-  if (status === 'pending') {
-    buttonsContainer.innerHTML = `
+        if (status === 'pending') {
+          buttonsContainer.innerHTML = `
       <div class="text-yellow-600 font-medium">Waiting for client response</div>
       <div class="flex gap-1 mt-1">
         <input id="new-bid-${card.id.replace('app-card-', '')}" type="number" 
@@ -210,12 +224,12 @@ function updateCardButtons(card, status) {
           class="text-[#ec8e13] hover:underline font-semibold">Update</button>
       </div>
     `;
-  } else if (status === 'accepted') {
-    buttonsContainer.innerHTML = `
+        } else if (status === 'accepted') {
+          buttonsContainer.innerHTML = `
       <div class="text-green-600 font-medium">Accepted</div>
     `;
-  } else if (status === 'rejected') {
-    buttonsContainer.innerHTML = `
+        } else if (status === 'rejected') {
+          buttonsContainer.innerHTML = `
       <div class="text-red-600 font-medium">Rejected</div>
       <div class="flex gap-1 mt-1">
         <input id="new-bid-${card.id.replace('app-card-', '')}" type="number" 
@@ -225,195 +239,195 @@ function updateCardButtons(card, status) {
           class="text-[#ec8e13] hover:underline font-semibold">Resubmit</button>
       </div>
     `;
-  }
-}
-
-    // Update application status
-    async function updateStatus(appId, newStatus, customBid = null, fullName = "") {
-      const actionVerb = newStatus === "accepted" ? "accept" : newStatus === "rejected" ? "reject" : "update the bid for";
-
-      const confirmResult = await Swal.fire({
-        title: `Are you sure you want to ${actionVerb}?`,
-        text: fullName ? `This action will ${actionVerb} ${fullName}.` : "",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#10b981",
-        cancelButtonColor: "#f43f5e",
-        confirmButtonText: "Yes, proceed"
-      });
-
-      if (!confirmResult.isConfirmed) return;
-
-     
-  try {
-    const res = await fetch(`/api/applications/${appId}/status`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        status: newStatus, 
-        bidAmount: customBid 
-      }),
-    });
-
-    const updated = await res.json();
-
-    if (res.ok) {
-      Swal.fire({
-        icon: "success",
-        title: newStatus === "pending" ? "Bid Updated" : "Status Updated",
-        text: newStatus === "pending" 
-          ? "Your bid has been updated and is waiting for client response" 
-          : `Application has been ${newStatus}`,
-        timer: 1500,
-        showConfirmButton: false
-      });
-
-        // Store rejected bids in localStorage
-      if (newStatus === 'rejected') {
-        const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids') || {});
-        rejectedBids[appId] = true;
-        localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
-      } else {
-        // Remove from localStorage if status changed from rejected
-        const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
-        delete rejectedBids[appId];
-        localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
-      }
-          // Update UI immediately
-           const card = document.getElementById(`app-card-${appId}`);
-      if (card) {
-        const statusEl = document.getElementById(`status-${appId}`);
-        if (statusEl) {
-          statusEl.textContent = newStatus;
-          statusEl.className = `status-badge status-${newStatus}`;
         }
-
-        const bidEl = document.getElementById(`bid-${appId}`);
-        if (bidEl && customBid) {
-          bidEl.textContent = `$${customBid}`;
-        }
-
-        updateCardButtons(card, newStatus);
-        card.classList.add('bid-update');
-        setTimeout(() => card.classList.remove('bid-update'), 1500);
       }
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Update Failed",
-            text: updated.error || "Unknown error occurred.",
-            confirmButtonColor: "#ef4444"
-          });
-        }
-      } catch (err) {
-        console.error("Error updating status:", err);
-        Swal.fire({
-          icon: "error",
-          title: "Network Error",
-          text: "Failed to update. Please try again.",
-          confirmButtonColor: "#ef4444"
-        });
-      }
-    }
 
-    // Confirm and reject application
-    async function confirmAndReject(appId) {
-      const confirmResult = await Swal.fire({
-        title: "Reject Applicant?",
-        text: "Are you sure you want to reject?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#ef4444",
-        cancelButtonColor: "#9ca3af",
-        confirmButtonText: "Yes, reject"
-      });
-      if (!confirmResult.isConfirmed) return;
+      // Update application status
+      async function updateStatus(appId, newStatus, customBid = null, fullName = "") {
+        const actionVerb = newStatus === "accepted" ? "accept" : newStatus === "rejected" ? "reject" : "update the bid for";
 
-      try {
-        const res = await fetch(`/api/applications/${appId}/status`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "rejected" }),
+        const confirmResult = await Swal.fire({
+          title: `Are you sure you want to ${actionVerb}?`,
+          text: fullName ? `This action will ${actionVerb} ${fullName}.` : "",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#10b981",
+          cancelButtonColor: "#f43f5e",
+          confirmButtonText: "Yes, proceed"
         });
 
-        if (!res.ok) {
-          const data = await res.json();
-          Swal.fire({
-            icon: "error",
-            title: "Rejection Failed",
-            text: data.error || "Unknown error",
-            confirmButtonColor: "#ef4444"
-          });
-          return;
-        }
+        if (!confirmResult.isConfirmed) return;
 
-        const updated = await res.json();
-         // Store rejected bid in localStorage
-    const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
-    rejectedBids[appId] = true;
-    localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
-        const card = document.getElementById(`app-card-${appId}`);
-        if (card) {
-          const statusEl = document.getElementById(`status-${appId}`);
-          if (statusEl) {
-            statusEl.textContent = "rejected";
-            statusEl.className = "status-badge status-rejected";
+
+        try {
+          const res = await fetch(`/api/applications/${appId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              status: newStatus,
+              bidAmount: customBid
+            }),
+          });
+
+          const updated = await res.json();
+
+          if (res.ok) {
+            Swal.fire({
+              icon: "success",
+              title: newStatus === "pending" ? "Bid Updated" : "Status Updated",
+              text: newStatus === "pending"
+                ? "Your bid has been updated and is waiting for client response"
+                : `Application has been ${newStatus}`,
+              timer: 1500,
+              showConfirmButton: false
+            });
+
+            // Store rejected bids in localStorage
+            if (newStatus === 'rejected') {
+              const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids') || {});
+              rejectedBids[appId] = true;
+              localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
+            } else {
+              // Remove from localStorage if status changed from rejected
+              const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
+              delete rejectedBids[appId];
+              localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
+            }
+            // Update UI immediately
+            const card = document.getElementById(`app-card-${appId}`);
+            if (card) {
+              const statusEl = document.getElementById(`status-${appId}`);
+              if (statusEl) {
+                statusEl.textContent = newStatus;
+                statusEl.className = `status-badge status-${newStatus}`;
+              }
+
+              const bidEl = document.getElementById(`bid-${appId}`);
+              if (bidEl && customBid) {
+                bidEl.textContent = `$${customBid}`;
+              }
+
+              updateCardButtons(card, newStatus);
+              card.classList.add('bid-update');
+              setTimeout(() => card.classList.remove('bid-update'), 1500);
+            }
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Update Failed",
+              text: updated.error || "Unknown error occurred.",
+              confirmButtonColor: "#ef4444"
+            });
           }
-          updateCardButtons(card, "rejected");
-          card.classList.add('bid-update');
-          setTimeout(() => card.classList.remove('bid-update'), 1500);
+        } catch (err) {
+          console.error("Error updating status:", err);
+          Swal.fire({
+            icon: "error",
+            title: "Network Error",
+            text: "Failed to update. Please try again.",
+            confirmButtonColor: "#ef4444"
+          });
         }
-
-        Swal.fire({
-          icon: "success",
-          title: "Rejected",
-          text: "The bid has been rejected successfully.",
-          timer: 2000,
-          showConfirmButton: false
-        });
-      } catch (err) {
-        console.error("Error rejecting bid:", err);
-        Swal.fire({
-          icon: "error",
-          title: "Network Error",
-          text: "Something went wrong while rejecting the bid.",
-          confirmButtonColor: "#ef4444"
-        });
-      }
-    }
-
-    // Load applicants when DOM is ready
-    document.addEventListener("DOMContentLoaded", async () => {
-      // Connect to Socket.IO
-      connectSocketIO();
-
-      const jobId = new URLSearchParams(window.location.search).get("jobId");
-      const applicantContainer = document.getElementById("applicant-list");
-      const biddingContainer = document.getElementById("bidding-list");
-
-      if (!jobId) {
-        applicantContainer.innerHTML = "<p>No job ID found.</p>";
-        return;
       }
 
-      try {
-        const res = await fetch(`/api/applications/job/${jobId}`);
-        const applicants = await res.json();
+      // Confirm and reject application
+      async function confirmAndReject(appId) {
+        const confirmResult = await Swal.fire({
+          title: "Reject Applicant?",
+          text: "Are you sure you want to reject?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#ef4444",
+          cancelButtonColor: "#9ca3af",
+          confirmButtonText: "Yes, reject"
+        });
+        if (!confirmResult.isConfirmed) return;
 
-        if (!Array.isArray(applicants) || applicants.length === 0) {
-          applicantContainer.innerHTML = "<p>No applicants yet.</p>";
+        try {
+          const res = await fetch(`/api/applications/${appId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: "rejected" }),
+          });
+
+          if (!res.ok) {
+            const data = await res.json();
+            Swal.fire({
+              icon: "error",
+              title: "Rejection Failed",
+              text: data.error || "Unknown error",
+              confirmButtonColor: "#ef4444"
+            });
+            return;
+          }
+
+          const updated = await res.json();
+          // Store rejected bid in localStorage
+          const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
+          rejectedBids[appId] = true;
+          localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
+          const card = document.getElementById(`app-card-${appId}`);
+          if (card) {
+            const statusEl = document.getElementById(`status-${appId}`);
+            if (statusEl) {
+              statusEl.textContent = "rejected";
+              statusEl.className = "status-badge status-rejected";
+            }
+            updateCardButtons(card, "rejected");
+            card.classList.add('bid-update');
+            setTimeout(() => card.classList.remove('bid-update'), 1500);
+          }
+
+          Swal.fire({
+            icon: "success",
+            title: "Rejected",
+            text: "The bid has been rejected successfully.",
+            timer: 2000,
+            showConfirmButton: false
+          });
+        } catch (err) {
+          console.error("Error rejecting bid:", err);
+          Swal.fire({
+            icon: "error",
+            title: "Network Error",
+            text: "Something went wrong while rejecting the bid.",
+            confirmButtonColor: "#ef4444"
+          });
+        }
+      }
+
+      // Load applicants when DOM is ready
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Connect to Socket.IO
+        connectSocketIO();
+
+        const jobId = new URLSearchParams(window.location.search).get("jobId");
+        const applicantContainer = document.getElementById("applicant-list");
+        const biddingContainer = document.getElementById("bidding-list");
+
+        if (!jobId) {
+          applicantContainer.innerHTML = "<p>No job ID found.</p>";
           return;
         }
 
-        applicantContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
-        biddingContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
-    const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
+        try {
+          const res = await fetch(`/api/applications/job/${jobId}`);
+          const applicants = await res.json();
 
-        applicants.forEach((app) => {
-          const user = app.craftsmanId;
-          const hasBid = typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
+          if (!Array.isArray(applicants) || applicants.length === 0) {
+            applicantContainer.innerHTML = "<p>No applicants yet.</p>";
+            return;
+          }
 
-          const userInfo = `
+          applicantContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
+          biddingContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
+          const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
+
+          applicants.forEach((app) => {
+            const user = app.craftsmanId;
+            const hasBid = typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
+
+            const userInfo = `
             <div class="flex-1">
               <div class="flex items-center gap-4 mb-2">
                 <img src="${user.profileImage || "/uploads/default.png"}" 
@@ -436,7 +450,7 @@ function updateCardButtons(card, status) {
             </div>
           `;
 
-          const actionButtons = `
+            const actionButtons = `
             <div class="action-buttons flex flex-col items-center justify-center gap-2 min-w-[140px]">
               ${app.status === 'pending' ? `
                 <div class="flex gap-2">
@@ -461,50 +475,50 @@ function updateCardButtons(card, status) {
             </div>
           `;
 
-          const html = `
+            const html = `
             <div id="app-card-${app._id}" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
               ${userInfo}
               ${actionButtons}
             </div>
           `;
 
-          if (hasBid) {
-            biddingContainer.insertAdjacentHTML("beforeend", html);
-          } else {
-            applicantContainer.insertAdjacentHTML("beforeend", html);
-          }
-        });
-      } catch (error) {
-        console.error(error);
-        applicantContainer.innerHTML = "<p>Error loading applicants.</p>";
-      }
+            if (hasBid) {
+              biddingContainer.insertAdjacentHTML("beforeend", html);
+            } else {
+              applicantContainer.insertAdjacentHTML("beforeend", html);
+            }
+          });
+        } catch (error) {
+          console.error(error);
+          applicantContainer.innerHTML = "<p>Error loading applicants.</p>";
+        }
 
-      // Load profile picture
-      const craftsmanId = localStorage.getItem("craftsmanId");
-      const profilePicDiv = document.getElementById("profile-pic");
+        // Load profile picture
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const profilePicDiv = document.getElementById("profile-pic");
 
-      if (!craftsmanId || !profilePicDiv) return;
+        if (!craftsmanId || !profilePicDiv) return;
 
-      // Try cached image first
-      const cachedImage = localStorage.getItem("profileImage");
-      if (cachedImage) {
-        profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-      }
+        // Try cached image first
+        const cachedImage = localStorage.getItem("profileImage");
+        if (cachedImage) {
+          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+        }
 
-      try {
-        const res = await fetch(`/api/profile/${craftsmanId}`);
-        if (!res.ok) throw new Error("Failed fetching profile");
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+          if (!res.ok) throw new Error("Failed fetching profile");
 
-        const data = await res.json();
-        const profileImage = data.profileImage.trim() || "/uploads/default.png";
+          const data = await res.json();
+          const profileImage = data.profileImage.trim() || "/uploads/default.png";
 
-        profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-        localStorage.setItem("profileImage", profileImage);
-      } catch (error) {
-        console.error("❌ Error loading profile:", error);
-      }
-    });
-  </script>
+          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+          localStorage.setItem("profileImage", profileImage);
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+      });
+    </script>
 </body>
 
 </html>

@@ -7,7 +7,8 @@
 
   <title>Galileo Design</title>
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
+  <script src="../js/chat-dot.js"></script>
+  <script src="../js/notifications-common.js"></script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
 
@@ -59,19 +60,21 @@
 
             </a>
 
-            <a href="chat.html">
+            <a href="chat.html" class="relative">
               <button
-                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3eee7] text-[#1b150d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                <div class="text-[#1b150d]" data-icon="ChatCircleDots" data-size="20px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                    viewBox="0 0 256 256">
-                    <path
-                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
-                    </path>
-                  </svg>
-                </div>
+                class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center">
+                <span id="chat-dot"
+                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  viewBox="0 0 256 256">
+                  <path
+                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
+                  </path>
+                </svg>
               </button>
             </a>
+
             <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
               ⚙️
             </a>
