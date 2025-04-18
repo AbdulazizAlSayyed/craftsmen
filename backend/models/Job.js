@@ -13,15 +13,23 @@ const jobSchema = new mongoose.Schema({
   },
   skillsRequired: [{ type: String }],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  craftsmanId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // ✅ Craftsman who completed the job
-
+  craftsmanId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   ratings: { type: Number, default: 0 },
   jobRank: {
     type: String,
     enum: ["Beginner", "Advanced", "Expert"],
-    default: "Beginner", // Default rank could be "Beginner"
+    default: "Beginner",
   },
   createdAt: { type: Date, default: Date.now },
+
+  // 👇 Add these fields
+  autoCompletedAt: { type: Date, default: null },
+  ratingStatus: {
+    type: String,
+    enum: ["not-rated", "rated", "skipped"],
+    default: "not-rated",
+  },
+  isRatingEnforced: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Job", jobSchema);

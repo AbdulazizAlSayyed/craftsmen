@@ -10,7 +10,14 @@ const NotificationSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["message", "job_invite", "status_update", "system"],
+
+      enum: [
+        "message",
+        "job_invite",
+        "status_update",
+        "system",
+        "rating_request",
+      ],
       required: true,
     },
     content: {

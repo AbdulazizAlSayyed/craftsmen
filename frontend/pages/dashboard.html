@@ -14,10 +14,19 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../js/notifications-common.js"></script>
   <script src="../js/chat-dot.js"></script>
+  <style>
+    .blur-overlay {
+      filter: blur(3px);
+      opacity: 0.4;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] group/design-root overflow-x-hidden"
+  <div id="dashboard-content"
+    class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] group/design-root overflow-x-hidden"
     style="font-family: 'Work Sans', 'Noto Sans', sans-serif">
     <div class="layout-container flex h-full grow flex-col">
       <header
@@ -1194,6 +1203,101 @@
       }
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const userId = localStorage.getItem('userId');
+      if (!userId) return;
+
+      try {
+        const response = await fetch(`/api/check-client-block/${userId}`);
+        const data = await response.json();
+
+        if (data.blocked) {
+          const showRatingAlert = () => {
+            // Add blur/fade to dashboard
+            const dashboard = document.getElementById('dashboard-content');
+            if (dashboard) dashboard.classList.add('blur-overlay');
+
+            Swal.fire({
+              title: 'Rate Craftsman',
+              html: `
+              <p>Please rate your experience (1-5 stars):</p>
+              <input type="number" id="swal-rating" class="swal2-input" min="1" max="5" placeholder="Rating (1-5)">
+            `,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false,
+              confirmButtonText: 'Submit Rating',
+              showLoaderOnConfirm: true,
+              focusConfirm: false,
+              preConfirm: async () => {
+                const rating = document.getElementById('swal-rating').value;
+                if (!rating || rating < 1 || rating > 5) {
+                  Swal.showValidationMessage('Please enter a valid rating (1-5)');
+                  return false;
+                }
+
+                try {
+                  const ratingResponse = await fetch(`/api/rate-job/${data.jobId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rating }),
+                  });
+
+                  const ratingData = await ratingResponse.json();
+                  if (!ratingData.success) {
+                    throw new Error('Failed to submit rating');
+                  }
+                } catch (error) {
+                  Swal.showValidationMessage(`Error: ${error.message}`);
+                  return false;
+                }
+              }
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Thank You!',
+                  text: 'Your rating has been submitted.',
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  allowEnterKey: false,
+                  confirmButtonText: 'Continue',
+                }).then(() => {
+                  // ✅ Re-enable all interactions and remove blur
+                  document.body.style.pointerEvents = 'auto';
+
+                  const dashboard = document.getElementById('dashboard-content');
+                  if (dashboard) dashboard.classList.remove('blur-overlay');
+
+                  setTimeout(() => {
+                    location.reload();
+                  }, 100);
+                });
+
+              } else {
+                showRatingAlert(); // reopen if somehow dismissed
+              }
+            });
+
+            // Disable interactions outside modal
+            document.body.style.pointerEvents = 'none';
+            setTimeout(() => {
+              const swalContainer = document.querySelector('.swal2-container');
+              if (swalContainer) swalContainer.style.pointerEvents = 'auto';
+            }, 10);
+          };
+
+          showRatingAlert();
+        }
+      } catch (err) {
+        console.error('Error checking client block status:', err);
+      }
+    });
+  </script>
+
+
+
 </body>
 
 </html>

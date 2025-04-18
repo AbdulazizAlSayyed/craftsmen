@@ -14,7 +14,6 @@ const settingRoutes = require("./routes/setting");
 const inviteRoute = require("./routes/invite");
 const adminDashboardRoutes = require("./routes/Admindashboard");
 const adminUserRoutes = require("./routes/adminUser");
-
 const categoryRoutes = require("./routes/categories");
 
 const notificationRoutes = require("./routes/notification");
@@ -44,6 +43,9 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/invite", inviteRoute);
 app.use("/api/dashboard", adminDashboardRoutes);
 app.use("/api/admin/users", adminUserRoutes);
+app.use("/api", require("./routes/blockCheck"));
+
+app.use("/api", require("./routes/rateJob"));
 
 app.use("/api/categories", categoryRoutes);
 mongoose

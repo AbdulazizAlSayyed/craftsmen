@@ -160,6 +160,15 @@
             </div>
             <div>
               <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                Current Work
+              </h3>
+              <div id="current-work-list" class="px-4 pb-6 space-y-4">
+                <p class="text-gray-500 text-sm">Loading current work...</p>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
                 Job Invitations
               </h3>
               <div id="invite-list" class="px-4 pb-4 space-y-4">
@@ -677,6 +686,93 @@
               console.error(err);
               alert("Failed to resend bid.");
             });
+        }
+
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          loadCurrentJobs();
+        });
+
+        async function loadCurrentJobs() {
+          const userId = localStorage.getItem("userId");
+
+          const container = document.getElementById("current-work-list");
+
+
+          if (!userId || !container) return;
+
+          try {
+            const res = await fetch(`/api/jobs/current/${userId}`);
+            const jobs = await res.json();
+
+            if (!jobs.length) {
+              container.innerHTML = `<p class="text-gray-500">You have no current jobs at the moment.</p>`;
+              return;
+            }
+
+            container.innerHTML = jobs.map(job => `
+      <div class="border rounded-xl p-4 bg-white shadow flex justify-between items-center">
+        <div>
+          <h4 class="text-[#1b150d] text-md font-semibold">${job.title}</h4>
+          <p class="text-sm text-gray-500">Deadline: ${new Date(job.deadline).toLocaleDateString()}</p>
+        </div>
+        <button onclick="markJobComplete('${job._id}', '${job.userId}')"
+
+                class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          Mark as Complete
+        </button>
+      </div>
+    `).join("");
+          } catch (err) {
+            console.error("❌ Error fetching current jobs:", err);
+            container.innerHTML = `<p class="text-red-500">Failed to load current jobs.</p>`;
+          }
+        }
+
+        async function markJobComplete(jobId, clientId) {
+
+          console.log("📤 Sending job completion:", { jobId, clientId }); // 👈 add this
+          const confirmed = await Swal.fire({
+            icon: "question",
+            title: "Complete this job?",
+            text: "This will notify the client to rate your work.",
+            showCancelButton: true,
+            confirmButtonText: "Yes, complete it",
+            cancelButtonText: "Cancel",
+            confirmButtonColor: "#10b981"
+          });
+
+          if (!confirmed.isConfirmed) return;
+
+          try {
+            const res = await fetch("/api/jobs/complete", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ jobId, clientId })
+            });
+
+            if (!res.ok) throw new Error(await res.text());
+
+            Swal.fire({
+              icon: "success",
+              title: "Marked as Complete",
+              text: "The client has been notified to rate your work.",
+              confirmButtonColor: "#22c55e"
+            });
+
+            loadCurrentJobs(); // Reload updated list
+          } catch (error) {
+            console.error("❌ Failed to mark job complete:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Could not complete the job. Please try again later.",
+              confirmButtonColor: "#ef4444"
+            });
+          }
         }
 
       </script>
