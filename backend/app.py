@@ -11,13 +11,20 @@ def check_content():
     data = request.get_json()
     text = data.get('text', '')
     
-    if moderator.has_inappropriate_content(text):
+    prob, is_toxic = moderator.predict_toxicity(text)
+    
+    if is_toxic:
         return jsonify({
             "safe": False,
-            "message": "Your post contains inappropriate language and cannot be published."
+            "probability": float(prob),
+            "message": "Content contains inappropriate language"
         }), 400
-    else:
-        return jsonify({"safe": True}), 200
+    
+    return jsonify({
+        "safe": True,
+        "probability": float(prob),
+        "message": "Content is appropriate"
+    }), 200
 
 if __name__ == '__main__':
     app.run(port=5001)

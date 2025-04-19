@@ -1,10 +1,23 @@
 text,label
-"This is a great project!",safe
-"bad",low-quality
-"j",low-quality
-"You're an idiot",toxic
-"f*** this app",toxic
-"Hi",safe
-"Need help",safe
-"u suck",toxic
-"ok",safe
+"This is a great project!",0
+"bad",0
+"j",0
+"You're an idiot",1
+"f*** this app",1
+"Hi",0
+"Need help",0
+"u suck",1
+"ok",0
+"kill yourself",1
+"I want to hurt you",1
+"you're a genius",0
+"you moron",1
+"absolutely love this",0
+"trash work",1
+"what a kind gesture",0
+"I hate you",1
+"I will kill you",1
+"You’re a worthless piece of trash",1
+"Go die",1
+"stupid idiot",1
+"you're such a moron",1

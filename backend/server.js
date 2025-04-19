@@ -3,7 +3,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-const axios = require("axios");
+const contentModeration = require("./middleware/contentModeration");
+
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
@@ -28,10 +29,11 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(contentModeration);
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
-
+app.use("/api", require("./routes/contentCheck"));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
@@ -104,7 +106,29 @@ const addUser = (userId, socketId) => {
 };
 
 const getUser = (userId) => users.find((u) => u.userId === userId);
+async function checkContent(text) {
+  if (!text || typeof text !== "string") return { safe: true };
 
+  try {
+    const response = await axios.post(
+      "http://localhost:5001/api/check-content",
+      {
+        text: text.substring(0, 1000), // Limit length to prevent abuse
+      },
+      {
+        timeout: 2000, // 2 second timeout
+        headers: {
+          "x-internal-request": "true", // Add this header
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Content check failed:", error);
+    // Fail open (allow content) or closed (block content) based on your needs
+    return { safe: false, probability: 1.0 };
+  }
+}
 io.on("connection", (socket) => {
   console.log("📡 User connected:", socket.id);
 
@@ -128,6 +152,17 @@ io.on("connection", (socket) => {
   socket.on(
     "sendMessage",
     async ({ sender, receiver, text, conversationId, tempId }) => {
+      const { safe } = await checkContent(text);
+      if (!safe) {
+        const senderSocket = getUser(sender);
+        if (senderSocket) {
+          io.to(senderSocket.socketId).emit("messageRejected", {
+            tempId,
+            reason: "Message contains inappropriate content",
+          });
+        }
+        return;
+      }
       const user = getUser(receiver);
 
       const messageData = {
@@ -228,32 +263,4 @@ app._router.stack.forEach((r) => {
 server.listen(PORT, () => {
   logInfo(`✅ Server is running at http://localhost:${PORT}`);
   console.log(`✅ Server is running at http://localhost:${PORT}`);
-});
-
-app.post("/posts", async (req, res) => {
-  const { userId, text } = req.body;
-
-  try {
-    const modRes = await axios.post(
-      "http://localhost:5000/api/moderatation_api",
-      {
-        text,
-      }
-    );
-
-    const { label, confidence } = modRes.data;
-
-    if (label === "unsafe" || confidence < 0.75) {
-      return res.status(403).json({
-        error: "Moderation failed",
-        label,
-        confidence,
-      });
-    }
-
-    // proceed with saving post in DB...
-  } catch (err) {
-    console.error("🔥 Moderation Service Error:", err.message);
-    return res.status(500).json({ error: "Moderation service failed." });
-  }
 });

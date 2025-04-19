@@ -318,7 +318,7 @@
 
           // ✅ Collect selected skills from buttons
           const selectedSkillButtons = document.querySelectorAll(
-            ".skill-btn.selected"
+           "input[name='skills']:checked"
           );
           const skillsRequired = Array.from(selectedSkillButtons).map((btn) =>
             btn.textContent.trim()
@@ -330,16 +330,17 @@
           ).checked;
 
           const userId = localStorage.getItem("userId");
-          if (!userId) {
-            return Swal.fire({
-              icon: "warning",
-              title: "Not Logged In",
-              text: "Please sign in before posting a job.",
-              confirmButtonColor: "#facc15",
-              background: "#fffbea",
-              backdrop: "rgba(250,204,21,0.2)"
-            });
-          }
+          if (!title || !description || !budget || !deadline || !userId) {
+          return Swal.fire({
+            icon: "warning",
+            title: "Missing Fields",
+            text: "Please fill out all fields before posting.",
+            confirmButtonColor: "#facc15",
+            background: "#fffbea",
+            backdrop: "rgba(250,204,21,0.2)"
+          });
+        }
+          
 
           const jobData = {
             title,
@@ -372,17 +373,51 @@
                 confirmButtonColor: "#22c55e",
                 background: "#ecfdf5",
                 backdrop: "rgba(34,197,94,0.2)"
+                
               });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Job Post Failed",
-                text: data.message || "Something went wrong. Try again.",
-                confirmButtonColor: "#ef4444",
-                background: "#fef2f2",
-                backdrop: "rgba(239,68,68,0.2)"
-              });
-            }
+                document.querySelector("input[placeholder='What do you need help with?']").value = "";
+  document.querySelector("textarea").value = "";
+  document.querySelector("input[placeholder='$500']").value = "";
+  document.querySelector("input[type='date']").value = "";
+document.querySelectorAll("input[name='skills']").forEach(cb => {
+  cb.checked = false;
+  const parentLabel = cb.closest("label");
+  if (parentLabel) {
+    parentLabel.classList.remove("peer-checked", "bg-[#ee7f2b]", "text-white");
+    parentLabel.classList.add("bg-gray-200", "text-black");
+  }
+});
+  document.getElementById("jobRankSelect").value = "Beginner";
+  document.getElementById("milestoneCheckbox").checked = false;
+            } else if (data.error === "Content moderation failed") {
+            Swal.fire({
+              icon: "error",
+              title: "Inappropriate Content",
+              text: `Please revise your ${data.field}: ${data.message || "Content flagged by moderation"}`,
+              confirmButtonColor: "#ef4444",
+              background: "#fff0f0",
+              backdrop: "rgba(255,0,0,0.1)"
+            });
+            highlightField(data.field);
+          } else if (skillsRequired.length === 0){
+             return Swal.fire({
+    icon: "warning",
+    title: "Missing Skills",
+    text: "Please select at least one skill.",
+    confirmButtonColor: "#facc15",
+    background: "#fffbea",
+    backdrop: "rgba(250,204,21,0.2)"
+  });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Job Post Failed",
+              text: data.message || "Something went wrong. Try again.",
+              confirmButtonColor: "#ef4444",
+              background: "#fef2f2",
+              backdrop: "rgba(239,68,68,0.2)"
+            });
+          }
 
           } catch (error) {
             console.error("Error posting job:", error);
@@ -503,6 +538,22 @@
     });
   </script>
   <script>
+     function highlightField(fieldName) {
+    let fieldEl;
+    if (fieldName === 'title') {
+      fieldEl = document.querySelector("input[placeholder='What do you need help with?']");
+    } else if (fieldName === 'description') {
+      fieldEl = document.querySelector("textarea");
+    } else {
+      return;
+    }
+
+    fieldEl.classList.add('ring-2', 'ring-red-500');
+    setTimeout(() => {
+      fieldEl.classList.remove('ring-2', 'ring-red-500');
+    }, 4000);
+  }
+
     // for disapper proposals if client
     document.addEventListener("DOMContentLoaded", () => {
       const userRole = localStorage.getItem("userRole");
