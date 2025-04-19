@@ -169,14 +169,25 @@ router.post("/rating/:jobId", async (req, res) => {
     await job.save();
 
     // ✅ Send notification to craftsman
-    const Notification = require("../models/Notification");
-    await Notification.create({
-      user: craftsmanId,
-      type: "rating", // ✅ this will now work
-      content: `You received a new rating of ${rating} ⭐ for the job "${job.title}"`,
-      isRead: false,
-      isMarked: false,
+    // ✅ Check if the notification already exists
+    const existingNotification = await Notification.findOne({
+      jobId: job._id, // Ensure it's related to the specific job
+      user: craftsmanId, // Make sure it's for the correct craftsman
+      type: "rating", // Type of notification: "rating"
     });
+
+    if (!existingNotification) {
+      // ✅ If no existing notification, create a new one
+      await Notification.create({
+        user: craftsmanId,
+        type: "rating",
+        content: `You received a new rating of ${rating} ⭐ for the job "${job.title}"`,
+        isRead: false,
+        isMarked: false,
+      });
+    } else {
+      console.log("✅ Notification already exists for this rating event.");
+    }
 
     res.json({ message: "Rating submitted" });
   } catch (err) {

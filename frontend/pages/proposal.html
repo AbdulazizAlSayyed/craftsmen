@@ -691,9 +691,7 @@
 
         async function loadCurrentJobs() {
           const userId = localStorage.getItem("userId");
-
           const container = document.getElementById("current-work-list");
-
 
           if (!userId || !container) return;
 
@@ -708,7 +706,7 @@
 
             document.getElementById("no-current-work").classList.add("hidden"); // Hide it if jobs exist
 
-
+            // Update the list with current in-progress jobs
             container.innerHTML = jobs.map(job => `
       <div class="border rounded-xl p-4 bg-white shadow flex justify-between items-center">
         <div>
@@ -716,7 +714,6 @@
           <p class="text-sm text-gray-500">Deadline: ${new Date(job.deadline).toLocaleDateString()}</p>
         </div>
         <button onclick="markJobComplete('${job._id}', '${job.userId}')"
-
                 class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
           Mark as Complete
         </button>
@@ -729,8 +726,6 @@
         }
 
         async function markJobComplete(jobId, clientId) {
-
-          console.log("📤 Sending job completion:", { jobId, clientId }); // 👈 add this
           const confirmed = await Swal.fire({
             icon: "question",
             title: "Complete this job?",
@@ -761,7 +756,7 @@
               confirmButtonColor: "#22c55e"
             });
 
-            loadCurrentJobs(); // Reload updated list
+            loadCurrentJobs(); // Reload updated list of current jobs
           } catch (error) {
             console.error("❌ Failed to mark job complete:", error);
             Swal.fire({

@@ -21,6 +21,7 @@ const jobSchema = new mongoose.Schema({
     default: "Beginner",
   },
   createdAt: { type: Date, default: Date.now },
+  startDate: { type: Date, default: null },
 
   // 👇 Add these fields
   autoCompletedAt: { type: Date, default: null },

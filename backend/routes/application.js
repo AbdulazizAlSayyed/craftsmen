@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Application = require("../models/Application"); // adjust path if needed
-
+const Job = require("../models/Job");
 function broadcastBidUpdate(req, updatedApp) {
   const io = req.app.get("io");
 
@@ -106,13 +106,18 @@ router.post("/api/applications", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+// PATCH /api/applications/:id/status
+
 router.patch("/:id/status", async (req, res) => {
   try {
+    const { status, bidAmount } = req.body;
+
+    // 1. Find and update the application
     const application = await Application.findByIdAndUpdate(
       req.params.id,
       {
-        status: req.body.status,
-        ...(req.body.bidAmount && { bidAmount: req.body.bidAmount }),
+        status,
+        ...(bidAmount && { bidAmount }),
       },
       { new: true }
     )
@@ -123,14 +128,30 @@ router.patch("/:id/status", async (req, res) => {
       return res.status(404).json({ error: "Application not found" });
     }
 
-    // Notify both parties via WebSocket
+    // 2. If status is accepted, update the Job
+    if (status === "accepted") {
+      const job = await Job.findById(application.jobId._id);
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+
+      // Set the job status to 'in progress' and assign the craftsman
+      job.status = "in progress";
+      job.craftsmanId = application.craftsmanId._id;
+      job.startDate = new Date();
+      await job.save();
+    }
+
+    // 3. Broadcast update
     broadcastBidUpdate(req, application);
 
     res.json(application);
   } catch (error) {
+    console.error("❌ Error updating status:", error);
     res.status(400).json({ error: error.message });
   }
 });
+
 // Assuming Express.js
 router.post("/:id/update-bid", async (req, res) => {
   const { id } = req.params;
