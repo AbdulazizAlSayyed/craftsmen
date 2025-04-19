@@ -132,11 +132,14 @@
             });
 
             // ✅ Store user info in localStorage
-            localStorage.setItem("craftsmanId", data.user._id); // assuming it's '_id'
+            if (data.user.role === "craftsman") {
+              localStorage.setItem("craftsmanId", data.user._id);
+            }
             localStorage.setItem("userId", data.user._id);
-            localStorage.setItem("userRole", data.user.role); // 'craftsman' or 'client'
+            localStorage.setItem("userRole", data.user.role);
 
-            // ✅ Redirect based on role
+
+            // ✅ Redirect based on role  
             if (data.user.fullName === "Admin") {
               window.location.href = "dashboardAdmin.html"; // admin page
             } else {

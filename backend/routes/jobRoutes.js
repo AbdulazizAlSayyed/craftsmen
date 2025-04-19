@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Job = require("../models/Job");
 const checkClientRating = require("../middleware/checkClientRating");
+const Notification = require("../models/Notification");
 
 // ✅ POST: Create a new job
 // ✅ POST: Create a new job
@@ -152,11 +153,9 @@ router.get("/current/:craftsmanId", async (req, res) => {
 // ✅ Submit a rating for a completed job and notify the craftsman
 router.post("/rating/:jobId", async (req, res) => {
   const { jobId } = req.params;
-  const { craftsmanId, rating } = req.body;
 
-  if (!rating || rating < 1 || rating > 5) {
-    return res.status(400).json({ message: "Invalid rating value" });
-  }
+  // ❌ MISSING:
+  const { craftsmanId, rating } = req.body; // ✅ REQUIRED
 
   try {
     const job = await Job.findById(jobId);
@@ -165,19 +164,15 @@ router.post("/rating/:jobId", async (req, res) => {
     job.ratings = rating;
     job.ratingStatus = "rated";
     job.isRatingEnforced = false;
-
     await job.save();
 
-    // ✅ Send notification to craftsman
-    // ✅ Check if the notification already exists
     const existingNotification = await Notification.findOne({
-      jobId: job._id, // Ensure it's related to the specific job
-      user: craftsmanId, // Make sure it's for the correct craftsman
-      type: "rating", // Type of notification: "rating"
+      jobId: job._id,
+      user: craftsmanId,
+      type: "rating",
     });
 
     if (!existingNotification) {
-      // ✅ If no existing notification, create a new one
       await Notification.create({
         user: craftsmanId,
         type: "rating",
@@ -185,14 +180,28 @@ router.post("/rating/:jobId", async (req, res) => {
         isRead: false,
         isMarked: false,
       });
-    } else {
-      console.log("✅ Notification already exists for this rating event.");
     }
 
     res.json({ message: "Rating submitted" });
   } catch (err) {
     console.error("❌ Error submitting rating:", err);
     res.status(500).json({ message: "Failed to submit rating" });
+  }
+});
+// ✅ GET: Get a job by ID
+router.get("/:jobId", async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    res.json(job);
+  } catch (err) {
+    console.error("❌ Error fetching job by ID:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 

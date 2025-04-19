@@ -690,25 +690,29 @@
         });
 
         async function loadCurrentJobs() {
-          const userId = localStorage.getItem("userId");
+          const craftsmanId = localStorage.getItem("craftsmanId");
           const container = document.getElementById("current-work-list");
 
-          if (!userId || !container) return;
+          if (!craftsmanId || !container) return;
 
           try {
-            const res = await fetch(`/api/jobs/current/${userId}`);
+            const res = await fetch(`/api/jobs/current/${craftsmanId}`);
             const jobs = await res.json();
+
+            console.log("📦 Current jobs loaded:", jobs); // 🔍 ADD THIS
 
             if (!jobs.length) {
               document.getElementById("no-current-work").classList.remove("hidden");
+              container.innerHTML = ""; // 💡 Clear old entries
               return;
             }
 
-            document.getElementById("no-current-work").classList.add("hidden"); // Hide it if jobs exist
+            document.getElementById("no-current-work").classList.add("hidden");
 
-            // Update the list with current in-progress jobs
+            container.innerHTML = ""; // 💡 Clear first
+
             container.innerHTML = jobs.map(job => `
-      <div class="border rounded-xl p-4 bg-white shadow flex justify-between items-center">
+      <div class="border rounded-xl p-4 bg-white shadow flex justify-between items-center" data-job-id="${job._id}">
         <div>
           <h4 class="text-[#1b150d] text-md font-semibold">${job.title}</h4>
           <p class="text-sm text-gray-500">Deadline: ${new Date(job.deadline).toLocaleDateString()}</p>
@@ -748,6 +752,9 @@
             });
 
             if (!res.ok) throw new Error(await res.text());
+
+            const result = await res.json();
+            console.log("✅ Server response after marking complete:", result);
 
             Swal.fire({
               icon: "success",

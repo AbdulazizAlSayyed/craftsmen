@@ -1,20 +1,20 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Galileo Design</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900">
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,">
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-  <script src="../js/chat-dot.js"></script>
-  <script src="../js/notifications-common.js"></script>
+
   <style>
-    /* Add to your CSS */
     @keyframes highlight {
       0% {
         background-color: rgba(59, 130, 246, 0.1);
@@ -29,89 +29,111 @@
       animation: highlight 2s ease-out;
     }
 
-    /* Make sure cards are properly styled for both views */
     .app-card {
       transition: all 0.3s ease;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
     }
 
     .status-badge {
-      padding: 0.25rem 0.5rem;
-      border-radius: 9999px;
+      padding: 0.25rem 0.75rem;
       font-size: 0.75rem;
       font-weight: 600;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .status-accepted {
+      background-color: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .status-rejected {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
     }
 
     .status-pending {
       background-color: #fef3c7;
       color: #92400e;
+      border: 1px solid #fde68a;
     }
 
-    .status-accepted {
-      background-color: #d1fae5;
-      color: #065f46;
+    .profile-image {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      background-color: #f3eee7;
     }
 
-    .status-rejected {
-      background-color: #fee2e2;
-      color: #991b1b;
+    @media (max-width: 768px) {
+      .flex-col-mobile {
+        flex-direction: column;
+      }
+
+      .w-full-mobile {
+        width: 100%;
+      }
+
+      .border-r-mobile {
+        border-right: none;
+      }
     }
   </style>
 </head>
 
-<body>
-  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
-    style="font-family: Inter, 'Noto Sans', sans-serif">
-    <div class="layout-container flex h-full grow flex-col">
-      <header
-        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3">
-        <div class="flex items-center gap-8">
-          <div class="flex items-center gap-4 text-[#1b150d]">
-            <div class="size-4">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                  fill="currentColor"></path>
-              </svg>
-            </div>
-            <h2 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]">
-              Craftsman
-            </h2>
+<body class="bg-[#fcfaf8] font-sans">
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="border-b border-[#f3eee7] px-4 md:px-10 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4 md:gap-8">
+          <div class="flex items-center gap-2">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                fill="currentColor"></path>
+            </svg>
+            <h2 class="text-lg font-bold">Craftsman</h2>
           </div>
-          <div class="flex items-center gap-9">
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="dashboard.html">Dashboard</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="job.html">Hire</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="Apply.html">Apply</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="myjob.html">My Jobs</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="proposal.html"
-              id="proposals-link">Proposals</a>
-          </div>
+          <nav class="hidden md:flex items-center gap-6">
+            <a href="dashboard.html" class="text-sm font-medium">Dashboard</a>
+            <a href="job.html" class="text-sm font-medium">Hire</a>
+            <a href="Apply.html" class="text-sm font-medium">Apply</a>
+            <a href="myjob.html" class="text-sm font-medium">My Jobs</a>
+            <a href="proposal.html" class="text-sm font-medium">Proposals</a>
+          </nav>
         </div>
-        <div class="flex flex-1 justify-end gap-8">
+
+        <div class="flex items-center gap-4">
           <div class="flex gap-2">
             <a href="Notification.html" class="relative">
-              <button
-                class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]">
-                <!-- Red Dot for Unread -->
+              <button class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center">
                 <span id="notif-dot"
-                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
-
-                <!-- Bell Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   viewBox="0 0 256 256">
                   <path
                     d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
                   </path>
                 </svg>
               </button>
-
             </a>
-            <a href="chat.html" class="relative">
-              <button
-                class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center">
-                <span id="chat-dot"
-                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+            <a href="chat.html" class="relative">
+              <button class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center">
+                <span id="chat-dot"
+                  class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   viewBox="0 0 256 256">
                   <path
                     d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
@@ -120,407 +142,352 @@
               </button>
             </a>
 
-            <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
+            <a href="Setting.html" class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center">
               ⚙️
             </a>
           </div>
+
           <a href="#" id="profile-link">
-            <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"></div>
+            <div id="profile-pic" class="profile-image"></div>
           </a>
         </div>
-      </header>
-
-      <!-- Two Columns: Applicants + Bidding -->
-      <div class="flex flex-col md:flex-row grow w-full h-full">
-        <!-- Left: All Applicants -->
-        <div id="applicant-list" class="w-full md:w-1/2 p-6 border-r border-[#f3eee7] overflow-y-auto max-h-screen">
-        </div>
-
-        <!-- Right: Pending Bidding -->
-        <div id="bidding-list" class="w-full md:w-1/2 p-6 overflow-y-auto max-h-screen"></div>
       </div>
-    </div>
+    </header>
 
-    <script>
-      // Global socket variable
-      let socket;
+    <!-- Main Content -->
+    <main class="flex flex-col md:flex-row flex-1">
+      <!-- Applicants Column -->
+      <div id="applicant-list" class="w-full md:w-1/2 p-4 md:p-6 border-r border-[#f3eee7] overflow-y-auto">
+        <h2 class="text-xl font-bold mb-4">Applicants</h2>
+        <div id="applicants-content"></div>
+      </div>
 
-      // Function to connect to Socket.IO
-      function connectSocketIO() {
-        const userId = localStorage.getItem("userId");
-        if (!userId) {
-          console.warn("⚠️ No userId found in localStorage.");
-          return;
-        }
+      <!-- Bidding Column -->
+      <div id="bidding-list" class="w-full md:w-1/2 p-4 md:p-6 overflow-y-auto">
+        <h2 class="text-xl font-bold mb-4">Bidders</h2>
+        <div id="bidders-content"></div>
+      </div>
+    </main>
+  </div>
 
-        socket = io("http://localhost:5001", {
-          reconnection: true,
-          reconnectionAttempts: 5,
-          reconnectionDelay: 2000,
-        });
+  <script>
+    // Socket.IO connection
+    let socket;
 
-        socket.on("connect", () => {
-          socket.emit("addUser", userId);
-          console.log("✅ Connected to Socket.IO with ID:", socket.id);
-        });
-
-        socket.on("BID_UPDATE", (data) => {
-          handleBidUpdate(data);
-        });
-
-        socket.on("disconnect", () => {
-          console.warn("⚠️ Socket.IO disconnected, attempting to reconnect...");
-        });
-
-        socket.on("reconnect_attempt", () => {
-          console.log("⚠️ Reconnecting...");
-        });
-
-        socket.on("reconnect_failed", () => {
-          console.error("❌ Socket.IO failed to reconnect.");
-        });
+    // Connect to Socket.IO
+    function connectSocketIO() {
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        console.warn("No userId found in localStorage");
+        return;
       }
 
-      // Handle bid updates from server
-      function handleBidUpdate(updatedBid) {
-        const existingCard = document.getElementById(`app-card-${updatedBid._id}`);
+      socket = io("http://localhost:5001", {
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 2000,
+      });
 
-        if (existingCard) {
-          // Update status
-          const statusEl = document.getElementById(`status-${updatedBid._id}`);
+      socket.on("connect", () => {
+        socket.emit("addUser", userId);
+        console.log("Connected to Socket.IO with ID:", socket.id);
+      });
+
+      socket.on("BID_UPDATE", handleBidUpdate);
+
+      socket.on("disconnect", () => {
+        console.warn("Socket.IO disconnected, attempting to reconnect...");
+      });
+    }
+
+    // Handle bid updates
+    function handleBidUpdate(updatedBid) {
+      const card = document.getElementById(`app-card-${updatedBid._id}`);
+      if (!card) return;
+
+      // Update status badge
+      const statusEl = card.querySelector('.status-badge');
+      if (statusEl) {
+        statusEl.textContent = updatedBid.status;
+        statusEl.className = `status-badge status-${updatedBid.status}`;
+      }
+
+      // Update bid amount if exists
+      const bidEl = card.querySelector('.bid-amount');
+      if (bidEl && updatedBid.bidAmount !== undefined) {
+        bidEl.textContent = `$${updatedBid.bidAmount}`;
+      }
+
+      // Update action buttons
+      updateActionButtons(card, updatedBid.status, updatedBid._id);
+
+      // Visual feedback
+      card.classList.add('bid-update');
+      setTimeout(() => card.classList.remove('bid-update'), 2000);
+    }
+
+    // Update action buttons based on status
+    function updateActionButtons(card, status, appId) {
+      const buttonsContainer = card.querySelector('.action-buttons');
+      if (!buttonsContainer) return;
+
+      let buttonsHTML = '';
+
+      switch (status) {
+        case 'pending':
+          buttonsHTML = `
+            <div class="flex flex-wrap gap-2 mt-2">
+              <button onclick="updateStatus('${appId}', 'accepted')" 
+                class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
+                Accept
+              </button>
+              <button onclick="updateStatus('${appId}', 'rejected')" 
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                Reject
+              </button>
+            </div>
+          `;
+          break;
+
+        case 'rejected':
+          buttonsHTML = `
+            <div class="flex flex-wrap items-center gap-2 mt-2">
+              <input id="new-bid-${appId}" type="number" 
+                class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
+              <button onclick="resubmitBid('${appId}')" 
+                class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
+                Resubmit
+              </button>
+            </div>
+          `;
+          break;
+
+        case 'accepted':
+          buttonsHTML = `
+            <div class="text-green-600 font-medium mt-2">
+              Accepted
+            </div>
+          `;
+          break;
+
+        default:
+          buttonsHTML = '';
+      }
+
+      buttonsContainer.innerHTML = buttonsHTML;
+    }
+
+    // Resubmit bid
+    function resubmitBid(appId) {
+      const newBidInput = document.getElementById(`new-bid-${appId}`);
+      if (!newBidInput || isNaN(parseFloat(newBidInput.value))) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Bid',
+          text: 'Please enter a valid bid amount',
+          confirmButtonColor: '#ef4444'
+        });
+        return;
+      }
+
+      updateStatus(appId, 'pending', parseFloat(newBidInput.value));
+    }
+
+    // Update application status
+    async function updateStatus(appId, newStatus, bidAmount = null) {
+      const actionMap = {
+        'accepted': { verb: 'accept', color: '#10b981' },
+        'rejected': { verb: 'reject', color: '#ef4444' },
+        'pending': { verb: 'update', color: '#f59e0b' }
+      };
+
+      const action = actionMap[newStatus] || { verb: 'update', color: '#3b82f6' };
+
+      const confirmResult = await Swal.fire({
+        title: `Confirm ${action.verb}?`,
+        text: `Are you sure you want to ${action.verb} this application?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: action.color,
+        cancelButtonColor: '#9ca3af',
+        confirmButtonText: `Yes, ${action.verb}`
+      });
+
+      if (!confirmResult.isConfirmed) return;
+
+      try {
+        const res = await fetch(`/api/applications/${appId}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: newStatus,
+            bidAmount: bidAmount
+          }),
+        });
+
+        if (!res.ok) {
+          const error = await res.json();
+          throw new Error(error.message || 'Failed to update status');
+        }
+
+        const updatedApp = await res.json();
+
+        // Update UI
+        const card = document.getElementById(`app-card-${appId}`);
+        if (card) {
+          const statusEl = card.querySelector('.status-badge');
           if (statusEl) {
-            statusEl.textContent = updatedBid.status;
-            statusEl.className = `status-badge status-${updatedBid.status}`;
+            statusEl.textContent = updatedApp.status;
+            statusEl.className = `status-badge status-${updatedApp.status}`;
           }
 
-          // Update bid amount if it exists
-          const bidEl = document.getElementById(`bid-${updatedBid._id}`);
-          if (bidEl && updatedBid.bidAmount !== undefined) {
-            bidEl.textContent = `$${updatedBid.bidAmount}`;
+          const bidEl = card.querySelector('.bid-amount');
+          if (bidEl && updatedApp.bidAmount !== undefined) {
+            bidEl.textContent = `$${updatedApp.bidAmount}`;
           }
+
+          updateActionButtons(card, updatedApp.status, appId);
 
           // Visual feedback
-          existingCard.classList.add('bid-update');
-          setTimeout(() => existingCard.classList.remove('bid-update'), 2000);
-
-          // Update buttons based on status
-          updateCardButtons(existingCard, updatedBid.status);
+          card.classList.add('bid-update');
+          setTimeout(() => card.classList.remove('bid-update'), 1500);
         }
-      }
 
-      // Update card buttons based on status
-      function updateCardButtons(card, status) {
-        const buttonsContainer = card.querySelector('.action-buttons');
-        if (!buttonsContainer) return;
-
-        if (status === 'pending') {
-          buttonsContainer.innerHTML = `
-      <div class="text-yellow-600 font-medium">Waiting for client response</div>
-      <div class="flex gap-1 mt-1">
-        <input id="new-bid-${card.id.replace('app-card-', '')}" type="number" 
-          class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
-        <button onclick="updateStatus('${card.id.replace('app-card-', '')}', 'pending', 
-          parseFloat(document.getElementById('new-bid-${card.id.replace('app-card-', '')}').value))"
-          class="text-[#ec8e13] hover:underline font-semibold">Update</button>
-      </div>
-    `;
-        } else if (status === 'accepted') {
-          buttonsContainer.innerHTML = `
-      <div class="text-green-600 font-medium">Accepted</div>
-    `;
-        } else if (status === 'rejected') {
-          buttonsContainer.innerHTML = `
-      <div class="text-red-600 font-medium">Rejected</div>
-      <div class="flex gap-1 mt-1">
-        <input id="new-bid-${card.id.replace('app-card-', '')}" type="number" 
-          class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
-        <button onclick="updateStatus('${card.id.replace('app-card-', '')}', 'pending', 
-          parseFloat(document.getElementById('new-bid-${card.id.replace('app-card-', '')}').value))"
-          class="text-[#ec8e13] hover:underline font-semibold">Resubmit</button>
-      </div>
-    `;
-        }
-      }
-
-      // Update application status
-      async function updateStatus(appId, newStatus, customBid = null, fullName = "") {
-        const actionVerb = newStatus === "accepted" ? "accept" : newStatus === "rejected" ? "reject" : "update the bid for";
-
-        const confirmResult = await Swal.fire({
-          title: `Are you sure you want to ${actionVerb}?`,
-          text: fullName ? `This action will ${actionVerb} ${fullName}.` : "",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonColor: "#10b981",
-          cancelButtonColor: "#f43f5e",
-          confirmButtonText: "Yes, proceed"
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: `${action.verb.charAt(0).toUpperCase() + action.verb.slice(1)}ed`,
+          text: `Application has been ${action.verb}ed successfully`,
+          timer: 1500,
+          showConfirmButton: false
         });
 
-        if (!confirmResult.isConfirmed) return;
-
-
-        try {
-          const res = await fetch(`/api/applications/${appId}/status`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              status: newStatus,
-              bidAmount: customBid
-            }),
-          });
-
-          const updated = await res.json();
-
-          if (res.ok) {
-            Swal.fire({
-              icon: "success",
-              title: newStatus === "pending" ? "Bid Updated" : "Status Updated",
-              text: newStatus === "pending"
-                ? "Your bid has been updated and is waiting for client response"
-                : `Application has been ${newStatus}`,
-              timer: 1500,
-              showConfirmButton: false
-            });
-
-            // Store rejected bids in localStorage
-            if (newStatus === 'rejected') {
-              const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids') || {});
-              rejectedBids[appId] = true;
-              localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
-            } else {
-              // Remove from localStorage if status changed from rejected
-              const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
-              delete rejectedBids[appId];
-              localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
-            }
-            // Update UI immediately
-            const card = document.getElementById(`app-card-${appId}`);
-            if (card) {
-              const statusEl = document.getElementById(`status-${appId}`);
-              if (statusEl) {
-                statusEl.textContent = newStatus;
-                statusEl.className = `status-badge status-${newStatus}`;
-              }
-
-              const bidEl = document.getElementById(`bid-${appId}`);
-              if (bidEl && customBid) {
-                bidEl.textContent = `$${customBid}`;
-              }
-
-              updateCardButtons(card, newStatus);
-              card.classList.add('bid-update');
-              setTimeout(() => card.classList.remove('bid-update'), 1500);
-            }
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Update Failed",
-              text: updated.error || "Unknown error occurred.",
-              confirmButtonColor: "#ef4444"
-            });
-          }
-        } catch (err) {
-          console.error("Error updating status:", err);
-          Swal.fire({
-            icon: "error",
-            title: "Network Error",
-            text: "Failed to update. Please try again.",
-            confirmButtonColor: "#ef4444"
-          });
-        }
-      }
-
-      // Confirm and reject application
-      async function confirmAndReject(appId) {
-        const confirmResult = await Swal.fire({
-          title: "Reject Applicant?",
-          text: "Are you sure you want to reject?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#ef4444",
-          cancelButtonColor: "#9ca3af",
-          confirmButtonText: "Yes, reject"
+      } catch (error) {
+        console.error('Error updating status:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Update Failed',
+          text: error.message || 'Something went wrong',
+          confirmButtonColor: '#ef4444'
         });
-        if (!confirmResult.isConfirmed) return;
-
-        try {
-          const res = await fetch(`/api/applications/${appId}/status`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status: "rejected" }),
-          });
-
-          if (!res.ok) {
-            const data = await res.json();
-            Swal.fire({
-              icon: "error",
-              title: "Rejection Failed",
-              text: data.error || "Unknown error",
-              confirmButtonColor: "#ef4444"
-            });
-            return;
-          }
-
-          const updated = await res.json();
-          // Store rejected bid in localStorage
-          const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
-          rejectedBids[appId] = true;
-          localStorage.setItem('rejectedBids', JSON.stringify(rejectedBids));
-          const card = document.getElementById(`app-card-${appId}`);
-          if (card) {
-            const statusEl = document.getElementById(`status-${appId}`);
-            if (statusEl) {
-              statusEl.textContent = "rejected";
-              statusEl.className = "status-badge status-rejected";
-            }
-            updateCardButtons(card, "rejected");
-            card.classList.add('bid-update');
-            setTimeout(() => card.classList.remove('bid-update'), 1500);
-          }
-
-          Swal.fire({
-            icon: "success",
-            title: "Rejected",
-            text: "The bid has been rejected successfully.",
-            timer: 2000,
-            showConfirmButton: false
-          });
-        } catch (err) {
-          console.error("Error rejecting bid:", err);
-          Swal.fire({
-            icon: "error",
-            title: "Network Error",
-            text: "Something went wrong while rejecting the bid.",
-            confirmButtonColor: "#ef4444"
-          });
-        }
       }
+    }
 
-      // Load applicants when DOM is ready
-      document.addEventListener("DOMContentLoaded", async () => {
-        // Connect to Socket.IO
-        connectSocketIO();
+    // Load profile data
+    async function loadProfile() {
+      const profilePic = document.getElementById('profile-pic');
+      if (!profilePic) return;
 
-        const jobId = new URLSearchParams(window.location.search).get("jobId");
-        const applicantContainer = document.getElementById("applicant-list");
-        const biddingContainer = document.getElementById("bidding-list");
+      const userId = localStorage.getItem('userId');
+      if (!userId) return;
 
-        if (!jobId) {
-          applicantContainer.innerHTML = "<p>No job ID found.</p>";
-          return;
-        }
-
-        try {
-          const res = await fetch(`/api/applications/job/${jobId}`);
-          const applicants = await res.json();
-
-          if (!Array.isArray(applicants) || applicants.length === 0) {
-            applicantContainer.innerHTML = "<p>No applicants yet.</p>";
-            return;
-          }
-
-          applicantContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Applicants</h2>";
-          biddingContainer.innerHTML = "<h2 class='text-xl font-bold mb-4'>Bidders</h2>";
-          const rejectedBids = JSON.parse(localStorage.getItem('rejectedBids')) || {};
-
-          applicants.forEach((app) => {
-            const user = app.craftsmanId;
-            const hasBid = typeof app.bidAmount === "number" && !isNaN(app.bidAmount);
-
-            const userInfo = `
-            <div class="flex-1">
-              <div class="flex items-center gap-4 mb-2">
-                <div class="h-12 w-12 rounded-full bg-center bg-cover bg-no-repeat cursor-pointer"
-     onclick="window.location.href='Profile2.html?craftsmanId=${user._id}'"
-     style="background-image: url('${user.profileImage || "/uploads/default.png"}')">
-</div>
-
-                  <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName}</h3>
-                  <p class="text-sm text-gray-500">${user.email}</p>
-                </div>
-              </div>
-              <p class="text-sm text-[#1b150d]">
-                <strong>Status:</strong> 
-                <span id="status-${app._id}" class="status-badge status-${app.status}">
-                  ${app.status}
-                </span>
-              </p>
-              ${hasBid ? `<p class="text-sm text-[#1b150d]"><strong>Bid Amount:</strong> <span id="bid-${app._id}">$${app.bidAmount}</span></p>` : ''}
-              <p class="mt-2 text-sm text-[#1b150d]">
-                <strong>Cover Letter:</strong><br/>${app.coverLetter}
-              </p>
-            </div>
-          `;
-
-            const actionButtons = `
-            <div class="action-buttons flex flex-col items-center justify-center gap-2 min-w-[140px]">
-              ${app.status === 'pending' ? `
-                <div class="flex gap-2">
-                  <button onclick="updateStatus('${app._id}', 'accepted', null, '${user.fullName.replace(/'/g, "\\'")}')"
-                    class="bg-green-100 text-green-700 hover:bg-green-200 px-2 py-1 rounded">Accept</button>
-                  <button onclick="confirmAndReject('${app._id}')"
-                    class="bg-red-100 text-red-700 hover:bg-red-200 px-2 py-1 rounded">Reject</button>
-                </div>
-               
-              ` : app.status === 'accepted' ? `
-                <div class="text-green-600 font-medium">Accepted</div>
-              ` : `
-                <div class="text-red-600 font-medium">Rejected</div>
-                ${hasBid ? `
-                <div class="flex gap-1 mt-1">
-                  <input id="new-bid-${app._id}" type="number" class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
-                  <button onclick="updateStatus('${app._id}', 'pending', parseFloat(document.getElementById('new-bid-${app._id}').value))"
-                    class="text-[#ec8e13] hover:underline font-semibold">Resubmit</button>
-                </div>
-                ` : ''}
-              `}
-            </div>
-          `;
-
-            const html = `
-            <div id="app-card-${app._id}" class="border p-4 rounded-lg shadow mb-4 bg-white flex justify-between items-start gap-6">
-              ${userInfo}
-              ${actionButtons}
-            </div>
-          `;
-
-            if (hasBid) {
-              biddingContainer.insertAdjacentHTML("beforeend", html);
-            } else {
-              applicantContainer.insertAdjacentHTML("beforeend", html);
-            }
-          });
-        } catch (error) {
-          console.error(error);
-          applicantContainer.innerHTML = "<p>Error loading applicants.</p>";
-        }
-
-        // Load profile picture
-        const craftsmanId = localStorage.getItem("craftsmanId");
-        const profilePicDiv = document.getElementById("profile-pic");
-
-        if (!craftsmanId || !profilePicDiv) return;
-
-        // Try cached image first
-        const cachedImage = localStorage.getItem("profileImage");
+      try {
+        const cachedImage = localStorage.getItem('profileImage');
         if (cachedImage) {
-          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+          profilePic.style.backgroundImage = `url('${cachedImage}')`;
         }
 
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
+        const res = await fetch(`/api/profile/${userId}`);
+        if (!res.ok) throw new Error('Failed to load profile');
 
-          const data = await res.json();
-          const profileImage = data.profileImage.trim() || "/uploads/default.png";
+        const data = await res.json();
+        const imageUrl = data.profileImage?.trim() || '/uploads/default.png';
 
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-          localStorage.setItem("profileImage", profileImage);
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
+        profilePic.style.backgroundImage = `url('${imageUrl}')`;
+        localStorage.setItem('profileImage', imageUrl);
+      } catch (error) {
+        console.error('Error loading profile:', error);
+      }
+    }
+
+    // Render applicant cards
+    function renderApplicantCards(applicants, mainSkill) {
+      const applicantsContainer = document.getElementById('applicants-content');
+      const biddersContainer = document.getElementById('bidders-content');
+
+      applicantsContainer.innerHTML = '';
+      biddersContainer.innerHTML = '';
+
+      applicants.forEach(applicant => {
+        const user = applicant.craftsmanId || {};
+        const hasBid = typeof applicant.bidAmount === 'number' && !isNaN(applicant.bidAmount);
+
+        const skillObj = user.skills?.find(skill => skill.name === mainSkill);
+        const skillRank = skillObj?.rank || 'Unranked';
+
+        const cardHTML = `
+      <div id="app-card-${applicant._id}" class="app-card">
+        <div class="flex gap-4">
+          <div class="profile-image cursor-pointer" 
+            style="background-image: url('${user.profileImage || '/uploads/default.png'}')"
+            onclick="window.location.href='Profile2.html?craftsmanId=${user._id}'"></div>
+
+          <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-lg font-bold">${user.fullName || 'Unknown User'}</h3>
+              <span class="status-badge status-${applicant.status}">${applicant.status}</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">${user.email || ''}</p>
+
+            ${hasBid ? `<p class="text-sm mb-2"><span class="font-medium">Bid Amount:</span> <span class="bid-amount">$${applicant.bidAmount}</span></p>` : ''}
+
+            <p class="text-sm mb-2"><span class="font-medium">Rank in ${mainSkill}:</span> <span class="text-blue-600">${skillRank}</span></p>
+
+            ${applicant.coverLetter ? `<div class="text-sm mb-2"><p class="font-medium">Cover Letter:</p><p class="text-gray-700">${applicant.coverLetter}</p></div>` : ''}
+          </div>
+        </div>
+
+        <div class="action-buttons"></div>
+      </div>
+    `;
+
+        if (hasBid) {
+          biddersContainer.insertAdjacentHTML('beforeend', cardHTML);
+        } else {
+          applicantsContainer.insertAdjacentHTML('beforeend', cardHTML);
         }
+
+        const card = document.getElementById(`app-card-${applicant._id}`);
+        if (card) updateActionButtons(card, applicant.status, applicant._id);
       });
-    </script>
+    }
+
+    // Load applicants data
+    async function loadApplicants() {
+      const jobId = new URLSearchParams(window.location.search).get('jobId');
+      if (!jobId) {
+        document.getElementById('applicants-content').innerHTML = '<p class="text-red-500">No job ID specified</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/applications/job/${jobId}`);
+        if (!res.ok) throw new Error('Failed to load applicants');
+        const applicants = await res.json();
+        const jobRes = await fetch(`/api/jobs/${jobId}`);
+        if (!jobRes.ok) {
+          throw new Error(`Job not found (status ${jobRes.status})`);
+        }
+        const jobData = await jobRes.json();
+        const mainSkill = jobData.skillsRequired?.[0] || "General";
+
+        renderApplicantCards(applicants, mainSkill);
+
+      } catch (error) {
+        console.error('Error loading applicants:', error);
+        document.getElementById('applicants-content').innerHTML = `
+          <p class="text-red-500">Error loading applicants: ${error.message}</p>
+        `;
+      }
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      connectSocketIO();
+      loadProfile();
+      loadApplicants();
+    });
+  </script>
 </body>
 
 </html>
