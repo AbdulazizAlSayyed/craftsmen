@@ -3,7 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-
+const axios = require("axios");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/userRoutes");
 const jobRoutes = require("./routes/jobRoutes");
@@ -228,4 +228,32 @@ app._router.stack.forEach((r) => {
 server.listen(PORT, () => {
   logInfo(`✅ Server is running at http://localhost:${PORT}`);
   console.log(`✅ Server is running at http://localhost:${PORT}`);
+});
+
+app.post("/posts", async (req, res) => {
+  const { userId, text } = req.body;
+
+  try {
+    const modRes = await axios.post(
+      "http://localhost:5000/api/moderatation_api",
+      {
+        text,
+      }
+    );
+
+    const { label, confidence } = modRes.data;
+
+    if (label === "unsafe" || confidence < 0.75) {
+      return res.status(403).json({
+        error: "Moderation failed",
+        label,
+        confidence,
+      });
+    }
+
+    // proceed with saving post in DB...
+  } catch (err) {
+    console.error("🔥 Moderation Service Error:", err.message);
+    return res.status(500).json({ error: "Moderation service failed." });
+  }
 });

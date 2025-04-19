@@ -2,5 +2,11 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.17",
     "tailwindcss": "^4.0.17"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+   "scripts": {
+    "dev": "concurrently \"cd backend && node server.js\" \"cd backend && python app.py\""
   }
 }

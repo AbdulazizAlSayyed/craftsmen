@@ -430,9 +430,11 @@
             const userInfo = `
             <div class="flex-1">
               <div class="flex items-center gap-4 mb-2">
-                <img src="${user.profileImage || "/uploads/default.png"}" 
-                  class="w-12 h-12 rounded-full object-cover" />
-                <div>
+                <div class="h-12 w-12 rounded-full bg-center bg-cover bg-no-repeat cursor-pointer"
+     onclick="window.location.href='Profile2.html?craftsmanId=${user._id}'"
+     style="background-image: url('${user.profileImage || "/uploads/default.png"}')">
+</div>
+
                   <h3 class="text-lg font-bold text-[#1b150d]">${user.fullName}</h3>
                   <p class="text-sm text-gray-500">${user.email}</p>
                 </div>

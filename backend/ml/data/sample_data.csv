@@ -1,0 +1,10 @@
+text,label
+"This is a great project!",safe
+"bad",low-quality
+"j",low-quality
+"You're an idiot",toxic
+"f*** this app",toxic
+"Hi",safe
+"Need help",safe
+"u suck",toxic
+"ok",safe
