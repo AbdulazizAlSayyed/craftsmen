@@ -430,8 +430,12 @@
             <p class="text-sm text-gray-600 mb-2">${user.email || ''}</p>
 
             ${hasBid ? `<p class="text-sm mb-2"><span class="font-medium">Bid Amount:</span> <span class="bid-amount">$${applicant.bidAmount}</span></p>` : ''}
-
-            <p class="text-sm mb-2"><span class="font-medium">Rank in ${mainSkill}:</span> <span class="text-blue-600">${skillRank}</span></p>
+<p class="text-sm mb-2">
+  <span class="font-medium">Rank in ${mainSkill}:</span> 
+  ${skillRank !== 'Unranked'
+            ? `<span class="text-blue-600">${skillRank}</span>`
+            : `<span class="italic text-gray-400">No rank yet</span>`}
+</p>
 
             ${applicant.coverLetter ? `<div class="text-sm mb-2"><p class="font-medium">Cover Letter:</p><p class="text-gray-700">${applicant.coverLetter}</p></div>` : ''}
           </div>

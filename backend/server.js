@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const axios = require("axios");
+
 require("dotenv").config();
 const contentModeration = require("./middleware/contentModeration");
 
@@ -33,6 +35,7 @@ app.use(contentModeration);
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+
 app.use("/api", require("./routes/contentCheck"));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

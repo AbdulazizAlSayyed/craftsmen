@@ -6,6 +6,25 @@ const Notification = require("../models/Notification");
 
 // ✅ POST: Create a new job
 // ✅ POST: Create a new job
+function calculateXP(jobRank, rating) {
+  const baseXP = {
+    Beginner: 20,
+    Advanced: 50,
+    Expert: 100,
+  };
+  const safeRating = rating || 3;
+  const multiplier = safeRating / 3;
+
+  return Math.round((baseXP[jobRank] || 0) * multiplier);
+}
+
+function getRankFromXP(xp) {
+  if (xp <= 100) return "Beginner";
+  if (xp <= 300) return "Intermediate";
+  if (xp <= 600) return "Advanced";
+  return "Expert";
+}
+
 router.post("/", async (req, res) => {
   try {
     const {
@@ -151,11 +170,11 @@ router.get("/current/:craftsmanId", async (req, res) => {
 
 // Submit a rating for a completed job
 // ✅ Submit a rating for a completed job and notify the craftsman
+const User = require("../models/User"); // Make sure this is at the top
+
 router.post("/rating/:jobId", async (req, res) => {
   const { jobId } = req.params;
-
-  // ❌ MISSING:
-  const { craftsmanId, rating } = req.body; // ✅ REQUIRED
+  const { craftsmanId, rating } = req.body;
 
   try {
     const job = await Job.findById(jobId);
@@ -165,6 +184,37 @@ router.post("/rating/:jobId", async (req, res) => {
     job.ratingStatus = "rated";
     job.isRatingEnforced = false;
     await job.save();
+
+    const user = await User.findById(craftsmanId);
+    if (!user) return res.status(404).json({ message: "Craftsman not found" });
+
+    const skillName = job.skillsRequired[0]; // Adjust if you want to loop
+    const xpGained = calculateXP(job.jobRank, rating);
+
+    const skill = user.skills.find(
+      (s) => s.name.toLowerCase() === skillName.toLowerCase()
+    );
+
+    if (skill) {
+      skill.xpPoints += xpGained;
+      skill.rank = getRankFromXP(skill.xpPoints);
+      skill.numberOfJobs += 1;
+      skill.numberOfRatedJobs += 1;
+      skill.rating =
+        (skill.rating * (skill.numberOfRatedJobs - 1) + rating) /
+        skill.numberOfRatedJobs;
+    } else {
+      user.skills.push({
+        name: skillName,
+        xpPoints: xpGained,
+        rank: getRankFromXP(xpGained),
+        numberOfJobs: 1,
+        numberOfRatedJobs: 1,
+        rating: rating,
+      });
+    }
+
+    await user.save();
 
     const existingNotification = await Notification.findOne({
       jobId: job._id,
@@ -182,12 +232,13 @@ router.post("/rating/:jobId", async (req, res) => {
       });
     }
 
-    res.json({ message: "Rating submitted" });
+    res.json({ message: "Rating submitted and XP updated" });
   } catch (err) {
     console.error("❌ Error submitting rating:", err);
     res.status(500).json({ message: "Failed to submit rating" });
   }
 });
+
 // ✅ GET: Get a job by ID
 router.get("/:jobId", async (req, res) => {
   try {
