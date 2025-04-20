@@ -158,6 +158,7 @@
               </div>
             </div>
           </div>
+
           <div
             class="layout-content-container flex flex-col max-w-[960px] flex-1"
           >
@@ -167,11 +168,6 @@
               >
                 Reports
               </p>
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal"
-              >
-                <span class="truncate">Create Report</span>
-              </button>
             </div>
             <div class="px-4 py-3">
               <label class="flex flex-col min-w-40 h-12 w-full">
@@ -203,47 +199,49 @@
               </label>
             </div>
             <div class="flex gap-3 p-3 flex-wrap pr-4">
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#111517] text-sm font-medium leading-normal">
-                  All
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#111517] text-sm font-medium leading-normal">
-                  Pending
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#111517] text-sm font-medium leading-normal">
-                  In Progress
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#111517] text-sm font-medium leading-normal">
-                  Resolved
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#111517] text-sm font-medium leading-normal">
-                  Closed
-                </p>
-              </div>
-              <div
-                class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
-              >
-                <p class="text-[#111517] text-sm font-medium leading-normal">
-                  Rejected
-                </p>
+              <div class="flex gap-3 p-3 flex-wrap pr-4">
+                <div
+                  class="filter-btn flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
+                >
+                  <p class="text-[#111517] text-sm font-medium leading-normal">
+                    All
+                  </p>
+                </div>
+                <div
+                  class="filter-btn flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
+                >
+                  <p class="text-[#111517] text-sm font-medium leading-normal">
+                    Pending Review
+                  </p>
+                </div>
+                <div
+                  class="filter-btn flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
+                >
+                  <p class="text-[#111517] text-sm font-medium leading-normal">
+                    In Progress
+                  </p>
+                </div>
+                <div
+                  class="filter-btn flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
+                >
+                  <p class="text-[#111517] text-sm font-medium leading-normal">
+                    Resolved
+                  </p>
+                </div>
+                <div
+                  class="filter-btn flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
+                >
+                  <p class="text-[#111517] text-sm font-medium leading-normal">
+                    Closed
+                  </p>
+                </div>
+                <div
+                  class="filter-btn flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4"
+                >
+                  <p class="text-[#111517] text-sm font-medium leading-normal">
+                    Rejected
+                  </p>
+                </div>
               </div>
             </div>
             <h2
@@ -290,208 +288,7 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        RPT00123
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-240 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        USR1001
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Harassment</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-480 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        03/15/2024
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Pending Review</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-720 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        View
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        RPT00124
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-240 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        USR1002
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Fake account</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-480 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        03/16/2024
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Under Review</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-720 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        View
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        RPT00125
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-240 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        USR1003
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Spam</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-480 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        03/17/2024
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Resolved</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-720 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        View
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        RPT00126
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-240 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        USR1004
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Fraud</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-480 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        03/18/2024
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Rejected</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-720 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        View
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dce1e5]">
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal"
-                      >
-                        RPT00127
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-240 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        USR1005
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Inappropriate Content</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-480 h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal"
-                      >
-                        03/19/2024
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal"
-                      >
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Closed</span>
-                        </button>
-                      </td>
-                      <td
-                        class="table-b76c8cab-c309-4ba0-84ac-c1ae26733244-column-720 h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]"
-                      >
-                        View
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
               <style>
@@ -588,5 +385,75 @@
         </div>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await fetch("/api/reports");
+          if (!res.ok) throw new Error("Failed to fetch reports");
+
+          const reports = await res.json();
+          renderReports(reports);
+
+          // Add filter functionality
+          document.querySelectorAll(".filter-btn").forEach((btn) => {
+            btn.addEventListener("click", async (e) => {
+              const status = e.target.textContent.trim();
+              const url =
+                status === "All"
+                  ? "/api/reports"
+                  : `/api/reports?status=${encodeURIComponent(status)}`;
+
+              const res = await fetch(url);
+              const filteredReports = await res.json();
+              renderReports(filteredReports);
+            });
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+
+      function renderReports(reports) {
+        const tbody = document.querySelector("tbody");
+        tbody.innerHTML = "";
+
+        reports.forEach((report) => {
+          const row = document.createElement("tr");
+          row.className = "border-t border-t-[#dce1e5]";
+          row.innerHTML = `
+        <td class="h-[72px] px-4 py-2 w-[400px] text-[#111517] text-sm font-normal leading-normal">
+          ${report._id}
+        </td>
+        <td class="h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal">
+          ${report.userId}
+        </td>
+        <td class="h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+          <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full">
+            <span class="truncate">${report.category}</span>
+          </button>
+        </td>
+        <td class="h-[72px] px-4 py-2 w-[400px] text-[#647787] text-sm font-normal leading-normal">
+          ${new Date(report.reportedDate).toLocaleDateString()}
+        </td>
+        <td class="h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+          <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f0f2f4] text-[#111517] text-sm font-medium leading-normal w-full">
+            <span class="truncate">${report.status}</span>
+          </button>
+        </td>
+        <td class="h-[72px] px-4 py-2 w-60 text-[#647787] text-sm font-bold leading-normal tracking-[0.015em]">
+          <button onclick="viewReport('${
+            report._id
+          }')" class="text-blue-600 hover:underline">
+            View
+          </button>
+        </td>`;
+          tbody.appendChild(row);
+        });
+      }
+
+      function viewReport(reportId) {
+        window.location.href = `/reportDetail.html?id=${reportId}`;
+      }
+    </script>
   </body>
 </html>

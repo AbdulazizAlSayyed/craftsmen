@@ -21,6 +21,8 @@ const categoryRoutes = require("./routes/categories");
 const dashboardStatsRoutes = require("./routes/dashboardStats");
 const notificationRoutes = require("./routes/notification");
 const Message = require("./models/message");
+const reportRoutes = require("./routes/reports");
+
 const { Server } = require("socket.io");
 const http = require("http");
 const { logError, logInfo } = require("./logger");
@@ -35,6 +37,7 @@ app.use(contentModeration);
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+app.use("/api/reports", reportRoutes);
 
 app.use("/api", require("./routes/contentCheck"));
 app.use("/api/auth", authRoutes);

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Galileo Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts and Tailwind -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- SweetAlert and Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/chat-dot.js"></script>
+    <script src="../js/notifications-common.js"></script>
+  </head>
+
+  <body
+    class="bg-[#fcfaf8] font-sans"
+    style="font-family: 'Work Sans', 'Noto Sans', sans-serif"
+  >
+    <div class="min-h-screen flex flex-col">
+      <!-- Content -->
+      <main class="p-6 max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">Report Details</h1>
+
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <p class="text-sm text-gray-500">Report ID</p>
+              <p id="report-id" class="font-medium"></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Status</p>
+              <p id="report-status" class="font-medium"></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Reported By</p>
+              <p id="report-user" class="font-medium"></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Date Reported</p>
+              <p id="report-date" class="font-medium"></p>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-sm text-gray-500">Category</p>
+            <p id="report-category" class="font-medium text-lg"></p>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-sm text-gray-500">Subject</p>
+            <p id="report-subject" class="font-medium text-lg"></p>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-sm text-gray-500">Description</p>
+            <div
+              id="report-message"
+              class="mt-2 p-4 bg-gray-50 rounded-lg"
+            ></div>
+          </div>
+
+          <div class="mb-6" id="admin-section">
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Admin Notes</label
+            >
+            <textarea
+              id="admin-notes"
+              rows="3"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md"
+            ></textarea>
+
+            <div class="mt-4 flex gap-2">
+              <select
+                id="status-select"
+                class="px-3 py-2 border border-gray-300 rounded-md"
+              >
+                <option value="Pending Review">Pending Review</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Closed">Closed</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              <button
+                onclick="updateReport()"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- JS -->
+    <script>
+      async function loadReport() {
+        const reportId = new URLSearchParams(window.location.search).get("id");
+        if (!reportId) return (window.location.href = "/reportAdmin.html");
+
+        try {
+          const res = await fetch(`/api/reports/${reportId}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          if (!res.ok) throw new Error("Failed to fetch report");
+
+          const report = await res.json();
+
+          document.getElementById("report-id").textContent =
+            report._id || report.id;
+          document.getElementById("report-status").textContent =
+            report.status || "Pending Review";
+          document.getElementById("report-user").textContent = report.userId;
+          document.getElementById("report-date").textContent = new Date(
+            report.reportedDate
+          ).toLocaleString();
+          document.getElementById("report-category").textContent =
+            report.category;
+          document.getElementById("report-subject").textContent =
+            report.subject;
+          document.getElementById("report-message").textContent =
+            report.message;
+          document.getElementById("admin-notes").value =
+            report.adminNotes || "";
+          document.getElementById("status-select").value = report.status;
+
+          const userRole = localStorage.getItem("userRole");
+          if (userRole !== "admin") {
+            document.getElementById("admin-section").style.display = "none";
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Failed to load report details");
+        }
+      }
+
+      async function updateReport() {
+        const reportId = new URLSearchParams(window.location.search).get("id");
+        const notes = document.getElementById("admin-notes").value;
+        const status = document.getElementById("status-select").value;
+
+        try {
+          const res = await fetch(`/api/reports/${reportId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({ status, adminNotes: notes }),
+          });
+
+          if (!res.ok) throw new Error("Failed to update report");
+
+          const updatedReport = await res.json();
+          document.getElementById("report-status").textContent =
+            updatedReport.status;
+
+          Swal.fire({
+            icon: "success",
+            title: "Report Updated",
+            text: "The report status has been updated successfully.",
+          });
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Update Failed",
+            text: "Failed to update the report. Please try again.",
+          });
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadReport);
+    </script>
+  </body>
+</html>

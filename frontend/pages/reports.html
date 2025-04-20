@@ -203,6 +203,7 @@
         </div>
       </div>
     </div>
+    <!-- ONLY RELEVANT CHANGES SHOWN BELOW -->
     <script>
       document
         .getElementById("reportForm")
@@ -210,6 +211,14 @@
           e.preventDefault();
 
           const userId = localStorage.getItem("userId");
+          if (!userId) {
+            Swal.fire({
+              icon: "error",
+              title: "Not Logged In",
+              text: "Please log in to submit a report.",
+            });
+            return;
+          }
 
           const data = {
             userId,
@@ -221,7 +230,9 @@
           try {
             const res = await fetch("/api/reports", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+              },
               body: JSON.stringify(data),
             });
 
@@ -231,14 +242,16 @@
               Swal.fire({
                 icon: "success",
                 title: "Report Submitted",
-                text: "Your report was sent to the admin.",
+                text:
+                  "Your report was sent to the admin. Reference ID: " +
+                  result._id,
               });
               this.reset();
             } else {
               Swal.fire({
                 icon: "error",
                 title: "Submission Failed",
-                text: result.message || "Something went wrong.",
+                text: result.error || "Something went wrong.",
               });
             }
           } catch (err) {
