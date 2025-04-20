@@ -1,8 +1,8 @@
+const axios = require("axios");
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const axios = require("axios");
 
 require("dotenv").config();
 const contentModeration = require("./middleware/contentModeration");
@@ -119,7 +119,7 @@ async function checkContent(text) {
         text: text.substring(0, 1000), // Limit length to prevent abuse
       },
       {
-        timeout: 2000, // 2 second timeout
+        timeout: 5000, // 2 second timeout
         headers: {
           "x-internal-request": "true", // Add this header
         },
@@ -132,6 +132,7 @@ async function checkContent(text) {
     return { safe: false, probability: 1.0 };
   }
 }
+
 io.on("connection", (socket) => {
   console.log("📡 User connected:", socket.id);
 
