@@ -318,40 +318,51 @@
 
           // ✅ Collect selected skills from buttons
           const selectedSkillButtons = document.querySelectorAll(
-           "input[name='skills']:checked"
-          );
-          const skillsRequired = Array.from(selectedSkillButtons).map((btn) =>
-            btn.textContent.trim()
-          );
+  "input[name='skills']:checked"
+);
+const skillsRequired = Array.from(selectedSkillButtons).map((btn) => {
+  const span = btn.nextElementSibling;
+  return span.textContent.trim();
+});
 
-          const jobRank = document.getElementById("jobRankSelect").value;
-          const milestonesEnabled = document.getElementById(
-            "milestoneCheckbox"
-          ).checked;
+const jobRank = document.getElementById("jobRankSelect").value;
+const milestonesEnabled = document.getElementById(
+  "milestoneCheckbox"
+).checked;
 
-          const userId = localStorage.getItem("userId");
-          if (!title || !description || !budget || !deadline || !userId) {
-          return Swal.fire({
-            icon: "warning",
-            title: "Missing Fields",
-            text: "Please fill out all fields before posting.",
-            confirmButtonColor: "#facc15",
-            background: "#fffbea",
-            backdrop: "rgba(250,204,21,0.2)"
-          });
-        }
-          
+const userId = localStorage.getItem("userId");
+if (!title || !description || !budget || !deadline || !userId) {
+  return Swal.fire({
+    icon: "warning",
+    title: "Missing Fields",
+    text: "Please fill out all fields before posting.",
+    confirmButtonColor: "#facc15",
+    background: "#fffbea",
+    backdrop: "rgba(250,204,21,0.2)"
+  });
+}
 
-          const jobData = {
-            title,
-            description,
-            budget,
-            deadline,
-            milestonesEnabled,
-            skillsRequired,
-            jobRank,
-            userId,
-          };
+if (skillsRequired.length === 0) {
+  return Swal.fire({
+    icon: "warning",
+    title: "Missing Skills",
+    text: "Please select at least one skill.",
+    confirmButtonColor: "#facc15",
+    background: "#fffbea",
+    backdrop: "rgba(250,204,21,0.2)"
+  });
+}
+
+const jobData = {
+  title,
+  description,
+  budget,
+  deadline,
+  milestonesEnabled,
+  skillsRequired,
+  jobRank,
+  userId,
+};
 
           console.log("Sending job data:", jobData);
 
