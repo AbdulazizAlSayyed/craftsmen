@@ -1,57 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skills & Categories</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+      .bg-active {
+        background-color: #f0f2f4;
+        font-weight: 600;
+        border-left: 4px solid #2563eb;
+        /* blue-600 */
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skills & Categories</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <style>
-    .bg-active {
-      background-color: #f0f2f4;
-      font-weight: 600;
-      border-left: 4px solid #2563eb;
-      /* blue-600 */
-    }
-  </style>
-</head>
-
-<body class="bg-white font-sans">
-  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-    style="font-family: Inter, 'Noto Sans', sans-serif">
-    <div class="layout-container flex h-full grow flex-col">
-      <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col w-80">
-          <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
-            <div class="flex flex-col gap-4">
-              <div class="flex gap-3">
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  style="background-image: url('https://cdn.usegalileo.ai/sdxl10/8df52227-0586-455a-ba76-fef9fda944ea.png');">
+  <body class="bg-white font-sans">
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+      style="font-family: Inter, 'Noto Sans', sans-serif"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col w-80">
+            <div
+              class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4"
+            >
+              <div class="flex flex-col gap-4">
+                <div class="flex gap-3">
+                  <div
+                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                    style="
+                      background-image: url('https://cdn.usegalileo.ai/sdxl10/8df52227-0586-455a-ba76-fef9fda944ea.png');
+                    "
+                  ></div>
+                  <h1
+                    class="text-gray-800 text-base font-medium leading-normal"
+                  >
+                    Craftsmen Network
+                  </h1>
                 </div>
-                <h1 class="text-gray-800 text-base font-medium leading-normal">
-                  Craftsmen Network
-                </h1>
-              </div>
-              <div class="flex flex-col gap-2">
-                <a href="/dashboardAdmin.html"
-                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
-                  <div class="text-gray-800">
-                    <!-- Dashboard icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
-                      viewBox="0 0 256 256">
-                      <path
-                        d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z">
-                      </path>
-                    </svg>
-                  </div>
+                <div class="flex flex-col gap-2">
+                  <a
+                    href="/dashboardAdmin.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- Dashboard icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z"
+                        ></path>
+                      </svg>
+                    </div>
 
-                  <p class="text-sm font-medium text-gray-800">Dashboard</p>
-                </a>
-
+                    <p class="text-sm font-medium text-gray-800">Dashboard</p>
+                  </a>
+                  <!--
                 <a href="/ContentModeration.html"
                   class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
                   <div class="text-gray-800">
-                    <!-- Broom Icon (Content Moderation) -->
+                   
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
                       viewBox="0 0 256 256">
                       <path
@@ -61,187 +76,237 @@
                   <p class="text-sm font-medium text-gray-800">Content Moderation</p>
 
                 </a>
+              -->
 
+                  <a
+                    href="/ManageUser.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- User icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        width="24px"
+                        height="24px"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-medium text-gray-800">
+                      Manage Users
+                    </p>
+                  </a>
 
-                <a href="/ManageUser.html"
-                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
-                  <div class="text-gray-800">
-                    <!-- User icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
-                      viewBox="0 0 256 256">
-                      <path
-                        d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z">
-                      </path>
-                    </svg>
-                  </div>
-                  <p class="text-sm font-medium text-gray-800"> Manage Users</p>
+                  <a
+                    href="/reportAdmin.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- Report icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        width="24px"
+                        height="24px"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M224,48V168a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C97.87,162,74.79,150.61,48,171.77V216a8,8,0,0,1-16,0V48a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C159,54.46,182.79,66.2,210.76,42A8,8,0,0,1,224,48Z"
+                        ></path>
+                      </svg>
+                    </div>
 
-                </a>
+                    <p class="text-sm font-medium text-gray-800">Reports</p>
+                  </a>
 
-                <a href="/reportAdmin.html"
-                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
-                  <div class="text-gray-800">
-                    <!-- Report icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24px" height="24px"
-                      viewBox="0 0 256 256">
-                      <path
-                        d="M224,48V168a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C97.87,162,74.79,150.61,48,171.77V216a8,8,0,0,1-16,0V48a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C159,54.46,182.79,66.2,210.76,42A8,8,0,0,1,224,48Z">
-                      </path>
-                    </svg>
-                  </div>
+                  <a
+                    href="/skilladmin.html"
+                    class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group"
+                  >
+                    <div class="text-gray-800">
+                      <!-- Settings icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"
+                        ></path>
+                      </svg>
+                    </div>
 
-                  <p class="text-sm font-medium text-gray-800">Reports</p>
-                </a>
-
-                <a href="/skilladmin.html"
-                  class="transition-colors duration-200 ease-in-out flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 group">
-                  <div class="text-gray-800">
-                    <!-- Settings icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
-                      viewBox="0 0 256 256">
-                      <path
-                        d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z">
-                      </path>
-                    </svg>
-                  </div>
-
-                  <p class="text-sm font-medium text-gray-800">Skills & Categories</p>
-
-                </a>
+                    <p class="text-sm font-medium text-gray-800">
+                      Skills & Categories
+                    </p>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <h1 class="text-3xl font-bold mb-2">Manage Job Categories</h1>
-          <p class="text-[#A07D1C] mb-6">Add, edit, search or delete categories below.</p>
+          <div
+            class="layout-content-container flex flex-col max-w-[960px] flex-1"
+          >
+            <h1 class="text-3xl font-bold mb-2">Manage Job Categories</h1>
+            <p class="text-[#A07D1C] mb-6">
+              Add, edit, search or delete categories below.
+            </p>
 
-          <!-- Search Bar -->
-          <div class="mb-4 flex gap-2">
-            <input id="category-search" type="text" oninput="filterCategories()" placeholder="Search categories..."
-              class="w-full p-2 rounded border border-yellow-700 bg-white placeholder:text-[#A07D1C]" />
+            <!-- Search Bar -->
+            <div class="mb-4 flex gap-2">
+              <input
+                id="category-search"
+                type="text"
+                oninput="filterCategories()"
+                placeholder="Search categories..."
+                class="w-full p-2 rounded border border-yellow-700 bg-white placeholder:text-[#A07D1C]"
+              />
+            </div>
+
+            <!-- Add New -->
+            <!-- Add New -->
+            <div
+              class="flex flex-col gap-4 mb-6 sm:flex-row sm:flex-wrap sm:items-center"
+            >
+              <input
+                id="new-category-name"
+                placeholder="Category name"
+                class="flex-1 min-w-[200px] p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+              <input
+                id="new-category-desc"
+                placeholder="Description"
+                class="flex-1 min-w-[250px] p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+              <input
+                id="new-category-image"
+                placeholder="Image URL (optional)"
+                class="flex-1 min-w-[200px] p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+              <button
+                onclick="addCategory()"
+                class="bg-yellow-600 hover:bg-yellow-700 text-white font-medium px-5 py-3 rounded-lg transition-colors duration-200 shadow-sm"
+              >
+                + Add
+              </button>
+            </div>
+
+            <!-- Category List -->
+            <div id="category-list" class="space-y-4"></div>
           </div>
-
-          <!-- Add New -->
-          <!-- Add New -->
-          <div class="flex flex-col gap-4 mb-6 sm:flex-row sm:flex-wrap sm:items-center">
-            <input id="new-category-name" placeholder="Category name"
-              class="flex-1 min-w-[200px] p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500" />
-            <input id="new-category-desc" placeholder="Description"
-              class="flex-1 min-w-[250px] p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500" />
-            <input id="new-category-image" placeholder="Image URL (optional)"
-              class="flex-1 min-w-[200px] p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500" />
-            <button onclick="addCategory()"
-              class="bg-yellow-600 hover:bg-yellow-700 text-white font-medium px-5 py-3 rounded-lg transition-colors duration-200 shadow-sm">
-              + Add
-            </button>
-          </div>
-
-
-
-          <!-- Category List -->
-          <div id="category-list" class="space-y-4"></div>
         </div>
       </div>
     </div>
-  </div>
-  <script>
-    async function fetchCategories() {
-      const res = await fetch('http://localhost:5001/api/categories');
+    <script>
+      async function fetchCategories() {
+        const res = await fetch("http://localhost:5001/api/categories");
 
-      const categories = await res.json();
+        const categories = await res.json();
 
-      const container = document.getElementById('category-list');
-      container.innerHTML = '';
+        const container = document.getElementById("category-list");
+        container.innerHTML = "";
 
-      categories.forEach(cat => {
-        const div = document.createElement('div');
-        div.className = "portfolio-card w-full max-w-5xl mx-auto";
+        categories.forEach((cat) => {
+          const div = document.createElement("div");
+          div.className = "portfolio-card w-full max-w-5xl mx-auto";
 
-        div.innerHTML = `
+          div.innerHTML = `
   <div class="flex justify-between gap-4 items-center bg-white p-4 border border-[#F5EFDB] rounded shadow">
     <div class="flex items-center gap-4">
       <div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-xl"
-           style="background-image: url('${cat.image || "/assets/default.png"}');"></div>
+           style="background-image: url('${
+             cat.image || "/assets/default.png"
+           }');"></div>
       <div class="flex flex-col">
         <p class="text-[#1b150d] text-lg font-semibold">${cat.name}</p>
         <p class="text-[#637588] text-sm">${cat.followerCount.toLocaleString()} followers</p>
       </div>
     </div>
     <div class="flex flex-col gap-2 items-end">
-      <button onclick="editCategory('${cat._id}', '${cat.name}', '${cat.description}')" class="text-blue-600 hover:underline text-sm">Edit</button>
-      <button onclick="deleteCategory('${cat._id}')" class="text-red-600 hover:underline text-sm">Delete</button>
+      <button onclick="editCategory('${cat._id}', '${cat.name}', '${
+            cat.description
+          }')" class="text-blue-600 hover:underline text-sm">Edit</button>
+      <button onclick="deleteCategory('${
+        cat._id
+      }')" class="text-red-600 hover:underline text-sm">Delete</button>
     </div>
   </div>
 `;
 
-
-
-        container.appendChild(div);
-      });
-
-    }
-
-    async function addCategory() {
-      const name = document.getElementById('new-category-name').value.trim();
-      const description = document.getElementById('new-category-desc').value.trim();
-      const image = document.getElementById('new-category-image').value.trim();
-
-      if (!name) return alert("Category name is required");
-
-      await fetch('/api/categories', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, description, image })  // <-- include image
-      });
-
-      // Reset inputs
-      document.getElementById('new-category-name').value = '';
-      document.getElementById('new-category-desc').value = '';
-      document.getElementById('new-category-image').value = '';
-
-      fetchCategories();
-    }
-
-
-    async function deleteCategory(id) {
-      if (!confirm('Are you sure you want to delete this category?')) return;
-      await fetch(`/api/categories/${id}`, { method: 'DELETE' });
-      fetchCategories();
-    }
-
-    function editCategory(id, oldName, oldDesc) {
-      const newName = prompt('Edit Category Name:', oldName);
-      const newDesc = prompt('Edit Description:', oldDesc);
-      if (newName) {
-        fetch(`/api/categories/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: newName, description: newDesc })
-        }).then(fetchCategories);
+          container.appendChild(div);
+        });
       }
-    }
 
-    function filterCategories() {
-      const query = document.getElementById('category-search').value.toLowerCase();
-      const all = document.querySelectorAll('#category-list > div');
-      all.forEach(div => {
-        const text = div.innerText.toLowerCase();
-        div.style.display = text.includes(query) ? '' : 'none';
-      });
-    }
+      async function addCategory() {
+        const name = document.getElementById("new-category-name").value.trim();
+        const description = document
+          .getElementById("new-category-desc")
+          .value.trim();
+        const image = document
+          .getElementById("new-category-image")
+          .value.trim();
 
-    document.addEventListener('DOMContentLoaded', fetchCategories);
-  </script>
-  <script>
-    const path = window.location.pathname;
-    document.querySelectorAll("a").forEach(link => {
-      if (link.getAttribute("href") === path) {
-        link.classList.add("bg-active", "text-blue-600");
+        if (!name) return alert("Category name is required");
+
+        await fetch("/api/categories", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, description, image }), // <-- include image
+        });
+
+        // Reset inputs
+        document.getElementById("new-category-name").value = "";
+        document.getElementById("new-category-desc").value = "";
+        document.getElementById("new-category-image").value = "";
+
+        fetchCategories();
       }
-    });
-  </script>
-</body>
 
+      async function deleteCategory(id) {
+        if (!confirm("Are you sure you want to delete this category?")) return;
+        await fetch(`/api/categories/${id}`, { method: "DELETE" });
+        fetchCategories();
+      }
+
+      function editCategory(id, oldName, oldDesc) {
+        const newName = prompt("Edit Category Name:", oldName);
+        const newDesc = prompt("Edit Description:", oldDesc);
+        if (newName) {
+          fetch(`/api/categories/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: newName, description: newDesc }),
+          }).then(fetchCategories);
+        }
+      }
+
+      function filterCategories() {
+        const query = document
+          .getElementById("category-search")
+          .value.toLowerCase();
+        const all = document.querySelectorAll("#category-list > div");
+        all.forEach((div) => {
+          const text = div.innerText.toLowerCase();
+          div.style.display = text.includes(query) ? "" : "none";
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", fetchCategories);
+    </script>
+    <script>
+      const path = window.location.pathname;
+      document.querySelectorAll("a").forEach((link) => {
+        if (link.getAttribute("href") === path) {
+          link.classList.add("bg-active", "text-blue-600");
+        }
+      });
+    </script>
+  </body>
 </html>

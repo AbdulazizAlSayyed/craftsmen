@@ -172,6 +172,9 @@
             icon: "success",
             title: "Report Updated",
             text: "The report status has been updated successfully.",
+            confirmButtonText: "OK",
+          }).then(() => {
+            window.location.href = "/reportAdmin.html";
           });
         } catch (error) {
           console.error("Error:", error);
