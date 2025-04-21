@@ -38,7 +38,8 @@ app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend", "pages")));
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 app.use("/api/reports", reportRoutes);
-
+const freePostRoutes = require("./routes/freeRoutes");
+app.use("/api/freeposts", freePostRoutes);
 app.use("/api", require("./routes/contentCheck"));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

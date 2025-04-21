@@ -287,9 +287,25 @@
             class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 bg-[#ee7f2b] text-[#1b130d] text-base font-bold leading-normal tracking-[0.015em]">
             <span class="truncate" id="postJobButton">Post</span>
           </button>
+          <button id="generateWithAIButton"
+  class="ml-4 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 bg-[#facc15] text-[#1b130d] text-base font-bold leading-normal tracking-[0.015em]">
+  Generate with AI
+</button>
+
         </div>
       </div>
 
+<!-- AI Prompt Modal -->
+<div id="aiPromptModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl p-6 max-w-md w-full shadow-lg">
+    <h2 class="text-lg font-semibold mb-2">Describe the Job</h2>
+    <textarea id="aiJobPrompt" rows="4" class="w-full p-3 border rounded-md mb-4" placeholder="e.g. I need someone to fix my wooden chair."></textarea>
+    <div class="flex justify-end gap-2">
+      <button id="cancelAIPrompt" class="bg-gray-300 px-4 py-2 rounded-md">Cancel</button>
+      <button id="submitAIPrompt" class="bg-[#facc15] px-4 py-2 rounded-md text-black font-bold">Generate</button>
+    </div>
+  </div>
+</div>
 
 
       <div class="flex gap-3 p-3 flex-wrap pr-4">
@@ -447,6 +463,57 @@ document.querySelectorAll("input[name='skills']").forEach(cb => {
         console.error("Post job button not found!");
       }
 
+    // ========= AI Job Generation Handler =========
+    const generateAIButton = document.getElementById("generateWithAIButton");
+
+    if (generateAIButton) {
+      generateAIButton.addEventListener("click", async () => {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          return Swal.fire({
+            icon: "warning",
+            title: "User Not Found",
+            text: "You must be logged in to generate an AI post.",
+          });
+        }
+
+        try {
+          const response = await fetch("http://localhost:5001/api/freeposts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: userId,
+              prompt: "Generate a job post for fixing a broken wooden chair leg with required skills."
+            }),
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || "Something went wrong");
+          }
+
+          // Fill the form based on AI response
+          document.querySelector("input[placeholder='What do you need help with?']").value = data.prompt || "Chair repair needed";
+          document.querySelector("textarea").value = data.aiResponse || "AI did not return content.";
+
+          Swal.fire({
+            icon: "success",
+            title: "AI Post Generated",
+            text: "You can now edit and post it!",
+            confirmButtonColor: "#22c55e",
+            background: "#ecfdf5",
+            backdrop: "rgba(34,197,94,0.2)"
+          });
+        } catch (error) {
+          console.error("Error generating post:", error);
+          Swal.fire({
+            icon: "error",
+            title: "AI Request Failed",
+            text: error.message || "Unable to fetch AI content.",
+          });
+        }
+      });
+    }
       // ========= Skill Button Toggle Logic =========
       document.querySelectorAll(".skill-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -574,7 +641,65 @@ document.querySelectorAll("input[name='skills']").forEach(cb => {
         proposalsLink.style.display = "none";
       }
     });
+  
   </script>
+  <script>
+  // Toggle modal
+  const modal = document.getElementById("aiPromptModal");
+  const openBtn = document.getElementById("generateWithAIButton");
+  const cancelBtn = document.getElementById("cancelAIPrompt");
+  const submitBtn = document.getElementById("submitAIPrompt");
+
+  openBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  submitBtn.addEventListener("click", async () => {
+    const prompt = document.getElementById("aiJobPrompt").value.trim();
+    if (!prompt) return Swal.fire({ icon: "warning", text: "Please describe your job first." });
+
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const res = await fetch("/api/freeposts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, prompt }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Something went wrong");
+
+      modal.classList.add("hidden");
+
+      // Auto-fill the job form
+      document.querySelector("input[placeholder='What do you need help with?']").value = data.prompt;
+      document.querySelector("textarea").value = data.aiResponse;
+
+      Swal.fire({
+        icon: "success",
+        title: "AI Post Generated",
+        text: "You can now edit and publish it.",
+        confirmButtonColor: "#22c55e",
+        background: "#ecfdf5"
+      });
+    } catch (err) {
+      console.error("❌ AI Generation Error:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: err.message,
+        confirmButtonColor: "#ef4444"
+      });
+    }
+  });
+</script>
+
 </body>
 
 </html>
