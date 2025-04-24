@@ -26,11 +26,9 @@
       }
     </style>
   </head>
-
   <body>
     <div
-      id="dashboard-content"
-      class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] group/design-root overflow-x-hidden"
+      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
       style="font-family: 'Work Sans', 'Noto Sans', sans-serif"
     >
       <div class="layout-container flex h-full grow flex-col">
@@ -114,15 +112,18 @@
                   </svg>
                 </button>
               </a>
+
               <a href="chat.html" class="relative">
                 <button
-                  class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center"
+                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]"
                 >
+                  <!-- Red dot for unread messages -->
                   <span
                     id="chat-dot"
                     class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"
                   ></span>
 
+                  <!-- Chat Icon -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20px"
@@ -309,159 +310,7 @@
             <div
               id="portfolio-container"
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4"
-            >
-              <a
-                href="portfolio.html?category=Carpentry"
-                class="portfolio-card max-w-xs w-full mx-auto"
-              >
-                <div class="flex flex-col gap-3 pb-3">
-                  <div
-                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                    style="
-                      background-image: url('https://cdn.usegalileo.ai/sdxl10/d73ed847-c73f-41af-b271-e0beb583fec8.png');
-                    "
-                  ></div>
-                  <div>
-                    <p
-                      class="text-[#1b150d] text-base font-medium leading-normal"
-                    >
-                      Carpentry
-                    </p>
-                    <p
-                      class="text-[#637588] text-sm font-normal leading-normal"
-                    >
-                      124k followers
-                    </p>
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="portfolio.html?category=Metalworking"
-                class="portfolio-card max-w-xs w-full mx-auto"
-              >
-                <div class="flex flex-col gap-3 pb-3">
-                  <div
-                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                    style="
-                      background-image: url('https://cdn.usegalileo.ai/sdxl10/2ec4b1e7-70ac-4f1a-8f3d-29e40b9deb3b.png');
-                    "
-                  ></div>
-                  <div>
-                    <p
-                      class="text-[#1b150d] text-base font-medium leading-normal"
-                    >
-                      Metalworking
-                    </p>
-                    <p
-                      class="text-[#637588] text-sm font-normal leading-normal"
-                    >
-                      94k followers
-                    </p>
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="portfolio.html?category=Pottery"
-                class="portfolio-card max-w-xs w-full mx-auto"
-              >
-                <div class="flex flex-col gap-3 pb-3">
-                  <div
-                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                    style="
-                      background-image: url('https://cdn.usegalileo.ai/sdxl10/93955401-8ef2-40fd-876e-fa6e68872203.png');
-                    "
-                  ></div>
-                  <div>
-                    <p
-                      class="text-[#1b150d] text-base font-medium leading-normal"
-                    >
-                      Pottery
-                    </p>
-                    <p
-                      class="text-[#637588] text-sm font-normal leading-normal"
-                    >
-                      92k followers
-                    </p>
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="portfolio.html?category=Leathercraft"
-                class="portfolio-card max-w-xs w-full mx-auto"
-              >
-                <div class="flex flex-col gap-3 pb-3">
-                  <div
-                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                    style="
-                      background-image: url('https://cdn.usegalileo.ai/sdxl10/a266f679-01db-49af-a4f2-93c9436d3bd5.png');
-                    "
-                  ></div>
-                  <div>
-                    <p
-                      class="text-[#1b150d] text-base font-medium leading-normal"
-                    >
-                      Leathercraft
-                    </p>
-                    <p
-                      class="text-[#637588] text-sm font-normal leading-normal"
-                    >
-                      87k followers
-                    </p>
-                  </div>
-                </div>
-              </a>
-              <a
-                href="portfolio.html?category=Woodworking"
-                class="portfolio-card max-w-xs w-full mx-auto"
-              >
-                <div class="flex flex-col gap-3 pb-3">
-                  <div
-                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                    style="background-image: url('../assets/woodworking.jpg')"
-                  ></div>
-                  <div>
-                    <p
-                      class="text-[#1b150d] text-base font-medium leading-normal"
-                    >
-                      Woodworking
-                    </p>
-                    <p
-                      class="text-[#637588] text-sm font-normal leading-normal"
-                    >
-                      75k followers
-                    </p>
-                  </div>
-                </div>
-              </a>
-              <a
-                href="portfolio.html?category=Glassblowing"
-                class="portfolio-card max-w-xs w-full mx-auto"
-              >
-                <div class="flex flex-col gap-3 pb-3">
-                  <div
-                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                    style="
-                      background-image: url('https://cdn.usegalileo.ai/sdxl10/25af0add-2ce3-4772-93fd-f55e220073dd.png');
-                    "
-                  ></div>
-                  <div>
-                    <p
-                      class="text-[#1b150d] text-base font-medium leading-normal"
-                    >
-                      Glassblowing
-                    </p>
-                    <p
-                      class="text-[#637588] text-sm font-normal leading-normal"
-                    >
-                      82k followers
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
+            ></div>
 
             <!-- addd  
             <h2
@@ -632,16 +481,6 @@
             <div class="flex items-center px-4 py-3 gap-3 @container">
               <label class="flex flex-col min-w-40 h-full flex-1">
                 <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-                  <div
-                    class="flex border border-[#e7ddcf] bg-[#fcfaf8] justify-end pl-[15px] pr-[15px] pt-[15px] rounded-l-xl border-r-0"
-                  >
-                    <div
-                      class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0"
-                      style="
-                        background-image: url('https://cdn.usegalileo.ai/sdxl10/f689e78f-fcfa-4419-a2f6-bbfc29a21817.png');
-                      "
-                    ></div>
-                  </div>
                   <div class="flex flex-1 flex-col">
                     <textarea
                       placeholder="What do you want to share today?"
@@ -1543,6 +1382,45 @@
           }
         } catch (err) {
           console.error("Error checking client block status:", err);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await fetch("/api/categories");
+          const categories = await res.json();
+
+          const container = document.getElementById("portfolio-container");
+          container.innerHTML = "";
+
+          categories.slice(0, 6).forEach((cat) => {
+            const imageUrl = cat.image?.trim() || "../assets/default.jpg";
+            const followerText =
+              cat.followerCount === 1
+                ? "1 follower"
+                : `${cat.followerCount.toLocaleString()} followers`;
+
+            container.innerHTML += `
+        <a href="portfolio.html?category=${encodeURIComponent(cat.name)}"
+           class="portfolio-card max-w-xs w-full mx-auto">
+          <div class="flex flex-col gap-3 pb-3">
+            <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                 style="background-image: url('${imageUrl}')">
+            </div>
+            <div>
+              <p class="text-[#1b150d] text-base font-medium leading-normal">${
+                cat.name
+              }</p>
+              <p class="text-[#637588] text-sm font-normal leading-normal">${followerText}</p>
+            </div>
+          </div>
+        </a>`;
+          });
+        } catch (error) {
+          console.error("❌ Failed to load featured categories", error);
+          const container = document.getElementById("portfolio-container");
+          container.innerHTML = `<p class="text-center text-[#dc2626]">Failed to load featured jobs.</p>`;
         }
       });
     </script>

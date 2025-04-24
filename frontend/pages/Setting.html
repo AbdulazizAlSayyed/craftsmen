@@ -16,26 +16,87 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/chat-dot.js"></script>
     <script src="../js/notifications-common.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+    <style id="dark-mode-prevent-flash">
+      /* Initial state - hidden */
+      body {
+        visibility: hidden;
+      }
+      /* Dark mode styles that match your theme */
+      .dark body {
+        background-color: #1b1c1f;
+        color: white;
+      }
+    </style>
+
+    <script>
+      // Immediately apply dark mode if needed
+      (function () {
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const storedDarkMode = localStorage.getItem("darkMode");
+        const darkMode =
+          storedDarkMode !== null ? storedDarkMode === "true" : prefersDark;
+
+        if (darkMode) {
+          document.documentElement.classList.add("dark");
+        }
+
+        // Remove the critical CSS after page loads
+        document.addEventListener("DOMContentLoaded", function () {
+          const style = document.getElementById("dark-mode-prevent-flash");
+          if (style) style.remove();
+          document.body.style.visibility = "visible";
+        });
+      })();
+    </script>
+
+    <!-- Rest of your head content -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
     <style>
       .bg-logout {
         background-color: #f3eee7;
         color: #b91c1c;
         width: 20%;
       }
+      /* Add smooth transitions for dark mode */
+      html {
+        transition: background-color 300ms ease, color 300ms ease;
+      }
+
+      body {
+        transition: background-color 300ms ease, color 300ms ease;
+      }
+
+      /* Ensure all elements inherit the transition */
+      * {
+        transition: background-color 300ms ease, color 300ms ease,
+          border-color 300ms ease;
+      }
     </style>
   </head>
 
-  <body>
+  <body
+    class="relative flex size-full min-h-screen flex-col bg-lightCard dark:bg-darkCard text-[#1b150d] transition-colors duration-300 dark:bg-[#1b1c1f] dark:text-white group/design-root overflow-x-hidden"
+  >
     <div
-      class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] dark group/design-root overflow-x-hidden"
+      class="relative flex size-full min-h-screen flex-col bg-lightCard dark:bg-darkCard dark:bg-[#1b1c1f] transition-colors duration-300 text-[#1b150d] dark:text-white group/design-root overflow-x-hidden"
       style="font-family: Inter, 'Noto Sans', sans-serif"
     >
       <div class="layout-container flex h-full grow flex-col">
         <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
+          class="flex items-center justify-between whitespace-nowrap border-b px-10 py-3 bg-white dark:bg-[#1b1c1f] border-[#f3eee7] dark:border-[#2a2b2f] shadow-sm dark:shadow-md"
         >
           <div class="flex items-center gap-8">
-            <div class="flex items-center gap-4 text-[#1b150d]">
+            <div
+              class="flex items-center gap-4 dark:bg-[#2a2b2f] text-[#1b150d] dark:text-white"
+            >
               <div class="size-4">
                 <svg
                   viewBox="0 0 48 48"
@@ -51,34 +112,34 @@
                 </svg>
               </div>
               <h2
-                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
+                class="text-neutral-900 dark:text-white text-lg font-bold tracking-tight text-lg font-bold leading-tight tracking-[-0.015em]"
               >
                 Craftsman
               </h2>
             </div>
             <div class="flex items-center gap-9">
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="dashboard.html"
                 >Dashboard</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="job.html"
                 >Hire</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="Apply.html"
                 >Apply</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="myjob.html"
                 >My Jobs</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="proposal.html"
                 id="proposals-link"
                 >Proposals</a
@@ -89,7 +150,7 @@
             <div class="flex gap-2">
               <a href="Notification.html" class="relative">
                 <button
-                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]"
+                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-lightCard dark:bg-darkCard text-neutral-900 dark:text-white text-lg font-bold tracking-tight"
                 >
                   <!-- Red Dot for Unread -->
                   <span
@@ -113,7 +174,7 @@
               </a>
               <a href="chat.html" class="relative">
                 <button
-                  class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center"
+                  class="relative h-10 w-10 rounded-xl bg-lightCard dark:bg-darkCard text-neutral-900 dark:text-white text-lg font-bold tracking-tight flex items-center justify-center"
                 >
                   <span
                     id="chat-dot"
@@ -136,7 +197,7 @@
 
               <a
                 href="Setting.html"
-                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
+                class="bg-lightCard dark:bg-darkCard rounded-xl h-10 flex items-center px-2.5"
               >
                 ⚙️
               </a>
@@ -157,22 +218,24 @@
           >
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <p
-                class="text-black tracking-light text-[32px] font-bold leading-tight min-w-72"
+                class="text-neutral-900 dark:text-white tracking-light text-[32px] font-bold leading-tight min-w-72"
               >
                 Settings
               </p>
             </div>
             <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+              class="text-neutral-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
             >
               Profile
             </h3>
             <!-- Name -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Name
                 </p>
                 <p
@@ -192,10 +255,12 @@
 
             <!-- Username -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Username
                 </p>
                 <p
@@ -215,10 +280,12 @@
 
             <!-- Bio -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Bio
                 </p>
                 <p
@@ -238,10 +305,12 @@
 
             <!-- Profile Picture -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Profile Picture
                 </p>
                 <input
@@ -262,10 +331,12 @@
 
             <!-- Location -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Location
                 </p>
                 <p
@@ -284,16 +355,18 @@
             </div>
 
             <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+              class="text-neutral-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
             >
               Account
             </h3>
             <!-- Email -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Email
                 </p>
                 <p
@@ -313,10 +386,12 @@
 
             <!-- Password -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Password
                 </p>
                 <p class="text-[#93adc8] text-sm font-normal leading-normal">
@@ -333,16 +408,18 @@
               </div>
             </div>
             <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+              class="text-neutral-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
             >
               Preferences
             </h3>
             <!-- Dark Mode Toggle -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Dark Mode
                 </p>
                 <p class="text-[#93adc8] text-sm font-normal leading-normal">
@@ -371,10 +448,12 @@
 
             <!-- Receive Email Notifications Toggle -->
             <div
-              class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[72px] py-2 justify-between"
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-[72px] py-2 justify-between"
             >
               <div class="flex flex-col justify-center">
-                <p class="text-black text-base font-medium leading-normal">
+                <p
+                  class="text-neutral-900 dark:text-white text-base font-medium leading-normal"
+                >
                   Receive email notifications
                 </p>
                 <p class="text-[#93adc8] text-sm font-normal leading-normal">
@@ -402,32 +481,40 @@
             </div>
 
             <h3
-              class="text-black text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+              class="text-neutral-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
             >
               Legal
             </h3>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <div
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-14"
+            >
               <p
                 class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
               >
                 Privacy Policy
               </p>
             </div>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <div
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-14"
+            >
               <p
                 class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
               >
                 Terms of Service
               </p>
             </div>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <div
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-14"
+            >
               <p
                 class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
               >
                 Cookie Policy
               </p>
             </div>
-            <div class="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-14">
+            <div
+              class="flex items-center gap-4 bg-lightCard dark:bg-darkCard px-4 min-h-14"
+            >
               <p
                 class="text-[#93adc8] text-base font-normal leading-normal flex-1 truncate"
               >
@@ -481,8 +568,12 @@
               Swal.fire({
                 icon: "success",
                 title: "Profile picture updated!",
-                background: "#fcfaf8",
-                color: "#1b150d",
+                background: document.documentElement.classList.contains("dark")
+                  ? "#1b1c1f"
+                  : "#fcfaf8",
+                color: document.documentElement.classList.contains("dark")
+                  ? "#ffffff"
+                  : "#1b150d",
                 confirmButtonColor: "#243547",
               });
             } else {
@@ -494,8 +585,12 @@
               icon: "error",
               title: "Upload failed",
               text: "Could not update profile picture. Please try again.",
-              background: "#fcfaf8",
-              color: "#1b150d",
+              background: document.documentElement.classList.contains("dark")
+                ? "#1b1c1f"
+                : "#fcfaf8",
+              color: document.documentElement.classList.contains("dark")
+                ? "#ffffff"
+                : "#1b150d",
               confirmButtonColor: "#ec8e13",
             });
           }
@@ -565,20 +660,21 @@
           if (!response.ok) throw new Error("Failed to fetch profile");
 
           const data = await response.json();
+          const mainSkill = data.skills?.[0]?.name || "General";
 
-          const mainSkill =
-            data.skills && data.skills.length > 0
-              ? data.skills[0].name
-              : "General";
-
-          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-            mainSkill
-          )}`;
-        } catch (error) {
-          console.error("❌ Error loading profile link:", error);
+          // ✅ Set the correct profile link with query
+          profileLink.setAttribute(
+            "href",
+            `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+              mainSkill
+            )}`
+          );
+        } catch (err) {
+          console.error("❌ Error setting profile link:", err);
         }
       });
     </script>
+
     <script>
       // for disapper proposals if client
       document.addEventListener("DOMContentLoaded", () => {
@@ -624,8 +720,12 @@
             inputValue: current,
             showCancelButton: true,
             confirmButtonText: "Save",
-            background: "#fcfaf8",
-            color: "#1b150d",
+            background: document.documentElement.classList.contains("dark")
+              ? "#1b1c1f"
+              : "#fcfaf8",
+            color: document.documentElement.classList.contains("dark")
+              ? "#ffffff"
+              : "#1b150d",
             confirmButtonColor: "#243547",
           });
 
@@ -649,8 +749,12 @@
               Swal.fire({
                 icon: "success",
                 title: `${label || key} updated!`,
-                background: "#fcfaf8",
-                color: "#1b150d",
+                background: document.documentElement.classList.contains("dark")
+                  ? "#1b1c1f"
+                  : "#fcfaf8",
+                color: document.documentElement.classList.contains("dark")
+                  ? "#ffffff"
+                  : "#1b150d",
                 confirmButtonColor: "#243547",
               });
             } catch (err) {
@@ -658,8 +762,12 @@
                 icon: "error",
                 title: "Update failed",
                 text: err.message || "Something went wrong",
-                background: "#fcfaf8",
-                color: "#1b150d",
+                background: document.documentElement.classList.contains("dark")
+                  ? "#1b1c1f"
+                  : "#fcfaf8",
+                color: document.documentElement.classList.contains("dark")
+                  ? "#ffffff"
+                  : "#1b150d",
                 confirmButtonColor: "#ec8e13",
               });
             }
@@ -713,8 +821,12 @@
               inputAttributes: { minlength: 6, required: true },
               showCancelButton: true,
               confirmButtonText: "Save",
-              background: "#fcfaf8",
-              color: "#1b150d",
+              background: document.documentElement.classList.contains("dark")
+                ? "#1b1c1f"
+                : "#fcfaf8",
+              color: document.documentElement.classList.contains("dark")
+                ? "#ffffff"
+                : "#1b150d",
               confirmButtonColor: "#243547",
             });
 
@@ -737,8 +849,14 @@
                 Swal.fire({
                   icon: "success",
                   title: "Password updated!",
-                  background: "#fcfaf8",
-                  color: "#1b150d",
+                  background: document.documentElement.classList.contains(
+                    "dark"
+                  )
+                    ? "#1b1c1f"
+                    : "#fcfaf8",
+                  color: document.documentElement.classList.contains("dark")
+                    ? "#ffffff"
+                    : "#1b150d",
                   confirmButtonColor: "#243547",
                 });
               } catch (err) {
@@ -746,8 +864,14 @@
                   icon: "error",
                   title: "Update failed",
                   text: err.message || "Something went wrong",
-                  background: "#fcfaf8",
-                  color: "#1b150d",
+                  background: document.documentElement.classList.contains(
+                    "dark"
+                  )
+                    ? "#1b1c1f"
+                    : "#fcfaf8",
+                  color: document.documentElement.classList.contains("dark")
+                    ? "#ffffff"
+                    : "#1b150d",
                   confirmButtonColor: "#ec8e13",
                 });
               }
@@ -777,6 +901,77 @@
           });
         }
       });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
+        const darkModeToggle = document.getElementById("darkModeToggle");
+
+        if (!craftsmanId || !darkModeToggle) return;
+
+        try {
+          // First GET the current dark mode setting
+          const response = await fetch(
+            `/api/settings/${craftsmanId}/dark-mode`
+          );
+          if (!response.ok)
+            throw new Error("Failed to fetch dark mode setting");
+
+          const { darkMode } = await response.json();
+
+          // Initialize toggle and UI
+          darkModeToggle.checked = darkMode;
+          document.documentElement.classList.toggle("dark", darkMode);
+          localStorage.setItem("darkMode", darkMode);
+
+          // Set up toggle handler
+          darkModeToggle.addEventListener("change", async () => {
+            const enabled = darkModeToggle.checked;
+
+            try {
+              const updateResponse = await fetch(
+                `/api/settings/${craftsmanId}/dark-mode`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ enabled }),
+                }
+              );
+
+              if (!updateResponse.ok) {
+                throw new Error("Failed to update dark mode");
+              }
+
+              // Update UI immediately
+              document.documentElement.classList.toggle("dark", enabled);
+              localStorage.setItem("darkMode", enabled);
+            } catch (err) {
+              console.error("Dark mode update error:", err);
+              // Revert toggle if update fails
+              darkModeToggle.checked = !enabled;
+            }
+          });
+        } catch (err) {
+          console.error("Dark mode initialization error:", err);
+          // Fallback to localStorage if API fails
+          const localDarkMode = localStorage.getItem("darkMode") === "true";
+          darkModeToggle.checked = localDarkMode;
+          document.documentElement.classList.toggle("dark", localDarkMode);
+        }
+      });
+    </script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              lightCard: "#fcfaf8",
+              darkCard: "#2a2b2f",
+            },
+          },
+        },
+      };
     </script>
   </body>
 </html>

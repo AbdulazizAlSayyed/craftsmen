@@ -691,6 +691,8 @@
 
         async function loadCurrentJobs() {
           const craftsmanId = localStorage.getItem("craftsmanId");
+          
+          
           const container = document.getElementById("current-work-list");
 
           if (!craftsmanId || !container) return;
@@ -779,9 +781,15 @@
       </script>
       <script>
         document.addEventListener("DOMContentLoaded", async () => {
-          const craftsmanId = localStorage.getItem("craftsmanId");
+  const craftsmanId = localStorage.getItem("craftsmanId");
+  const profilePicDiv = document.getElementById("profile-pic");
 
-          if (!craftsmanId) return;
+  if (!craftsmanId || !profilePicDiv) return;
+
+  const cachedImage = localStorage.getItem("profileImage");
+  if (cachedImage) {
+    profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
+  }
 
           try {
             const res = await fetch(`/api/dashboard/stats/${craftsmanId}`);
@@ -811,22 +819,24 @@
           profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
         }
 
-        try {
-          const res = await fetch(`/api/profile/${craftsmanId}`);
-          if (!res.ok) throw new Error("Failed fetching profile");
+       try {
+    const res = await fetch(`/api/profile/${craftsmanId}`);
+    if (!res.ok) throw new Error("Failed fetching profile");
 
-          const data = await res.json();
-          const profileImage =
-            data.profileImage.trim() || "/uploads/default.png";
+    const data = await res.json();
+    const profileImage = data.profileImage.trim() || "/uploads/default.png";
+    profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+    localStorage.setItem("profileImage", profileImage);
 
-          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-
-          // Update cache
-          localStorage.setItem("profileImage", profileImage);
-        } catch (error) {
-          console.error("❌ Error loading profile:", error);
-        }
-      });
+    // ✅ Set the correct profile link
+    const profileLink = document.getElementById("profile-link");
+    if (profileLink) {
+      profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}`;
+    }
+  } catch (error) {
+    console.error("❌ Error loading profile:", error);
+  }
+});
     </script>
 </body>
 

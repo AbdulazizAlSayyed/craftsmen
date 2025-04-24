@@ -17,7 +17,8 @@ const settingRoutes = require("./routes/setting");
 const inviteRoute = require("./routes/invite");
 const adminDashboardRoutes = require("./routes/Admindashboard");
 const adminUserRoutes = require("./routes/adminUser");
-const categoryRoutes = require("./routes/categories");
+const categoriesRoutes = require("./routes/categories");
+
 const dashboardStatsRoutes = require("./routes/dashboardStats");
 const notificationRoutes = require("./routes/notification");
 const Message = require("./models/message");
@@ -55,8 +56,8 @@ app.use("/api/admin/users", adminUserRoutes);
 app.use("/api", require("./routes/blockCheck"));
 app.use("/api/dashboard", dashboardStatsRoutes);
 app.use("/api", require("./routes/rateJob"));
+app.use("/api/categories", categoriesRoutes);
 
-app.use("/api/categories", categoryRoutes);
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB connected!"))

@@ -47,7 +47,8 @@ const userSchema = new mongoose.Schema({
 
   lastLogin: { type: Date, default: null },
   blockForMissingRating: { type: Boolean, default: false }, // ✅ Step 1: Restriction flag
-
+  darkMode: { type: Boolean, default: false },
+  emailNotifications: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
 });
 
