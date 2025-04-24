@@ -1,100 +1,172 @@
 <html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <title>Galileo Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="../js/seemorejob.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/notifications-common.js"></script>
+    <script src="../js/chat-dot.js"></script>
+    <style>
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+    </style>
+  </head>
 
-<head>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" />
-  <title>Galileo Design</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-  <script src="../js/seemorejob.js"></script>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../js/notifications-common.js"></script>
-  <script src="../js/chat-dot.js"></script>
-</head>
-
-<body>
-  <div class="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] group/design-root overflow-x-hidden"
-    style="font-family: 'Work Sans', 'Noto Sans', sans-serif">
-    <div class="layout-container flex h-full grow flex-col">
-      <header
-        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3">
-        <div class="flex items-center gap-8">
-          <div class="flex items-center gap-4 text-[#1b150d]">
-            <div class="size-4">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                  fill="currentColor"></path>
-              </svg>
+  <body>
+    <div
+      class="relative flex w-full max-w-full overflow-x-hidden min-h-screen flex-col bg-[#fcfaf8] group/design-root"
+      style="font-family: 'Work Sans', 'Noto Sans', sans-serif"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
+        >
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-[#1b150d]">
+              <div class="size-4">
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <h2
+                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
+              >
+                Craftsman
+              </h2>
             </div>
-            <h2 class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]">
-              Craftsman
-            </h2>
+            <div class="flex items-center gap-9">
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="dashboard.html"
+                >Dashboard</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="job.html"
+                >Hire</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="Apply.html"
+                >Apply</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="myjob.html"
+                >My Jobs</a
+              >
+              <a
+                class="text-[#1b150d] text-sm font-medium leading-normal"
+                href="proposal.html"
+                id="proposals-link"
+                >Proposals</a
+              >
+            </div>
           </div>
-          <div class="flex items-center gap-9">
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="dashboard.html">Dashboard</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="job.html">Hire</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="Apply.html">Apply</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="myjob.html">My Jobs</a>
-            <a class="text-[#1b150d] text-sm font-medium leading-normal" href="proposal.html"
-              id="proposals-link">Proposals</a>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex gap-2">
+              <a href="Notification.html" class="relative">
+                <button
+                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]"
+                >
+                  <!-- Red Dot for Unread -->
+                  <span
+                    id="notif-dot"
+                    class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"
+                  ></span>
+
+                  <!-- Bell Icon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20px"
+                    height="20px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                    ></path>
+                  </svg>
+                </button>
+              </a>
+              <a href="chat.html" class="relative">
+                <button
+                  class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center"
+                >
+                  <span
+                    id="chat-dot"
+                    class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"
+                  ></span>
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20px"
+                    height="20px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                    ></path>
+                  </svg>
+                </button>
+              </a>
+
+              <a
+                href="Setting.html"
+                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
+              >
+                ⚙️
+              </a>
+            </div>
+            <a href="#" id="profile-link">
+              <div
+                id="profile-pic"
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              ></div>
+            </a>
           </div>
-        </div>
-        <div class="flex flex-1 justify-end gap-8">
-          <div class="flex gap-2">
-            <a href="Notification.html" class="relative">
-              <button
-                class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]">
-                <!-- Red Dot for Unread -->
-                <span id="notif-dot"
-                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
-
-                <!-- Bell Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                  viewBox="0 0 256 256">
-                  <path
-                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
-                  </path>
-                </svg>
-              </button>
-
-            </a>
-            <a href="chat.html" class="relative">
-              <button
-                class="relative h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d] flex items-center justify-center">
-                <span id="chat-dot"
-                  class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                  viewBox="0 0 256 256">
-                  <path
-                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
-                  </path>
-                </svg>
-              </button>
-            </a>
-
-            <a href="Setting.html" class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5">
-              ⚙️
-            </a>
-          </div>
-          <a href="#" id="profile-link">
-            <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"></div>
-          </a>
-        </div>
-      </header>
-
-      <div class="flex flex-1 justify-start px-6 py-5 gap-6">
-        <div class="flex gap-6 px-4 py-4">
+        </header>
+        <div
+          class="flex justify-start gap-6 px-6 py-5 w-full overflow-x-hidden"
+        >
           <!-- Filter Sidebar -->
-          <div class="w-full max-w-xs bg-white p-4 rounded-xl shadow-md sticky top-24 h-fit">
+          <div
+            class="w-full max-w-xs bg-white p-4 rounded-xl shadow-md sticky top-24 h-fit"
+          >
             <h2 class="text-xl font-bold mb-4">Filter Jobs</h2>
 
             <!-- Budget Filter -->
             <label class="block mb-3">
               <span class="text-sm font-medium">Budget (Min)</span>
-              <input id="budgetFilter" type="range" min="0" max="1000" value="1000" class="w-full" />
+              <input
+                id="budgetFilter"
+                type="range"
+                min="0"
+                max="1000"
+                value="1000"
+                class="w-full"
+              />
               <p class="text-sm mt-1">
                 starting from $<span id="budgetValue">1000</span>
               </p>
@@ -103,7 +175,10 @@
             <!-- Rank Filter -->
             <label class="block mb-3">
               <span class="text-sm font-medium">Job Rank</span>
-              <select id="rankFilter" class="w-full mt-1 p-2 rounded border border-gray-300">
+              <select
+                id="rankFilter"
+                class="w-full mt-1 p-2 rounded border border-gray-300"
+              >
                 <option value="">All</option>
                 <option value="Beginner">Beginner</option>
                 <option value="Advanced">Advanced</option>
@@ -114,17 +189,28 @@
             <!-- Skills Filter -->
             <label class="block mb-3">
               <span class="text-sm font-medium">Skill</span>
-              <input id="skillFilter" type="text" placeholder="e.g. Plumbing"
-                class="w-full mt-1 p-2 rounded border border-gray-300" />
+              <input
+                id="skillFilter"
+                type="text"
+                placeholder="e.g. Plumbing"
+                class="w-full mt-1 p-2 rounded border border-gray-300"
+              />
             </label>
 
-            <button id="applyFilters" class="w-full bg-[#ec7113] text-white font-bold py-2 rounded-lg mt-2">
+            <button
+              id="applyFilters"
+              class="w-full bg-[#ec7113] text-white font-bold py-2 rounded-lg mt-2"
+            >
               Apply Filters
             </button>
           </div>
-          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <div
+            class="layout-content-container flex flex-col w-full max-w-full overflow-hidden"
+          >
             <div class="flex flex-wrap justify-between gap-3 p-4">
-              <p class="text-[#181411] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
+              <p
+                class="text-[#181411] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72"
+              >
                 Apply to jobs that suit you!
               </p>
             </div>
@@ -133,16 +219,25 @@
               <label class="flex flex-col min-w-40 h-12 w-full">
                 <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
                   <div
-                    class="text-[#637588] flex border-none bg-[#f0f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
-                      viewBox="0 0 256 256">
+                    class="text-[#637588] flex border-none bg-[#f0f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24px"
+                      height="24px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
                       <path
-                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-                      </path>
+                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                      ></path>
                     </svg>
                   </div>
-                  <input id="searchInput" placeholder="What are you looking for?"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" />
+                  <input
+                    id="searchInput"
+                    placeholder="What are you looking for?"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                  />
                 </div>
               </label>
             </div>
@@ -228,82 +323,85 @@
             -->
 
             <!-- Job Listing -->
-            <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 flex-1"></div>
+            <div
+              id="job-list"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 flex-1"
+            ></div>
           </div>
-
-          <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-4"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    document
-      .getElementById("seeMoreBtn")
-      ?.addEventListener("click", function () {
-        const extraCards = document.querySelectorAll(
-          "#portfolio-container .portfolio-card:nth-child(n+6)"
-        );
+    <script>
+      document
+        .getElementById("seeMoreBtn")
+        ?.addEventListener("click", function () {
+          const extraCards = document.querySelectorAll(
+            "#portfolio-container .portfolio-card:nth-child(n+6)"
+          );
 
-        const isShowingMore = this.textContent === "See More";
+          const isShowingMore = this.textContent === "See More";
 
-        extraCards.forEach((card) => {
-          card
-            .querySelector("div")
-            .classList.toggle("hidden", !isShowingMore);
+          extraCards.forEach((card) => {
+            card
+              .querySelector("div")
+              .classList.toggle("hidden", !isShowingMore);
+          });
+
+          this.textContent = isShowingMore ? "See Less" : "See More";
         });
 
-        this.textContent = isShowingMore ? "See Less" : "See More";
-      });
+      async function fetchJobs() {
+        try {
+          const response = await fetch("/api/jobs");
+          const jobs = await response.json();
+          const jobList = document.getElementById("job-list");
 
-    async function fetchJobs() {
-      try {
-        const response = await fetch("/api/jobs");
-        const jobs = await response.json();
-        const jobList = document.getElementById("job-list");
+          // Show loading alert
+          Swal.fire({
+            title: "Loading Jobs...",
+            text: "Please wait while we fetch the job listings.",
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            background: "#fefce8",
+            backdrop: "rgba(253,224,71,0.2)",
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          console.log("Job data:", job);
 
-        // Show loading alert
-        Swal.fire({
-          title: "Loading Jobs...",
-          text: "Please wait while we fetch the job listings.",
-          allowOutsideClick: false,
-          showConfirmButton: false,
-          background: "#fefce8",
-          backdrop: "rgba(253,224,71,0.2)",
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        console.log("Job data:", job);
+          jobs.forEach((job) => {
+            const jobCard = document.createElement("div");
+            jobCard.className =
+              "flex flex-col gap-2 bg-white shadow-md rounded-xl p-4 border border-[#f0f0f0]";
 
-        jobs.forEach((job) => {
-          const jobCard = document.createElement("div");
-          jobCard.className =
-            "flex flex-col gap-2 bg-white shadow-md rounded-xl p-4 border border-[#f0f0f0]";
-
-          jobCard.innerHTML = `
+            jobCard.innerHTML = `
           <h3 class="text-lg font-bold text-[#1b150d]">${job.title}</h3>
-          <p class="text-sm text-[#555]">${job.description || "No description provided."
-            }</p>
+          <p class="text-sm text-[#555]">${
+            job.description || "No description provided."
+          }</p>
           <p class="text-sm text-[#333] font-medium">Budget: $${job.budget}</p>
           <p class="text-xs text-[#777]">Deadline: ${new Date(
-              job.deadline
-            ).toLocaleDateString()}</p>
-<p><strong>Rank:</strong> <span class="${job.jobRank === "Expert"
-              ? "text-red-600"
-              : job.jobRank === "Advanced"
+            job.deadline
+          ).toLocaleDateString()}</p>
+<p><strong>Rank:</strong> <span class="${
+              job.jobRank === "Expert"
+                ? "text-red-600"
+                : job.jobRank === "Advanced"
                 ? "text-yellow-600"
                 : "text-green-600"
             }">${job.jobRank}</span></p>
             <p><strong>Skills:</strong></p>
             
 <div class="flex flex-wrap gap-2">
-  ${job.skillsRequired
-              ?.map(
-                (skill) => `<span class="bg-gray-200 px-2 py-1 rounded">${skill}</span>`
-              )
-              .join("") || "Any"
-            }
+  ${
+    job.skillsRequired
+      ?.map(
+        (skill) => `<span class="bg-gray-200 px-2 py-1 rounded">${skill}</span>`
+      )
+      .join("") || "Any"
+  }
 </div>
 
 
@@ -317,266 +415,269 @@
 
         `;
 
-          jobList.appendChild(jobCard);
-        });
-      } catch (err) {
-        Swal.fire({
-          icon: "error",
-          title: "Failed to Load Jobs",
-          text: "Please check your internet or try again later.",
-          background: "#fff1f2",
-          backdrop: "rgba(252,165,165,0.3)",
-          confirmButtonColor: "#ef4444",
-        });
+            jobList.appendChild(jobCard);
+          });
+        } catch (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed to Load Jobs",
+            text: "Please check your internet or try again later.",
+            background: "#fff1f2",
+            backdrop: "rgba(252,165,165,0.3)",
+            confirmButtonColor: "#ef4444",
+          });
+        }
       }
-    }
 
-    function applyToJob(jobId) {
-      // This function should be customized to handle your application logic (e.g., API POST request or redirect)
-      alert("Applied to job with ID: " + jobId);
-    }
+      function applyToJob(jobId) {
+        // This function should be customized to handle your application logic (e.g., API POST request or redirect)
+        alert("Applied to job with ID: " + jobId);
+      }
 
-    // Fetch jobs when page loads
-    document.addEventListener("DOMContentLoaded", fetchJobs);
+      // Fetch jobs when page loads
+      document.addEventListener("DOMContentLoaded", fetchJobs);
 
-    //filtersss js
-    let allJobs = [];
+      //filtersss js
+      let allJobs = [];
 
-    document.getElementById("budgetFilter").addEventListener("input", (e) => {
-      document.getElementById("budgetValue").textContent = e.target.value;
-    });
-
-    document
-      .getElementById("applyFilters")
-      .addEventListener("click", applyFilters);
-
-    function applyFilters() {
-      const minBudget = parseInt(
-        document.getElementById("budgetFilter").value
-      );
-      const rank = document.getElementById("rankFilter").value;
-      const skill = document
-        .getElementById("skillFilter")
-        .value.toLowerCase();
-
-      const filtered = allJobs.filter((job) => {
-        const matchesBudget = job.budget >= minBudget; // ✅ jobs with budget >= min
-        const matchesRank = !rank || job.jobRank === rank;
-        const matchesSkill =
-          !skill ||
-          job.skillsRequired?.some((s) => s.toLowerCase().includes(skill));
-        return matchesBudget && matchesRank && matchesSkill;
+      document.getElementById("budgetFilter").addEventListener("input", (e) => {
+        document.getElementById("budgetValue").textContent = e.target.value;
       });
 
-      renderJobs(filtered);
-    }
+      document
+        .getElementById("applyFilters")
+        .addEventListener("click", applyFilters);
 
-    async function fetchJobs() {
-      try {
-        const response = await fetch("/api/jobs");
-        allJobs = await response.json();
-        renderJobs(allJobs);
-      } catch (err) {
-        Swal.fire({
-          icon: "error",
-          title: "Failed to Load Jobs",
-          text: "Please check your internet or try again later.",
-          background: "#fff1f2",
-          backdrop: "rgba(252,165,165,0.3)",
-          confirmButtonColor: "#ef4444",
+      function applyFilters() {
+        const minBudget = parseInt(
+          document.getElementById("budgetFilter").value
+        );
+        const rank = document.getElementById("rankFilter").value;
+        const skill = document
+          .getElementById("skillFilter")
+          .value.toLowerCase();
+
+        const filtered = allJobs.filter((job) => {
+          const matchesBudget = job.budget >= minBudget; // ✅ jobs with budget >= min
+          const matchesRank = !rank || job.jobRank === rank;
+          const matchesSkill =
+            !skill ||
+            job.skillsRequired?.some((s) => s.toLowerCase().includes(skill));
+          return matchesBudget && matchesRank && matchesSkill;
         });
-      }
-    }
 
-    function renderJobs(jobs) {
-      const jobList = document.getElementById("job-list");
-      jobList.innerHTML = "";
-
-      const craftsmanId = localStorage.getItem("craftsmanId");
-
-      const filteredJobs = jobs.filter((job) => {
-        const creatorId = job.userId?._id || job.userId; // handles both ObjectId or populated user
-        return creatorId !== craftsmanId;
-      });
-
-      if (filteredJobs.length === 0) {
-        Swal.fire({
-          icon: "warning",
-          title: "No Jobs Found",
-          text: "Try adjusting your filters or search keywords.",
-          background: "#fffbea",
-          backdrop: "rgba(253,224,71,0.3)",
-          confirmButtonColor: "#facc15",
-        });
-        return;
+        renderJobs(filtered);
       }
 
-      filteredJobs.forEach((job) => {
-        const jobCard = document.createElement("div");
-        jobCard.className =
-          "flex flex-col gap-2 bg-white shadow-md rounded-xl p-4 border border-[#f0f0f0]";
+      async function fetchJobs() {
+        try {
+          const response = await fetch("/api/jobs");
+          allJobs = await response.json();
+          renderJobs(allJobs);
+        } catch (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed to Load Jobs",
+            text: "Please check your internet or try again later.",
+            background: "#fff1f2",
+            backdrop: "rgba(252,165,165,0.3)",
+            confirmButtonColor: "#ef4444",
+          });
+        }
+      }
 
-        jobCard.innerHTML = `
+      function renderJobs(jobs) {
+        const jobList = document.getElementById("job-list");
+        jobList.innerHTML = "";
+
+        const craftsmanId = localStorage.getItem("craftsmanId");
+
+        const filteredJobs = jobs.filter((job) => {
+          const creatorId = job.userId?._id || job.userId; // handles both ObjectId or populated user
+          return creatorId !== craftsmanId;
+        });
+
+        if (filteredJobs.length === 0) {
+          Swal.fire({
+            icon: "warning",
+            title: "No Jobs Found",
+            text: "Try adjusting your filters or search keywords.",
+            background: "#fffbea",
+            backdrop: "rgba(253,224,71,0.3)",
+            confirmButtonColor: "#facc15",
+          });
+          return;
+        }
+
+        filteredJobs.forEach((job) => {
+          const jobCard = document.createElement("div");
+          jobCard.className =
+            "flex flex-col gap-2 bg-white shadow-md rounded-xl p-4 border border-[#f0f0f0]";
+
+          jobCard.innerHTML = `
       <h3 class="text-lg font-bold text-[#1b150d]">${job.title}</h3>
-      <p class="text-sm text-[#555]">${job.description || "No description provided."
-          }</p>
+      <p class="text-sm text-[#555]">${
+        job.description || "No description provided."
+      }</p>
       <p class="text-sm text-[#333] font-medium">Budget: $${job.budget}</p>
       <p class="text-xs text-[#777]">Deadline: ${new Date(
-            job.deadline
-          ).toLocaleDateString()}</p>
-      <p><strong>Rank:</strong> <span class="${job.jobRank === "Expert"
-            ? "text-red-600"
-            : job.jobRank === "Advanced"
-              ? "text-yellow-600"
-              : "text-green-600"
-          }">${job.jobRank}</span></p>
+        job.deadline
+      ).toLocaleDateString()}</p>
+      <p><strong>Rank:</strong> <span class="${
+        job.jobRank === "Expert"
+          ? "text-red-600"
+          : job.jobRank === "Advanced"
+          ? "text-yellow-600"
+          : "text-green-600"
+      }">${job.jobRank}</span></p>
       <p><strong>Skills:</strong></p>
       <div class="flex flex-wrap gap-2">
-        ${job.skillsRequired
+        ${
+          job.skillsRequired
             ?.map(
               (skill) =>
                 `<span class="bg-gray-200 px-2 py-1 rounded">${skill}</span>`
             )
             .join("") || "Any"
-          }
+        }
       </div>
       <div class="mt-2 flex gap-2">
-        <a href="application.html?jobId=${job._id
-          }" class="flex-1 text-center bg-[#ec7113] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#d16210] transition">
+        <a href="application.html?jobId=${
+          job._id
+        }" class="flex-1 text-center bg-[#ec7113] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#d16210] transition">
           Apply
         </a>
       </div>
     `;
 
-        jobList.appendChild(jobCard);
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", fetchJobs);
-
-    //da search
-    document
-      .getElementById("searchInput")
-      .addEventListener("input", function () {
-        const query = this.value.toLowerCase();
-        const filtered = allJobs.filter((job) => {
-          const titleMatch = job.title.toLowerCase().includes(query);
-          const descMatch = job.description?.toLowerCase().includes(query);
-          return titleMatch || descMatch;
+          jobList.appendChild(jobCard);
         });
+      }
 
-        renderJobs(filtered);
-      });
-  </script>
+      document.addEventListener("DOMContentLoaded", fetchJobs);
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      let craftsmanId = new URLSearchParams(window.location.search).get(
-        "craftsmanId"
-      );
+      //da search
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function () {
+          const query = this.value.toLowerCase();
+          const filtered = allJobs.filter((job) => {
+            const titleMatch = job.title.toLowerCase().includes(query);
+            const descMatch = job.description?.toLowerCase().includes(query);
+            return titleMatch || descMatch;
+          });
 
-      if (!craftsmanId) {
-        craftsmanId = localStorage.getItem("craftsmanId");
+          renderJobs(filtered);
+        });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        let craftsmanId = new URLSearchParams(window.location.search).get(
+          "craftsmanId"
+        );
+
         if (!craftsmanId) {
-          console.error("❌ Missing craftsmanId in URL and Local Storage!");
-          return;
-        }
-      }
-
-      localStorage.setItem("craftsmanId", craftsmanId);
-
-      try {
-        const res = await fetch(`/api/profile/${craftsmanId}`);
-
-        if (!res.ok)
-          throw new Error(
-            `Failed to fetch profile: ${response.status} ${response.statusText}`
-          );
-
-        const data = await res.json();
-
-        console.log("✅ API Response:", data); // Debugging log
-
-        if (!data || !data.profileImage) {
-          console.error("❌ Profile image is missing in API response");
-          return;
+          craftsmanId = localStorage.getItem("craftsmanId");
+          if (!craftsmanId) {
+            console.error("❌ Missing craftsmanId in URL and Local Storage!");
+            return;
+          }
         }
 
-        const profileImage = data.profileImage.trim()
-          ? data.profileImage
-          : "/uploads/default.png";
-        console.log("✅ Profile Image URL:", profileImage);
+        localStorage.setItem("craftsmanId", craftsmanId);
 
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+
+          if (!res.ok)
+            throw new Error(
+              `Failed to fetch profile: ${response.status} ${response.statusText}`
+            );
+
+          const data = await res.json();
+
+          console.log("✅ API Response:", data); // Debugging log
+
+          if (!data || !data.profileImage) {
+            console.error("❌ Profile image is missing in API response");
+            return;
+          }
+
+          const profileImage = data.profileImage.trim()
+            ? data.profileImage
+            : "/uploads/default.png";
+          console.log("✅ Profile Image URL:", profileImage);
+
+          const profilePicDiv = document.getElementById("profile-pic");
+          if (profilePicDiv) {
+            profilePicDiv.style.backgroundImage = `url(${profileImage})`;
+          } else {
+            console.error("❌ profile-pic element not found");
+          }
+
+          document.getElementById(
+            "profile-pic"
+          ).style.backgroundImage = `url(${profileImage})`;
+
+          const mainSkill =
+            data.skills && data.skills.length > 0
+              ? data.skills[0].name
+              : "General";
+          const profileLink = document.getElementById("profile-link");
+
+          if (profileLink) {
+            profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
+              mainSkill
+            )}`;
+          } else {
+            console.error("❌ profile-link element not found");
+          }
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const craftsmanId = localStorage.getItem("craftsmanId");
         const profilePicDiv = document.getElementById("profile-pic");
-        if (profilePicDiv) {
-          profilePicDiv.style.backgroundImage = `url(${profileImage})`;
-        } else {
-          console.error("❌ profile-pic element not found");
+
+        if (!craftsmanId || !profilePicDiv) return;
+
+        // Try cached image first
+        const cachedImage = localStorage.getItem("profileImage");
+        if (cachedImage) {
+          profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
         }
 
-        document.getElementById(
-          "profile-pic"
-        ).style.backgroundImage = `url(${profileImage})`;
+        try {
+          const res = await fetch(`/api/profile/${craftsmanId}`);
+          if (!res.ok) throw new Error("Failed fetching profile");
 
-        const mainSkill =
-          data.skills && data.skills.length > 0
-            ? data.skills[0].name
-            : "General";
-        const profileLink = document.getElementById("profile-link");
+          const data = await res.json();
+          const profileImage =
+            data.profileImage.trim() || "/uploads/default.png";
 
-        if (profileLink) {
-          profileLink.href = `Profile2.html?craftsmanId=${craftsmanId}&skill=${encodeURIComponent(
-            mainSkill
-          )}`;
-        } else {
-          console.error("❌ profile-link element not found");
+          profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
+
+          // Update cache
+          localStorage.setItem("profileImage", profileImage);
+        } catch (error) {
+          console.error("❌ Error loading profile:", error);
         }
-      } catch (error) {
-        console.error("❌ Error loading profile:", error);
-      }
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const craftsmanId = localStorage.getItem("craftsmanId");
-      const profilePicDiv = document.getElementById("profile-pic");
+      });
+    </script>
+    <script>
+      // for disapper proposals if client
+      document.addEventListener("DOMContentLoaded", () => {
+        const userRole = localStorage.getItem("userRole");
+        const proposalsLink = document.getElementById("proposals-link");
 
-      if (!craftsmanId || !profilePicDiv) return;
-
-      // Try cached image first
-      const cachedImage = localStorage.getItem("profileImage");
-      if (cachedImage) {
-        profilePicDiv.style.backgroundImage = `url('${cachedImage}')`;
-      }
-
-      try {
-        const res = await fetch(`/api/profile/${craftsmanId}`);
-        if (!res.ok) throw new Error("Failed fetching profile");
-
-        const data = await res.json();
-        const profileImage =
-          data.profileImage.trim() || "/uploads/default.png";
-
-        profilePicDiv.style.backgroundImage = `url('${profileImage}')`;
-
-        // Update cache
-        localStorage.setItem("profileImage", profileImage);
-      } catch (error) {
-        console.error("❌ Error loading profile:", error);
-      }
-    });
-  </script>
-  <script>
-    // for disapper proposals if client
-    document.addEventListener("DOMContentLoaded", () => {
-      const userRole = localStorage.getItem("userRole");
-      const proposalsLink = document.getElementById("proposals-link");
-
-      if (userRole === "client" && proposalsLink) {
-        proposalsLink.style.display = "none";
-      }
-    });
-  </script>
-</body>
-
+        if (userRole === "client" && proposalsLink) {
+          proposalsLink.style.display = "none";
+        }
+      });
+    </script>
+  </body>
 </html>

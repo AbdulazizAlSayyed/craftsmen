@@ -107,9 +107,9 @@
                 </div>
               </div>
               <div class="flex w-full max-w-[480px] gap-3 @[480px]:w-auto">
-                <a href="chat.html"
+                <a href="chat.html">
                 <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto">
+                  class="hire-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto">
                   <span class="truncate">Hire Me</span>
                 </button>
               </a>
@@ -133,10 +133,12 @@
             <!-- Skills will load here dynamically -->
           </div>
 
-          <p id="skill-name" class="text-[#181411] text-lg font-bold leading-tight"></p>
-          <p id="skill-rank" class="text-sm text-gray-600"></p>
-          <p id="skill-experience" class="text-sm text-gray-600"></p>
-          <p id="skill-rating" class="text-sm text-gray-600"></p>
+         <div class="mt-3 p-4 bg-gray-100 rounded-xl shadow-sm text-sm space-y-1 max-w-md">
+          <h3 id="skill-name" class="text-lg font-semibold text-gray-800 mb-2"></h3>
+         <div class="flex justify-between"><span>🎖️ Rank:</span> <span id="skill-rank" class="text-gray-700"></span></div>
+        <div class="flex justify-between"><span>🧠 Experience:</span> <span id="skill-experience" class="text-gray-700"></span></div>
+  <div class="flex justify-between"><span>⭐ Rating:</span> <span id="skill-rating" class="text-gray-700"></span></div>
+</div>
 
           <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
             Experience
@@ -202,9 +204,10 @@
           }
           else {
             document.getElementById("skill-name").textContent = skill.name;
-            document.getElementById("skill-rank").textContent = `Rank: ${skill.rank}`;
-            document.getElementById("skill-experience").textContent = `Experience: ${skill.xpPoints} XP`;
-            document.getElementById("skill-rating").textContent = `Rating: ${skill.rating.toFixed(1)}⭐ (${skill.numberOfRatedJobs} rated jobs)`;
+document.getElementById("skill-rank").textContent = skill.rank;
+document.getElementById("skill-experience").textContent = `${skill.xpPoints} XP`;
+document.getElementById("skill-rating").textContent = `${skill.rating.toFixed(1)}⭐ (${skill.numberOfRatedJobs} rated jobs)`;
+
           }
         } else {
           console.warn("⚠️ No skills found for this craftsman");
@@ -445,6 +448,19 @@
     });
 
   </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const viewerId = localStorage.getItem("userId"); // the logged-in user
+    const profileId = new URLSearchParams(window.location.search).get("craftsmanId");
+
+    if (viewerId === profileId) {
+      // Hide "Hire Me" and "Invite to Job" buttons if user is viewing their own profile
+      document.querySelector(".invite-btn")?.classList.add("hidden");
+      document.querySelector('.hire-btn')?.classList.add("hidden");
+    }
+  });
+</script>
 
 </body>
 

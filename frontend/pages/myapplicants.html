@@ -1,241 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galileo Design</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900">
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,">
+    <title>Galileo Design</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
-  <style>
-    @keyframes highlight {
-      0% {
-        background-color: rgba(59, 130, 246, 0.1);
+    <style>
+      @keyframes highlight {
+        0% {
+          background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        100% {
+          background-color: transparent;
+        }
       }
 
-      100% {
-        background-color: transparent;
-      }
-    }
-
-    .bid-update {
-      animation: highlight 2s ease-out;
-    }
-
-    .app-card {
-      transition: all 0.3s ease;
-      padding: 1.25rem;
-      border-radius: 0.75rem;
-      background-color: white;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-    }
-
-    .status-badge {
-      padding: 0.25rem 0.75rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border-radius: 9999px;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .status-accepted {
-      background-color: #dcfce7;
-      color: #15803d;
-      border: 1px solid #bbf7d0;
-    }
-
-    .status-rejected {
-      background-color: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .status-pending {
-      background-color: #fef3c7;
-      color: #92400e;
-      border: 1px solid #fde68a;
-    }
-
-    .profile-image {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-      border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-      background-color: #f3eee7;
-    }
-
-    @media (max-width: 768px) {
-      .flex-col-mobile {
-        flex-direction: column;
+      .bid-update {
+        animation: highlight 2s ease-out;
       }
 
-      .w-full-mobile {
-        width: 100%;
+      .app-card {
+        transition: all 0.3s ease;
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
       }
 
-      .border-r-mobile {
-        border-right: none;
+      .status-badge {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
       }
-    }
-  </style>
-</head>
 
-<body class="bg-[#fcfaf8] font-sans">
-  <div class="min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="border-b border-[#f3eee7] px-4 md:px-10 py-3">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-4 md:gap-8">
-          <div class="flex items-center gap-2">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                fill="currentColor"></path>
-            </svg>
-            <h2 class="text-lg font-bold">Craftsman</h2>
-          </div>
-          <nav class="hidden md:flex items-center gap-6">
-            <a href="dashboard.html" class="text-sm font-medium">Dashboard</a>
-            <a href="job.html" class="text-sm font-medium">Hire</a>
-            <a href="Apply.html" class="text-sm font-medium">Apply</a>
-            <a href="myjob.html" class="text-sm font-medium">My Jobs</a>
-            <a href="proposal.html" class="text-sm font-medium">Proposals</a>
-          </nav>
-        </div>
+      .status-accepted {
+        background-color: #dcfce7;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
 
-        <div class="flex items-center gap-4">
-          <div class="flex gap-2">
-            <a href="Notification.html" class="relative">
-              <button class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center">
-                <span id="notif-dot"
-                  class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                  viewBox="0 0 256 256">
-                  <path
-                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
-                  </path>
-                </svg>
-              </button>
-            </a>
+      .status-rejected {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
 
-            <a href="chat.html" class="relative">
-              <button class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center">
-                <span id="chat-dot"
-                  class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                  viewBox="0 0 256 256">
-                  <path
-                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z">
-                  </path>
-                </svg>
-              </button>
-            </a>
+      .status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+      }
 
-            <a href="Setting.html" class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center">
-              ⚙️
-            </a>
+      .profile-image {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-color: #f3eee7;
+      }
+
+      @media (max-width: 768px) {
+        .flex-col-mobile {
+          flex-direction: column;
+        }
+
+        .w-full-mobile {
+          width: 100%;
+        }
+
+        .border-r-mobile {
+          border-right: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-[#fcfaf8] font-sans">
+    <div class="min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="border-b border-[#f3eee7] px-4 md:px-10 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4 md:gap-8">
+            <div class="flex items-center gap-2">
+              <svg
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+              <h2 class="text-lg font-bold">Craftsman</h2>
+            </div>
+            <nav class="hidden md:flex items-center gap-6">
+              <a href="dashboard.html" class="text-sm font-medium">Dashboard</a>
+              <a href="job.html" class="text-sm font-medium">Hire</a>
+              <a href="Apply.html" class="text-sm font-medium">Apply</a>
+              <a href="myjob.html" class="text-sm font-medium">My Jobs</a>
+              <a href="proposal.html" class="text-sm font-medium">Proposals</a>
+            </nav>
           </div>
 
-          <a href="#" id="profile-link">
-            <div id="profile-pic" class="profile-image"></div>
-          </a>
+          <div class="flex items-center gap-4">
+            <div class="flex gap-2">
+              <a href="Notification.html" class="relative">
+                <button
+                  class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center"
+                >
+                  <span
+                    id="notif-dot"
+                    class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"
+                  ></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                    ></path>
+                  </svg>
+                </button>
+              </a>
+
+              <a href="chat.html" class="relative">
+                <button
+                  class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center"
+                >
+                  <span
+                    id="chat-dot"
+                    class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"
+                  ></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                    ></path>
+                  </svg>
+                </button>
+              </a>
+
+              <a
+                href="Setting.html"
+                class="w-10 h-10 rounded-xl bg-[#f3eee7] flex items-center justify-center"
+              >
+                ⚙️
+              </a>
+            </div>
+
+            <a href="#" id="profile-link">
+              <div id="profile-pic" class="profile-image"></div>
+            </a>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <!-- Main Content -->
-    <main class="flex flex-col md:flex-row flex-1">
-      <!-- Applicants Column -->
-      <div id="applicant-list" class="w-full md:w-1/2 p-4 md:p-6 border-r border-[#f3eee7] overflow-y-auto">
-        <h2 class="text-xl font-bold mb-4">Applicants</h2>
-        <div id="applicants-content"></div>
-      </div>
+      <!-- Main Content -->
+      <main class="flex flex-col md:flex-row flex-1 gap-4 p-4 md:p-6">
+        <!-- Applicants Column -->
+        <div
+          id="applicant-list"
+          class="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-[#f3eee7]"
+        >
+          <h2 class="text-xl md:text-2xl font-bold mb-4">Applicants</h2>
 
-      <!-- Bidding Column -->
-      <div id="bidding-list" class="w-full md:w-1/2 p-4 md:p-6 overflow-y-auto">
-        <h2 class="text-xl font-bold mb-4">Bidders</h2>
-        <div id="bidders-content"></div>
-      </div>
-    </main>
-  </div>
+          <div id="applicants-content"></div>
+        </div>
 
-  <script>
-    // Socket.IO connection
-    let socket;
+        <!-- Bidding Column -->
+        <!-- Bidding Column -->
+        <div id="bidding-list" class="w-full md:w-1/2 overflow-y-auto">
+          <h2 class="text-xl md:text-2xl font-bold mb-4">Bidders</h2>
 
-    // Connect to Socket.IO
-    function connectSocketIO() {
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        console.warn("No userId found in localStorage");
-        return;
+          <div id="bidders-content"></div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Socket.IO connection
+      let socket;
+
+      // Connect to Socket.IO
+      function connectSocketIO() {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          console.warn("No userId found in localStorage");
+          return;
+        }
+
+        socket = io("http://localhost:5001", {
+          reconnection: true,
+          reconnectionAttempts: 5,
+          reconnectionDelay: 2000,
+        });
+
+        socket.on("connect", () => {
+          socket.emit("addUser", userId);
+          console.log("Connected to Socket.IO with ID:", socket.id);
+        });
+
+        socket.on("BID_UPDATE", handleBidUpdate);
+
+        socket.on("disconnect", () => {
+          console.warn("Socket.IO disconnected, attempting to reconnect...");
+        });
       }
 
-      socket = io("http://localhost:5001", {
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 2000,
-      });
+      // Handle bid updates
+      function handleBidUpdate(updatedBid) {
+        const card = document.getElementById(`app-card-${updatedBid._id}`);
+        if (!card) return;
 
-      socket.on("connect", () => {
-        socket.emit("addUser", userId);
-        console.log("Connected to Socket.IO with ID:", socket.id);
-      });
+        // Update status badge
+        const statusEl = card.querySelector(".status-badge");
+        if (statusEl) {
+          statusEl.textContent = updatedBid.status;
+          statusEl.className = `status-badge status-${updatedBid.status}`;
+        }
 
-      socket.on("BID_UPDATE", handleBidUpdate);
+        // Update bid amount if exists
+        const bidEl = card.querySelector(".bid-amount");
+        if (bidEl && updatedBid.bidAmount !== undefined) {
+          bidEl.textContent = `$${updatedBid.bidAmount}`;
+        }
 
-      socket.on("disconnect", () => {
-        console.warn("Socket.IO disconnected, attempting to reconnect...");
-      });
-    }
+        // Update action buttons
+        updateActionButtons(card, updatedBid.status, updatedBid._id);
 
-    // Handle bid updates
-    function handleBidUpdate(updatedBid) {
-      const card = document.getElementById(`app-card-${updatedBid._id}`);
-      if (!card) return;
-
-      // Update status badge
-      const statusEl = card.querySelector('.status-badge');
-      if (statusEl) {
-        statusEl.textContent = updatedBid.status;
-        statusEl.className = `status-badge status-${updatedBid.status}`;
+        // Visual feedback
+        card.classList.add("bid-update");
+        setTimeout(() => card.classList.remove("bid-update"), 2000);
       }
 
-      // Update bid amount if exists
-      const bidEl = card.querySelector('.bid-amount');
-      if (bidEl && updatedBid.bidAmount !== undefined) {
-        bidEl.textContent = `$${updatedBid.bidAmount}`;
-      }
+      // Update action buttons based on status
+      function updateActionButtons(card, status, appId) {
+        const buttonsContainer = card.querySelector(".action-buttons");
+        if (!buttonsContainer) return;
 
-      // Update action buttons
-      updateActionButtons(card, updatedBid.status, updatedBid._id);
+        let buttonsHTML = "";
 
-      // Visual feedback
-      card.classList.add('bid-update');
-      setTimeout(() => card.classList.remove('bid-update'), 2000);
-    }
-
-    // Update action buttons based on status
-    function updateActionButtons(card, status, appId) {
-      const buttonsContainer = card.querySelector('.action-buttons');
-      if (!buttonsContainer) return;
-
-      let buttonsHTML = '';
-
-      switch (status) {
-        case 'pending':
-          buttonsHTML = `
+        switch (status) {
+          case "pending":
+            buttonsHTML = `
             <div class="flex flex-wrap gap-2 mt-2">
               <button onclick="updateStatus('${appId}', 'accepted')" 
                 class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
@@ -247,10 +286,10 @@
               </button>
             </div>
           `;
-          break;
+            break;
 
-        case 'rejected':
-          buttonsHTML = `
+          case "rejected":
+            buttonsHTML = `
             <div class="flex flex-wrap items-center gap-2 mt-2">
               <input id="new-bid-${appId}" type="number" 
                 class="w-20 text-sm border rounded px-2 py-1" placeholder="New $" />
@@ -260,184 +299,211 @@
               </button>
             </div>
           `;
-          break;
+            break;
 
-        case 'accepted':
-          buttonsHTML = `
+          case "accepted":
+            buttonsHTML = `
             <div class="text-green-600 font-medium mt-2">
               Accepted
             </div>
           `;
-          break;
+            break;
 
-        default:
-          buttonsHTML = '';
-      }
-
-      buttonsContainer.innerHTML = buttonsHTML;
-    }
-
-    // Resubmit bid
-    function resubmitBid(appId) {
-      const newBidInput = document.getElementById(`new-bid-${appId}`);
-      if (!newBidInput || isNaN(parseFloat(newBidInput.value))) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Invalid Bid',
-          text: 'Please enter a valid bid amount',
-          confirmButtonColor: '#ef4444'
-        });
-        return;
-      }
-
-      updateStatus(appId, 'pending', parseFloat(newBidInput.value));
-    }
-
-    // Update application status
-    async function updateStatus(appId, newStatus, bidAmount = null) {
-      const actionMap = {
-        'accepted': { verb: 'accept', color: '#10b981' },
-        'rejected': { verb: 'reject', color: '#ef4444' },
-        'pending': { verb: 'update', color: '#f59e0b' }
-      };
-
-      const action = actionMap[newStatus] || { verb: 'update', color: '#3b82f6' };
-
-      const confirmResult = await Swal.fire({
-        title: `Confirm ${action.verb}?`,
-        text: `Are you sure you want to ${action.verb} this application?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: action.color,
-        cancelButtonColor: '#9ca3af',
-        confirmButtonText: `Yes, ${action.verb}`
-      });
-
-      if (!confirmResult.isConfirmed) return;
-
-      try {
-        const res = await fetch(`/api/applications/${appId}/status`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            status: newStatus,
-            bidAmount: bidAmount
-          }),
-        });
-
-        if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.message || 'Failed to update status');
+          default:
+            buttonsHTML = "";
         }
 
-        const updatedApp = await res.json();
+        buttonsContainer.innerHTML = buttonsHTML;
+      }
 
-        // Update UI
-        const card = document.getElementById(`app-card-${appId}`);
-        if (card) {
-          const statusEl = card.querySelector('.status-badge');
-          if (statusEl) {
-            statusEl.textContent = updatedApp.status;
-            statusEl.className = `status-badge status-${updatedApp.status}`;
+      // Resubmit bid
+      function resubmitBid(appId) {
+        const newBidInput = document.getElementById(`new-bid-${appId}`);
+        if (!newBidInput || isNaN(parseFloat(newBidInput.value))) {
+          Swal.fire({
+            icon: "error",
+            title: "Invalid Bid",
+            text: "Please enter a valid bid amount",
+            confirmButtonColor: "#ef4444",
+          });
+          return;
+        }
+
+        updateStatus(appId, "pending", parseFloat(newBidInput.value));
+      }
+
+      // Update application status
+      async function updateStatus(appId, newStatus, bidAmount = null) {
+        const actionMap = {
+          accepted: { verb: "accept", color: "#10b981" },
+          rejected: { verb: "reject", color: "#ef4444" },
+          pending: { verb: "update", color: "#f59e0b" },
+        };
+
+        const action = actionMap[newStatus] || {
+          verb: "update",
+          color: "#3b82f6",
+        };
+
+        const confirmResult = await Swal.fire({
+          title: `Confirm ${action.verb}?`,
+          text: `Are you sure you want to ${action.verb} this application?`,
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: action.color,
+          cancelButtonColor: "#9ca3af",
+          confirmButtonText: `Yes, ${action.verb}`,
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        try {
+          const res = await fetch(`/api/applications/${appId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              status: newStatus,
+              bidAmount: bidAmount,
+            }),
+          });
+
+          if (!res.ok) {
+            const error = await res.json();
+            throw new Error(error.message || "Failed to update status");
           }
 
-          const bidEl = card.querySelector('.bid-amount');
-          if (bidEl && updatedApp.bidAmount !== undefined) {
-            bidEl.textContent = `$${updatedApp.bidAmount}`;
+          const updatedApp = await res.json();
+
+          // Update UI
+          const card = document.getElementById(`app-card-${appId}`);
+          if (card) {
+            const statusEl = card.querySelector(".status-badge");
+            if (statusEl) {
+              statusEl.textContent = updatedApp.status;
+              statusEl.className = `status-badge status-${updatedApp.status}`;
+            }
+
+            const bidEl = card.querySelector(".bid-amount");
+            if (bidEl && updatedApp.bidAmount !== undefined) {
+              bidEl.textContent = `$${updatedApp.bidAmount}`;
+            }
+
+            updateActionButtons(card, updatedApp.status, appId);
+
+            // Visual feedback
+            card.classList.add("bid-update");
+            setTimeout(() => card.classList.remove("bid-update"), 1500);
           }
 
-          updateActionButtons(card, updatedApp.status, appId);
-
-          // Visual feedback
-          card.classList.add('bid-update');
-          setTimeout(() => card.classList.remove('bid-update'), 1500);
+          // Show success message
+          Swal.fire({
+            icon: "success",
+            title: `${
+              action.verb.charAt(0).toUpperCase() + action.verb.slice(1)
+            }ed`,
+            text: `Application has been ${action.verb}ed successfully`,
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        } catch (error) {
+          console.error("Error updating status:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Update Failed",
+            text: error.message || "Something went wrong",
+            confirmButtonColor: "#ef4444",
+          });
         }
-
-        // Show success message
-        Swal.fire({
-          icon: 'success',
-          title: `${action.verb.charAt(0).toUpperCase() + action.verb.slice(1)}ed`,
-          text: `Application has been ${action.verb}ed successfully`,
-          timer: 1500,
-          showConfirmButton: false
-        });
-
-      } catch (error) {
-        console.error('Error updating status:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Update Failed',
-          text: error.message || 'Something went wrong',
-          confirmButtonColor: '#ef4444'
-        });
       }
-    }
 
-    // Load profile data
-    async function loadProfile() {
-      const profilePic = document.getElementById('profile-pic');
-      if (!profilePic) return;
+      // Load profile data
+      async function loadProfile() {
+        const profilePic = document.getElementById("profile-pic");
+        if (!profilePic) return;
 
-      const userId = localStorage.getItem('userId');
-      if (!userId) return;
+        const userId = localStorage.getItem("userId");
+        if (!userId) return;
 
-      try {
-        const cachedImage = localStorage.getItem('profileImage');
-        if (cachedImage) {
-          profilePic.style.backgroundImage = `url('${cachedImage}')`;
+        try {
+          const cachedImage = localStorage.getItem("profileImage");
+          if (cachedImage) {
+            profilePic.style.backgroundImage = `url('${cachedImage}')`;
+          }
+
+          const res = await fetch(`/api/profile/${userId}`);
+          if (!res.ok) throw new Error("Failed to load profile");
+
+          const data = await res.json();
+          const imageUrl = data.profileImage?.trim() || "/uploads/default.png";
+
+          profilePic.style.backgroundImage = `url('${imageUrl}')`;
+          localStorage.setItem("profileImage", imageUrl);
+        } catch (error) {
+          console.error("Error loading profile:", error);
         }
-
-        const res = await fetch(`/api/profile/${userId}`);
-        if (!res.ok) throw new Error('Failed to load profile');
-
-        const data = await res.json();
-        const imageUrl = data.profileImage?.trim() || '/uploads/default.png';
-
-        profilePic.style.backgroundImage = `url('${imageUrl}')`;
-        localStorage.setItem('profileImage', imageUrl);
-      } catch (error) {
-        console.error('Error loading profile:', error);
       }
-    }
 
-    // Render applicant cards
-    function renderApplicantCards(applicants, mainSkill) {
-      const applicantsContainer = document.getElementById('applicants-content');
-      const biddersContainer = document.getElementById('bidders-content');
+      // Render applicant cards
+      function renderApplicantCards(applicants, mainSkill) {
+        const applicantsContainer =
+          document.getElementById("applicants-content");
+        const biddersContainer = document.getElementById("bidders-content");
 
-      applicantsContainer.innerHTML = '';
-      biddersContainer.innerHTML = '';
+        applicantsContainer.innerHTML = "";
+        biddersContainer.innerHTML = "";
 
-      applicants.forEach(applicant => {
-        const user = applicant.craftsmanId || {};
-        const hasBid = typeof applicant.bidAmount === 'number' && !isNaN(applicant.bidAmount);
+        applicants.forEach((applicant) => {
+          const user = applicant.craftsmanId || {};
+          const hasBid =
+            typeof applicant.bidAmount === "number" &&
+            !isNaN(applicant.bidAmount);
 
-        const skillObj = user.skills?.find(skill => skill.name === mainSkill);
-        const skillRank = skillObj?.rank || 'Unranked';
+          const skillObj = user.skills?.find(
+            (skill) => skill.name === mainSkill
+          );
+          const skillRank = skillObj?.rank || "Unranked";
 
-        const cardHTML = `
+          const cardHTML = `
       <div id="app-card-${applicant._id}" class="app-card">
         <div class="flex gap-4">
           <div class="profile-image cursor-pointer" 
-            style="background-image: url('${user.profileImage || '/uploads/default.png'}')"
-            onclick="window.location.href='Profile2.html?craftsmanId=${user._id}'"></div>
+            style="background-image: url('${
+              user.profileImage || "/uploads/default.png"
+            }')"
+            onclick="window.location.href='Profile2.html?craftsmanId=${
+              user._id
+            }'"></div>
 
           <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
-              <h3 class="text-lg font-bold">${user.fullName || 'Unknown User'}</h3>
-              <span class="status-badge status-${applicant.status}">${applicant.status}</span>
+              <h3 class="text-lg font-bold">${
+                user.fullName || "Unknown User"
+              }</h3>
+              <span class="status-badge status-${applicant.status}">${
+            applicant.status
+          }</span>
             </div>
-            <p class="text-sm text-gray-600 mb-2">${user.email || ''}</p>
+            <p class="text-sm text-gray-600 mb-2">${user.email || ""}</p>
 
-            ${hasBid ? `<p class="text-sm mb-2"><span class="font-medium">Bid Amount:</span> <span class="bid-amount">$${applicant.bidAmount}</span></p>` : ''}
+            ${
+              hasBid
+                ? `<p class="text-sm mb-2"><span class="font-medium">Bid Amount:</span> <span class="bid-amount">$${applicant.bidAmount}</span></p>`
+                : ""
+            }
 <p class="text-sm mb-2">
   <span class="font-medium">Rank in ${mainSkill}:</span> 
-  ${skillRank !== 'Unranked'
-            ? `<span class="text-blue-600">${skillRank}</span>`
-            : `<span class="italic text-gray-400">No rank yet</span>`}
+  ${
+    skillRank !== "Unranked"
+      ? `<span class="text-blue-600">${skillRank}</span>`
+      : `<span class="italic text-gray-400">No rank yet</span>`
+  }
 </p>
 
-            ${applicant.coverLetter ? `<div class="text-sm mb-2"><p class="font-medium">Cover Letter:</p><p class="text-gray-700">${applicant.coverLetter}</p></div>` : ''}
+            ${
+              applicant.coverLetter
+                ? `<div class="text-sm mb-2"><p class="font-medium">Cover Letter:</p><p class="text-gray-700">${applicant.coverLetter}</p></div>`
+                : ""
+            }
           </div>
         </div>
 
@@ -445,53 +511,52 @@
       </div>
     `;
 
-        if (hasBid) {
-          biddersContainer.insertAdjacentHTML('beforeend', cardHTML);
-        } else {
-          applicantsContainer.insertAdjacentHTML('beforeend', cardHTML);
-        }
+          if (hasBid) {
+            biddersContainer.insertAdjacentHTML("beforeend", cardHTML);
+          } else {
+            applicantsContainer.insertAdjacentHTML("beforeend", cardHTML);
+          }
 
-        const card = document.getElementById(`app-card-${applicant._id}`);
-        if (card) updateActionButtons(card, applicant.status, applicant._id);
-      });
-    }
-
-    // Load applicants data
-    async function loadApplicants() {
-      const jobId = new URLSearchParams(window.location.search).get('jobId');
-      if (!jobId) {
-        document.getElementById('applicants-content').innerHTML = '<p class="text-red-500">No job ID specified</p>';
-        return;
+          const card = document.getElementById(`app-card-${applicant._id}`);
+          if (card) updateActionButtons(card, applicant.status, applicant._id);
+        });
       }
 
-      try {
-        const res = await fetch(`/api/applications/job/${jobId}`);
-        if (!res.ok) throw new Error('Failed to load applicants');
-        const applicants = await res.json();
-        const jobRes = await fetch(`/api/jobs/${jobId}`);
-        if (!jobRes.ok) {
-          throw new Error(`Job not found (status ${jobRes.status})`);
+      // Load applicants data
+      async function loadApplicants() {
+        const jobId = new URLSearchParams(window.location.search).get("jobId");
+        if (!jobId) {
+          document.getElementById("applicants-content").innerHTML =
+            '<p class="text-red-500">No job ID specified</p>';
+          return;
         }
-        const jobData = await jobRes.json();
-        const mainSkill = jobData.skillsRequired?.[0] || "General";
 
-        renderApplicantCards(applicants, mainSkill);
+        try {
+          const res = await fetch(`/api/applications/job/${jobId}`);
+          if (!res.ok) throw new Error("Failed to load applicants");
+          const applicants = await res.json();
+          const jobRes = await fetch(`/api/jobs/${jobId}`);
+          if (!jobRes.ok) {
+            throw new Error(`Job not found (status ${jobRes.status})`);
+          }
+          const jobData = await jobRes.json();
+          const mainSkill = jobData.skillsRequired?.[0] || "General";
 
-      } catch (error) {
-        console.error('Error loading applicants:', error);
-        document.getElementById('applicants-content').innerHTML = `
+          renderApplicantCards(applicants, mainSkill);
+        } catch (error) {
+          console.error("Error loading applicants:", error);
+          document.getElementById("applicants-content").innerHTML = `
           <p class="text-red-500">Error loading applicants: ${error.message}</p>
         `;
+        }
       }
-    }
 
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', () => {
-      connectSocketIO();
-      loadProfile();
-      loadApplicants();
-    });
-  </script>
-</body>
-
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", () => {
+        connectSocketIO();
+        loadProfile();
+        loadApplicants();
+      });
+    </script>
+  </body>
 </html>

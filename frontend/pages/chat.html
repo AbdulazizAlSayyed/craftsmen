@@ -25,7 +25,7 @@
     <script src="../js/chat-dot.js"></script>
     <script src="../js/notifications-common.js"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=1024" />
   </head>
 
   <body>
@@ -155,15 +155,19 @@
           </div>
         </header>
 
-        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+        <div
+          class="gap-4 px-4 flex flex-row flex-1 justify-center py-5 min-h-screen overflow-x-auto"
+        >
           <!-- LEFT: Conversation List -->
-          <div class="layout-content-container flex flex-col w-80">
+          <div
+            class="layout-content-container flex flex-col min-w-[300px] w-[300px] max-w-[300px]"
+          >
             <h2>Conversations</h2>
             <div id="conversation-list"></div>
           </div>
           <!-- RIGHT CHAT AREA -->
           <div
-            class="layout-content-container flex flex-col max-w-[960px] flex-1"
+            class="layout-content-container flex flex-col flex-1 min-w-[350px]"
           >
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <div class="flex min-w-72 flex-col gap-3">

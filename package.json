@@ -6,7 +6,8 @@
   "devDependencies": {
     "concurrently": "^9.1.2"
   },
-   "scripts": {
+  "scripts": {
+    "start": "node server.js",
     "dev": "concurrently \"cd backend && node server.js\" \"cd backend && python app.py\""
   }
 }

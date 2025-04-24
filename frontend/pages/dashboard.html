@@ -308,7 +308,7 @@
             </h2>
             <div
               id="portfolio-container"
-              class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4"
             >
               <a
                 href="portfolio.html?category=Carpentry"
@@ -413,7 +413,29 @@
                   </div>
                 </div>
               </a>
-
+              <a
+                href="portfolio.html?category=Woodworking"
+                class="portfolio-card max-w-xs w-full mx-auto"
+              >
+                <div class="flex flex-col gap-3 pb-3">
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                    style="background-image: url('../assets/woodworking.jpg')"
+                  ></div>
+                  <div>
+                    <p
+                      class="text-[#1b150d] text-base font-medium leading-normal"
+                    >
+                      Woodworking
+                    </p>
+                    <p
+                      class="text-[#637588] text-sm font-normal leading-normal"
+                    >
+                      75k followers
+                    </p>
+                  </div>
+                </div>
+              </a>
               <a
                 href="portfolio.html?category=Glassblowing"
                 class="portfolio-card max-w-xs w-full mx-auto"
@@ -629,52 +651,6 @@
                       class="flex border border-[#e7ddcf] bg-[#fcfaf8] justify-end pr-[15px] rounded-br-xl border-l-0 border-t-0 px-[15px] pb-[15px]"
                     >
                       <div class="flex items-center gap-4 justify-end">
-                        <div class="flex items-center gap-1">
-                          <button
-                            class="flex items-center justify-center p-1.5"
-                          >
-                            <div
-                              class="text-[#637588]"
-                              data-icon="Image"
-                              data-size="20px"
-                              data-weight="regular"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20px"
-                                height="20px"
-                                fill="currentColor"
-                                viewBox="0 0 256 256"
-                              >
-                                <path
-                                  d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"
-                                ></path>
-                              </svg>
-                            </div>
-                          </button>
-                          <button
-                            class="flex items-center justify-center p-1.5"
-                          >
-                            <div
-                              class="text-[#637588]"
-                              data-icon="Video"
-                              data-size="20px"
-                              data-weight="regular"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20px"
-                                height="20px"
-                                fill="currentColor"
-                                viewBox="0 0 256 256"
-                              >
-                                <path
-                                  d="M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,129.05V95l25.58,17ZM216,40H40A16,16,0,0,0,24,56V168a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H40V56H216V168Zm16,40a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Z"
-                                ></path>
-                              </svg>
-                            </div>
-                          </button>
-                        </div>
                         <button
                           id="post-btn"
                           class="min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec8e13] text-[#1b150d] text-sm font-medium leading-normal hidden @[480px]:block"
