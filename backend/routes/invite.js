@@ -10,21 +10,50 @@ router.post("/", async (req, res) => {
   const { jobId, craftsmanId, clientId } = req.body;
 
   try {
-    // 1. Find all required documents first
-    const [job, craftsman, client] = await Promise.all([
-      Job.findById(jobId),
+    // 🔍 Step 1: Check if someone already accepted the job
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(404).json({ error: "Job not found" });
+    }
+
+    if (job.status === "in progress" && job.craftsmanId) {
+      return res
+        .status(403)
+        .json({ error: "A craftsman has already been accepted for this job." });
+    }
+
+    // 🔁 Step 2: Prevent duplicate invites
+    const existingInvite = await Invite.findOne({
+      jobId,
+      craftsmanId,
+      status: "pending",
+    });
+
+    if (existingInvite) {
+      return res
+        .status(409)
+        .json({ error: "Invite already sent to this craftsman for this job." });
+    }
+
+    // 👤 Step 3: Validate craftsman and client
+    const [craftsman, client] = await Promise.all([
       User.findById(craftsmanId),
       User.findById(clientId),
     ]);
 
-    if (!job || !craftsman || !client) {
-      return res.status(404).json({ error: "Job or user not found" });
+    if (!craftsman || !client) {
+      return res.status(404).json({ error: "Craftsman or client not found" });
     }
 
-    // 2. Create invite
-    const invite = await Invite.create({ jobId, craftsmanId, clientId });
+    // 📩 Step 4: Create invite
+    const invite = await Invite.create({
+      jobId,
+      craftsmanId,
+      clientId,
+      status: "pending",
+    });
 
-    // 3. Create notification (wrap in try-catch to prevent blocking)
+    // 🔔 Step 5: Notify craftsman
     try {
       await Notification.create({
         user: craftsmanId,
@@ -34,21 +63,19 @@ router.post("/", async (req, res) => {
         isMarked: false,
       });
     } catch (notificationError) {
-      console.error("Notification creation failed:", notificationError);
-      // Continue even if notification fails
+      console.warn("Notification creation failed:", notificationError);
     }
 
-    // 4. Return success response
+    // ✅ Step 6: Success response
     return res.status(200).json({
       message: "Invite sent successfully",
       invite,
-      job: { title: job.title }, // Include minimal job info
     });
   } catch (err) {
     console.error("❌ Error sending invite:", err);
     return res.status(500).json({
       error: "Internal server error",
-      details: err.message, // Include error details for debugging
+      details: err.message,
     });
   }
 });
@@ -74,28 +101,77 @@ router.get("/craftsman/:craftsmanId", async (req, res) => {
   }
 });
 // Route to respond to job invite
+// Route to respond to job invite
+// Improved invite response route
 router.put("/respond/:inviteId", async (req, res) => {
   const { inviteId } = req.params;
   const { response } = req.body; // "accepted" or "rejected"
 
   try {
-    // Find the invite by ID and update the status
-    const invite = await Invite.findByIdAndUpdate(
-      inviteId,
-      { status: response }, // Set status to 'accepted' or 'rejected'
-      { new: true } // Return the updated invite
-    );
+    // Find the invite with populated data
+    const invite = await Invite.findById(inviteId)
+      .populate("jobId", "title description budget status")
+      .populate("craftsmanId", "username profileImage")
+      .populate("clientId", "username");
 
     if (!invite) {
       return res.status(404).json({ error: "Invite not found" });
     }
 
-    // Respond with the updated invite data
-    res.json({ message: "Invite status updated successfully", invite });
+    // Check if invite is already responded to
+    if (invite.status !== "pending") {
+      return res.status(400).json({ error: "Invite already responded to" });
+    }
+
+    // Update invite status
+    invite.status = response;
+    await invite.save();
+
+    // If accepted, update the job status and assign craftsman
+    if (response === "accepted") {
+      const job = await Job.findByIdAndUpdate(
+        invite.jobId?._id || invite.jobId,
+        {
+          status: "in progress",
+          craftsmanId: invite.craftsmanId?._id || invite.craftsmanId,
+        },
+        { new: true }
+      );
+
+      await Notification.create({
+        user: invite.clientId?._id || invite.clientId,
+        type: "job_accepted",
+        content: `${
+          invite.craftsmanId?.username || "A craftsman"
+        } has accepted your job "${invite.jobId?.title || "Untitled"}"`,
+        isRead: false,
+      });
+
+      return res.status(200).json({
+        message: "Invite accepted and job updated",
+        invite,
+        job,
+      });
+    }
+
+    // If rejected, just send a notification
+    await Notification.create({
+      user: invite.clientId._id,
+      type: "job_rejected",
+      content: `${invite.craftsmanId.username} has declined your job "${invite.jobId.title}"`,
+      isRead: false,
+    });
+
+    return res.status(200).json({
+      message: "Invite declined",
+      invite,
+    });
   } catch (err) {
     console.error("❌ Error updating invite status:", err);
-    res.status(500).json({ error: "Failed to update invite status" });
+    return res.status(500).json({
+      error: "Failed to update invite status",
+      details: err.message,
+    });
   }
 });
-
 module.exports = router;

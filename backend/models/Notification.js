@@ -11,7 +11,15 @@ const NotificationSchema = new mongoose.Schema(
     type: {
       type: String,
 
-      enum: ["message", "job_invite", "rating_request", "system", "rating"],
+      enum: [
+        "message",
+        "job_invite",
+        "job_accepted",
+        "job_rejected",
+        "rating_request",
+        "system",
+        "rating",
+      ],
       required: true,
     },
     content: {

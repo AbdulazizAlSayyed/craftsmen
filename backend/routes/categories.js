@@ -25,19 +25,36 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch categories" });
   }
 });
-
+// GET all skills
+router.get("/api/skills", async (req, res) => {
+  try {
+    const skills = await Skill.find().lean();
+    res.json(skills);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch skills" });
+  }
+});
+// CREATE a new category
 // CREATE a new category
 router.post("/", async (req, res) => {
   try {
     const { name, description, image } = req.body;
-    const existing = await Category.findOne({ name });
-    if (existing)
+
+    // 🔍 Case-insensitive search for existing category
+    const existing = await Category.findOne({
+      name: { $regex: new RegExp(`^${name}$`, "i") },
+    });
+
+    if (existing) {
       return res.status(400).json({ error: "Category already exists" });
+    }
 
     const category = new Category({ name, description, image });
     await category.save();
+
     res.status(201).json(category);
   } catch (error) {
+    console.error("❌ Error creating category:", error);
     res.status(500).json({ error: "Failed to create category" });
   }
 });

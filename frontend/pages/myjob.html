@@ -100,7 +100,18 @@
             </div>
             
           </div>
-          <div id="posted-jobs-list" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
+          <!-- Open Jobs Section -->
+<h3 class="text-lg font-bold text-[#1b150d] mt-6 mb-2">Open</h3>
+<div id="open-jobs" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
+
+<!-- In Progress Section -->
+<h3 class="text-lg font-bold text-[#1b150d] mt-6 mb-2">In Progress</h3>
+<div id="in-progress-jobs" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
+
+<!-- Completed Section -->
+<h3 class="text-lg font-bold text-[#1b150d] mt-6 mb-2">Completed</h3>
+<div id="completed-jobs" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
+
 
           <div id="pending-rating-section" class="mt-6 space-y-4 hidden">
             <h3 class="text-lg font-bold text-[#1b150d]">Pending Ratings</h3>
@@ -194,78 +205,59 @@
               }
             });
 
-            //fetching
-            async function fetchPostedJobs(userId) {
-              try {
-                const res = await fetch(`/api/jobs/posted/${userId}`);
-                if (!res.ok) throw new Error("Failed to fetch posted jobs");
+           
 
-                const jobs = await res.json();
-                const container = document.getElementById("posted-jobs-list");
+   async function fetchPostedJobs(userId) {
+  try {
+    const res = await fetch(`/api/jobs/posted-all/${userId}`);
+    const jobs = await res.json();
 
-                if (jobs.length === 0) {
-                  Swal.fire({
-                    icon: "info",
-                    title: "No Jobs Posted",
-                    text: "You haven't posted any jobs yet.",
-                    confirmButtonColor: "#ec7113",
-                    background: "#fffaf0",
-                    backdrop: "rgba(255, 215, 160, 0.3)",
-                  });
-                  return;
-                }
+    const openContainer = document.getElementById("open-jobs");
+    const progressContainer = document.getElementById("in-progress-jobs");
+    const completedContainer = document.getElementById("completed-jobs");
 
-                jobs.forEach((job) => {
-                  const jobCard = document.createElement("div");
-                  jobCard.className = "flex gap-4 bg-white px-4 py-4 rounded-lg shadow border border-[#f3eee7] hover:shadow-md transition-transform transform hover:scale-[1.02]";
+    // Clear all
+    openContainer.innerHTML = "";
+    progressContainer.innerHTML = "";
+    completedContainer.innerHTML = "";
 
-
-
-                  jobCard.innerHTML = `
-        <div
-          class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
-          style="background-image: url('https://cdn.usegalileo.ai/sdxl10/fallback-job-thumb.png');"
-        ></div>
+    jobs.forEach((job) => {
+      const jobCard = document.createElement("div");
+      jobCard.className = "flex gap-4 bg-white px-4 py-4 rounded-lg shadow border border-[#f3eee7] hover:shadow-md transition-transform transform hover:scale-[1.02]";
+      jobCard.innerHTML = `
+        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+             style="background-image: url('https://cdn.usegalileo.ai/sdxl10/fallback-job-thumb.png');"></div>
         <div class="flex flex-1 flex-col justify-center">
-          <a href="myapplicants.html?jobId=${job._id}" class="text-[#111922] text-base font-medium leading-normal hover:underline">
+          <a href="myapplicants.html?jobId=${job._id}" class="text-[#111922] text-base font-medium hover:underline">
             ${job.title}
           </a>
-          <p class="text-[#93adc8] text-sm font-normal leading-normal">
-            ${job.description || "No description"}
-          </p>
+          <p class="text-[#93adc8] text-sm">${job.description || "No description"}</p>
           <p class="text-sm text-gray-500 mt-1">
-  <span class="capitalize font-medium ${job.status === 'completed' ? 'text-green-600' : 'text-yellow-600'}">${job.status}</span> • 
-  <span>${new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-</p>
-        </div>
-      `;
-                  container.appendChild(jobCard);
-                });
+            <span class="capitalize font-medium ${
+              job.status === 'completed' ? 'text-green-600' :
+              job.status === 'in progress' ? 'text-blue-600' :
+              'text-yellow-600'
+            }">${job.status}</span> • 
+            <span>${new Date(job.createdAt).toLocaleDateString('en-US')}</span>
+          </p>
+        </div>`;
 
-                Swal.fire({
-                  icon: "success",
-                  title: "Jobs Loaded",
-                  text: `${jobs.length} job(s) retrieved successfully.`,
-                  timer: 2000,
-                  showConfirmButton: false,
-                  background: "#ecfdf5",
-                  backdrop: "rgba(34,197,94,0.15)",
-                });
-
-              } catch (err) {
-                console.error("❌ Error fetching posted jobs:", err);
-                Swal.fire({
-                  icon: "error",
-                  title: "Failed to Load Jobs",
-                  text: "Something went wrong while fetching your jobs.",
-                  confirmButtonColor: "#ef4444",
-                  background: "#fef2f2",
-                  backdrop: "rgba(239, 68, 68, 0.2)",
-                });
-              }
-            }
-
-          </script>
+      if (job.status === "open") openContainer.appendChild(jobCard);
+      else if (job.status === "in progress") progressContainer.appendChild(jobCard);
+      else if (job.status === "completed" && job.ratingStatus !== "not-rated")
+        completedContainer.appendChild(jobCard);
+    });
+  } catch (err) {
+    console.error("❌ Error fetching posted jobs:", err);
+    Swal.fire({
+      icon: "error",
+      title: "Failed to Load Jobs",
+      text: "Something went wrong while fetching your jobs.",
+      confirmButtonColor: "#ef4444"
+    });
+  }
+}
+         </script>
           <script>
             document.addEventListener("DOMContentLoaded", async () => {
               const craftsmanId = localStorage.getItem("craftsmanId");
@@ -306,13 +298,17 @@
 
             async function fetchUnratedCompletedJobs(userId) {
               try {
-                const res = await fetch(`/api/jobs/posted/${userId}`);
+                const res = await fetch(`/api/jobs/posted-all/${userId}`);
+
                 const jobs = await res.json();
                 const unrated = jobs.filter(
                   job => job.status === "completed" && job.ratingStatus === "not-rated"
                 );
 
-                if (unrated.length === 0) return;
+                if (unrated.length === 0) {
+  document.getElementById("pending-rating-section").classList.add("hidden");
+  return;
+}
 
                 const section = document.getElementById("pending-rating-section");
                 const container = document.getElementById("pending-rating-jobs");
@@ -342,62 +338,72 @@
             }
 
 
-            async function openRatingAlert(jobId, craftsmanId) {
-              const { value: rating } = await Swal.fire({
-                title: 'Rate the Craftsman',
-                input: 'range',
-                inputAttributes: {
-                  min: 1,
-                  max: 5,
-                  step: 1
-                },
-                inputValue: 3,
-                confirmButtonText: 'Submit Rating',
-                confirmButtonColor: '#22c55e',
-                showCancelButton: true,
-                cancelButtonColor: '#ef4444',
-                background: '#fefce8',
-                backdrop: 'rgba(253, 224, 71, 0.3)',
-                preConfirm: (value) => {
-                  if (!value || value < 1 || value > 5) {
-                    Swal.showValidationMessage('Please select a valid rating between 1 and 5.');
-                  }
-                }
-              });
+async function openRatingAlert(jobId, craftsmanId) {
+  const { value: rating } = await Swal.fire({
+    title: 'Rate the Craftsman',
+    input: 'range',
+    inputAttributes: {
+      min: 1,
+      max: 5,
+      step: 1
+    },
+    inputValue: 3,
+    confirmButtonText: 'Submit Rating',
+    confirmButtonColor: '#22c55e',
+    showCancelButton: true,
+    cancelButtonColor: '#ef4444',
+    background: '#fefce8',
+    backdrop: 'rgba(253, 224, 71, 0.3)',
+    preConfirm: (value) => {
+      if (!value || value < 1 || value > 5) {
+        Swal.showValidationMessage('Please select a valid rating between 1 and 5.');
+      }
+    }
+  });
 
-              if (rating) {
-                try {
-                  const res = await fetch(`/api/jobs/rating/${jobId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rating: parseInt(rating), craftsmanId })
-                  });
+  if (rating) {
+    try {
+      const res = await fetch(`/api/jobs/rating/${jobId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: parseInt(rating), craftsmanId })
+      });
 
-                  if (!res.ok) throw new Error("Failed to submit rating");
+      if (!res.ok) throw new Error("Failed to submit rating");
 
-                  Swal.fire({
-                    icon: 'success',
-                    title: 'Thank you!',
-                    text: 'Your rating has been submitted.',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    background: '#ecfdf5',
-                    backdrop: 'rgba(34,197,94,0.15)'
-                  });
+     let extraMsg = "";
+if (result.xpGained >= 10 && parseInt(rating) === 5) {
+  extraMsg += `🎁 You received +10 bonus XP for a perfect 5⭐ rating!\n`;
+}
+if (result.newRank && result.newRank !== "Beginner") {
+  extraMsg += `🎖️ You've reached ${result.newRank} rank in ${result.skillName}!`;
+}
 
-                  fetchPostedJobs(localStorage.getItem("craftsmanId"));
+Swal.fire({
+  icon: 'success',
+  title: 'Thank you!',
+  text: extraMsg || 'Your rating has been submitted.',
+  timer: 3000,
+  showConfirmButton: false,
+  background: '#ecfdf5',
+  backdrop: 'rgba(34,197,94,0.15)'
+});
 
-                } catch (err) {
-                  console.error("❌ Error submitting rating:", err);
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: 'Could not submit your rating. Please try again.',
-                    confirmButtonColor: '#ef4444'
-                  });
-                }
-              }
-            }
+      // ✅ Immediately refresh both pending ratings & job listings
+      await fetchUnratedCompletedJobs(localStorage.getItem("craftsmanId"));
+      await fetchPostedJobs(localStorage.getItem("craftsmanId"));
+
+    } catch (err) {
+      console.error("❌ Error submitting rating:", err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed',
+        text: 'Could not submit your rating. Please try again.',
+        confirmButtonColor: '#ef4444'
+      });
+    }
+  }
+}
 
           </script>
           <script>

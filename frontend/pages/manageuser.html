@@ -319,9 +319,8 @@
         <td class="px-4 py-2 text-sm text-[#111517]">${user.fullName}</td>
         <td class="px-4 py-2 text-sm text-[#647787]">${user.email}</td>
         <td class="px-4 py-2 text-sm">
-          <button class="rounded-xl bg-[#f0f2f4] px-4 py-1" onclick="editRole('${
-            user._id
-          }', '${user.role}')">${user.role}</button>
+          <span class="rounded-xl bg-[#f0f2f4] px-4 py-1">${user.role}</span>
+
         </td>
         <td class="px-4 py-2 text-sm">
           <button class="rounded-xl bg-[#f0f2f4] px-4 py-1" onclick="toggleBan('${
@@ -329,9 +328,7 @@
           }', '${user.status}')">${user.status}</button>
         </td>
         <td class="px-4 py-2 text-sm text-[#647787] font-bold">
-          <button class="text-blue-600 hover:underline" onclick="editRole('${
-            user._id
-          }', '${user.role}')">Edit</button> |
+          
           <button class="text-red-600 hover:underline" onclick="toggleBan('${
             user._id
           }', '${user.status}')">${
@@ -344,20 +341,6 @@
       </tr>`;
         });
       }
-      async function editRole(id, currentRole) {
-        const newRole = prompt(
-          "Enter new role (Admin, Client, Craftsman):",
-          currentRole
-        );
-        if (!newRole || newRole === currentRole) return;
-        await fetch(`/api/admin/users/${id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ role: newRole }),
-        });
-        await loadUsers();
-      }
-
       async function toggleBan(id, currentStatus) {
         const newStatus = currentStatus === "Banned" ? "Active" : "Banned";
         await fetch(`/api/admin/users/${id}`, {

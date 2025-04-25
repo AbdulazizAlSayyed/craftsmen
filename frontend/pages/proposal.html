@@ -440,6 +440,8 @@
           loadApplications();
           loadJobInvites(); // Add this line
 
+  loadCurrentJobs(); // Add this
+
           // Update profile picture
           const profilePic = document.getElementById("profile-pic");
           const userData = JSON.parse(localStorage.getItem("user"));
@@ -511,64 +513,60 @@
           }
         }
         // Update respondToInvite function
-        async function respondToInvite(button, inviteId, response) {
-          const originalText = button.textContent;
-          button.disabled = true;
-          button.innerHTML = `<span class="inline-block animate-spin">↻</span> ${response === 'accepted' ? "Accepting..." : "Rejecting..."}`;
+     // Improved respondToInvite function
+async function respondToInvite(button, inviteId, response) {
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.innerHTML = `<span class="inline-block animate-spin">↻</span> ${response === 'accepted' ? "Accepting..." : "Rejecting..."}`;
 
-          try {
-            const res = await fetch(`/api/invite/respond/${inviteId}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ response }),
-            });
+  try {
+    const res = await fetch(`/api/invite/respond/${inviteId}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('token')}` // Add auth header
+      },
+      body: JSON.stringify({ response }),
+    });
 
-            if (!res.ok) {
-              const errorText = await res.text();
-              throw new Error(errorText);
-            }
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Failed to respond to invite");
+    }
 
-            const result = await res.json();
+    const result = await res.json();
 
-            // ✅ Fade out the card
-            const card = button.closest(".invite-card");
-            if (card) {
-              card.classList.add("opacity-50"); // Makes it semi-transparent
-            }
+    // Show success message
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
 
-            // 🎉 Toast feedback
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-            });
+    Toast.fire({
+      icon: "success",
+      title: `Invite ${response}d successfully`,
+    });
 
-            Toast.fire({
-              icon: "success",
-              title: `Invite ${response === "accepted" ? "accepted" : "rejected"}`,
-            });
+    // Reload both invites and current jobs
+    loadJobInvites();
+    loadCurrentJobs();
 
-            // Wait for animation before reloading invites (500ms)
-            setTimeout(() => {
-              loadJobInvites();
-            }, 500);
-
-          } catch (err) {
-            console.error("❌ Error responding to invite:", err);
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: err.message || "Failed to respond to invite",
-            });
-          } finally {
-            button.disabled = false;
-            button.textContent = originalText;
-          }
-        }
-
-
+  } catch (err) {
+    console.error("❌ Error responding to invite:", err);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: err.message || "Failed to respond to invite",
+      confirmButtonColor: "#ef4444",
+    });
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
 
         async function loadApplications() {
           const userId = localStorage.getItem("userId");

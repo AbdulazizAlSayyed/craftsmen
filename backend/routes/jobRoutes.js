@@ -141,15 +141,41 @@ router.get("/", async (req, res) => {
   }
 });
 
+// ✅ New route to get ALL jobs (for My Jobs page)
+router.get("/posted-all/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const jobs = await Job.find({ userId }); // no status filter here
+    res.json(jobs);
+  } catch (err) {
+    console.error("❌ Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+// In your routes/job.js file
+router.get("/in-progress/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const jobs = await Job.find({
+      userId,
+      status: "in progress",
+    }).populate("craftsmanId", "username profileImage");
+
+    res.json(jobs);
+  } catch (err) {
+    console.error("❌ Error fetching in-progress jobs:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // ✅ GET jobs posted by a specific user
 router.get("/posted/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
-    console.log("✅ Received userId:", userId);
-
-    const jobs = await Job.find({ userId });
-    console.log("✅ Jobs found:", jobs);
-
+    const jobs = await Job.find({
+      userId,
+      status: "open", // or any status you use for available jobs
+    });
     res.json(jobs);
   } catch (err) {
     console.error("❌ Error:", err);
@@ -191,10 +217,13 @@ router.post("/rating/:jobId", async (req, res) => {
     const skillName = job.skillsRequired[0]; // Adjust if you want to loop
     const xpGained = calculateXP(job.jobRank, rating);
 
+    // ✅ INSERT THIS RIGHT AFTER XP CALCULATION
+    if (rating === 5) xpGained += 10;
+
+    // then continue with the rest:
     const skill = user.skills.find(
       (s) => s.name.toLowerCase() === skillName.toLowerCase()
     );
-
     if (skill) {
       skill.xpPoints += xpGained;
       skill.rank = getRankFromXP(skill.xpPoints);
@@ -232,7 +261,13 @@ router.post("/rating/:jobId", async (req, res) => {
       });
     }
 
-    res.json({ message: "Rating submitted and XP updated" });
+    res.json({
+      message: "Rating submitted and XP updated",
+      xpGained,
+      newXP: skill?.xpPoints,
+      newRank: skill?.rank,
+      skillName,
+    });
   } catch (err) {
     console.error("❌ Error submitting rating:", err);
     res.status(500).json({ message: "Failed to submit rating" });

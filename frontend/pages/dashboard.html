@@ -25,18 +25,51 @@
         transition: all 0.3s ease;
       }
     </style>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              lightCard: "#fcfaf8",
+              darkCard: "#2a2b2f",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Add smooth transitions for dark mode */
+      html {
+        transition: background-color 300ms ease, color 300ms ease;
+      }
+
+      body {
+        transition: background-color 300ms ease, color 300ms ease;
+      }
+
+      /* Ensure all elements inherit the transition */
+      * {
+        transition: background-color 300ms ease, color 300ms ease,
+          border-color 300ms ease;
+      }
+    </style>
   </head>
-  <body>
+  <body
+    class="relative flex size-full min-h-screen flex-col bg-lightCard dark:bg-darkCard text-[#1b150d] transition-colors duration-300 dark:bg-[#1b1c1f] dark:text-white group/design-root overflow-x-hidden"
+  >
     <div
-      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-      style="font-family: 'Work Sans', 'Noto Sans', sans-serif"
+      class="relative flex size-full min-h-screen flex-col bg-lightCard dark:bg-darkCard dark:bg-[#1b1c1f] transition-colors duration-300 text-[#1b150d] dark:text-white group/design-root overflow-x-hidden"
+      style="font-family: Inter, 'Noto Sans', sans-serif"
     >
       <div class="layout-container flex h-full grow flex-col">
         <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3eee7] px-10 py-3"
+          class="flex items-center justify-between whitespace-nowrap border-b px-10 py-3 bg-white dark:bg-[#1b1c1f] border-[#f3eee7] dark:border-[#2a2b2f] shadow-sm dark:shadow-md"
         >
           <div class="flex items-center gap-8">
-            <div class="flex items-center gap-4 text-[#1b150d]">
+            <div
+              class="flex items-center gap-4 dark:bg-[#2a2b2f] text-[#1b150d] dark:text-white"
+            >
               <div class="size-4">
                 <svg
                   viewBox="0 0 48 48"
@@ -52,34 +85,34 @@
                 </svg>
               </div>
               <h2
-                class="text-[#1b150d] text-lg font-bold leading-tight tracking-[-0.015em]"
+                class="text-neutral-900 dark:text-white text-lg font-bold tracking-tight text-lg font-bold leading-tight tracking-[-0.015em]"
               >
                 Craftsman
               </h2>
             </div>
             <div class="flex items-center gap-9">
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="dashboard.html"
                 >Dashboard</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="job.html"
                 >Hire</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="Apply.html"
                 >Apply</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="myjob.html"
                 >My Jobs</a
               >
               <a
-                class="text-[#1b150d] text-sm font-medium leading-normal"
+                class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"
                 href="proposal.html"
                 id="proposals-link"
                 >Proposals</a
@@ -90,7 +123,7 @@
             <div class="flex gap-2">
               <a href="Notification.html" class="relative">
                 <button
-                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]"
+                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-lightCard dark:bg-darkCard text-neutral-900 dark:text-white text-lg font-bold tracking-tight"
                 >
                   <!-- Red Dot for Unread -->
                   <span
@@ -112,18 +145,15 @@
                   </svg>
                 </button>
               </a>
-
               <a href="chat.html" class="relative">
                 <button
-                  class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-[#f3eee7] text-[#1b150d]"
+                  class="relative h-10 w-10 rounded-xl bg-lightCard dark:bg-darkCard text-neutral-900 dark:text-white text-lg font-bold tracking-tight flex items-center justify-center"
                 >
-                  <!-- Red dot for unread messages -->
                   <span
                     id="chat-dot"
                     class="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white hidden"
                   ></span>
 
-                  <!-- Chat Icon -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20px"
@@ -140,7 +170,7 @@
 
               <a
                 href="Setting.html"
-                class="bg-[#f3eee7] rounded-xl h-10 flex items-center px-2.5"
+                class="bg-lightCard dark:bg-darkCard rounded-xl h-10 flex items-center px-2.5"
               >
                 ⚙️
               </a>
@@ -149,6 +179,7 @@
               <div
                 id="profile-pic"
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                style="background-image: url('/uploads/default.png')"
               ></div>
             </a>
           </div>
@@ -193,9 +224,9 @@
             >
               <a
                 href="dashboard.html"
-                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
+                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
               >
-                <div class="text-[#1b150d]">
+                <div class="text-[#1b150d] dark:text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -208,16 +239,18 @@
                     ></path>
                   </svg>
                 </div>
-                <h2 class="text-[#1b150d] text-base font-bold leading-tight">
+                <h2
+                  class="text-[#1b150d] dark:text-white text-base font-bold leading-tight"
+                >
                   Discover more about the world
                 </h2>
               </a>
 
               <a
                 href="Apply.html"
-                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
+                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
               >
-                <div class="text-[#1b150d]">
+                <div class="text-[#1b150d] dark:text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -230,16 +263,18 @@
                     ></path>
                   </svg>
                 </div>
-                <h2 class="text-[#1b150d] text-base font-bold leading-tight">
+                <h2
+                  class="text-[#1b150d] dark:text-white text-base font-bold leading-tight"
+                >
                   Find your next opportunity
                 </h2>
               </a>
 
               <a
                 href="Profile2.html?craftsmanId=67e3352db796800bfa59a86c"
-                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
+                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
               >
-                <div class="text-[#1b150d]">
+                <div class="text-[#1b150d] dark:text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -252,16 +287,18 @@
                     ></path>
                   </svg>
                 </div>
-                <h2 class="text-[#1b150d] text-base font-bold leading-tight">
+                <h2
+                  class="text-[#1b150d] dark:text-white text-base font-bold leading-tight"
+                >
                   Keep track of what matters most
                 </h2>
               </a>
 
               <a
                 href="chat.html"
-                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
+                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
               >
-                <div class="text-[#1b150d]">
+                <div class="text-[#1b150d] dark:text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -274,16 +311,18 @@
                     ></path>
                   </svg>
                 </div>
-                <h2 class="text-[#1b150d] text-base font-bold leading-tight">
+                <h2
+                  class="text-[#1b150d] dark:text-white text-base font-bold leading-tight"
+                >
                   Connect with others in real time
                 </h2>
               </a>
 
               <a
                 href="reports.html"
-                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
+                class="flex flex-1 gap-3 rounded-lg border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] p-4 flex-col transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
               >
-                <div class="text-[#1b150d]">
+                <div class="text-[#1b150d] dark:text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -296,14 +335,16 @@
                     ></path>
                   </svg>
                 </div>
-                <h2 class="text-[#1b150d] text-base font-bold leading-tight">
+                <h2
+                  class="text-[#1b150d] dark:text-white text-base font-bold leading-tight"
+                >
                   Report
                 </h2>
               </a>
             </div>
 
             <h2
-              class="text-[#1b150d] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+              class="text-[#1b150d] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
             >
               Featured Jobs
             </h2>
@@ -484,15 +525,15 @@
                   <div class="flex flex-1 flex-col">
                     <textarea
                       placeholder="What do you want to share today?"
-                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1b150d] focus:outline-0 focus:ring-0 border border-[#e7ddcf] bg-[#fcfaf8] focus:border-[#e7ddcf] h-auto placeholder:text-[#637588] rounded-l-none border-l-0 pl-2 rounded-b-none border-b-0 text-base font-normal leading-normal pt-[22px]"
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1b150d] dark:text-white focus:outline-0 focus:ring-0 border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] focus:border-[#e7ddcf] h-auto placeholder:text-[#637588] rounded-l-none border-l-0 pl-2 rounded-b-none border-b-0 text-base font-normal leading-normal pt-[22px]"
                     ></textarea>
                     <div
-                      class="flex border border-[#e7ddcf] bg-[#fcfaf8] justify-end pr-[15px] rounded-br-xl border-l-0 border-t-0 px-[15px] pb-[15px]"
+                      class="flex border border-[#e7ddcf] bg-[#fcfaf8] dark:bg-[#1a1a1a] justify-end pr-[15px] rounded-br-xl border-l-0 border-t-0 px-[15px] pb-[15px]"
                     >
                       <div class="flex items-center gap-4 justify-end">
                         <button
                           id="post-btn"
-                          class="min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec8e13] text-[#1b150d] text-sm font-medium leading-normal hidden @[480px]:block"
+                          class="min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#ec8e13] text-[#1b150d] dark:text-white text-sm font-medium leading-normal hidden @[480px]:block"
                         >
                           <span class="truncate">Post</span>
                         </button>
@@ -504,7 +545,7 @@
             </div>
 
             <h2
-              class="text-[#1b150d] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+              class="text-[#1b150d] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
             >
               Real-time Discussions
             </h2>
@@ -542,7 +583,7 @@
       }
       function renderPost(post, openCommentSections) {
         return `
-    <div class="bg-white rounded-xl border border-[#e7ddcf] shadow-sm p-4 space-y-4">
+    <div class="bg-[#fcfaf8] dark:bg-[#1a1a1a]  rounded-xl border border-[#e7ddcf] shadow-sm p-4 space-y-4">
       <!-- Post Header -->
       <div class="flex items-center gap-4 justify-between">
         <!-- Left: Profile Info -->
@@ -556,7 +597,7 @@
             }')">
           </div>
           <div>
-            <p class="text-[#1b150d] font-semibold text-base">
+            <p class="text-[#1b150d] dark:text-white font-semibold text-base">
               ${post.userId?.fullName || "Unknown User"}
             </p>
             <p class="text-sm text-[#637588]">${new Date(
@@ -574,13 +615,15 @@
       </div>
 
       <!-- Post Content -->
-      <p class="text-[#1b150d] text-base mt-2 break-all">${post.text}</p>
+      <p class="text-[#1b150d] dark:text-white text-base mt-2 break-all">${
+        post.text
+      }</p>
 
       <!-- Reply Button -->
       <div class="flex justify-end">
         <button onclick="toggleReplyInputOnly('${
           post._id
-        }')" class="text-sm font-medium text-[#1b150d] hover:underline">
+        }')" class="text-sm font-medium text-[#1b150d] dark:text-white hover:underline">
           Reply
         </button>
       </div>
@@ -635,14 +678,14 @@
               </a>
               <div class="flex-1">
                 <div class="flex justify-between items-center">
-                  <p class="font-semibold text-sm text-[#1b150d]">${
+                  <p class="font-semibold text-sm text-[#1b150d] dark:text-white">${
                     c.userId?.fullName || "Unknown"
                   }</p>
                   <p class="text-xs text-[#637588]">${new Date(
                     c.createdAt
                   ).toLocaleString()}</p>
                 </div>
-                <p class="text-sm text-[#1b150d] break-all" id="comment-text-${
+                <p class="text-sm text-[#1b150d] dark:text-white break-all" id="comment-text-${
                   c._id
                 }">${c.text}</p>
                 <div class="text-sm text-[#637588] flex gap-4 mt-1">
@@ -1409,7 +1452,7 @@
                  style="background-image: url('${imageUrl}')">
             </div>
             <div>
-              <p class="text-[#1b150d] text-base font-medium leading-normal">${
+              <p class="text-[#1b150d] dark:text-white text-base font-medium leading-normal">${
                 cat.name
               }</p>
               <p class="text-[#637588] text-sm font-normal leading-normal">${followerText}</p>
@@ -1421,6 +1464,25 @@
           console.error("❌ Failed to load featured categories", error);
           const container = document.getElementById("portfolio-container");
           container.innerHTML = `<p class="text-center text-[#dc2626]">Failed to load featured jobs.</p>`;
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const userId = localStorage.getItem("userId");
+        if (!userId) return;
+
+        try {
+          const res = await fetch(`/api/settings/${userId}/dark-mode`); // ✅ Custom endpoint
+          const data = await res.json();
+
+          if (data.darkMode) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (error) {
+          console.error("❌ Failed to apply dark mode:", error);
         }
       });
     </script>

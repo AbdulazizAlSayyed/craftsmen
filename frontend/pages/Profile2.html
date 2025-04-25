@@ -138,6 +138,14 @@
          <div class="flex justify-between"><span>🎖️ Rank:</span> <span id="skill-rank" class="text-gray-700"></span></div>
         <div class="flex justify-between"><span>🧠 Experience:</span> <span id="skill-experience" class="text-gray-700"></span></div>
   <div class="flex justify-between"><span>⭐ Rating:</span> <span id="skill-rating" class="text-gray-700"></span></div>
+ 
+  <div class="mt-2">
+  <div class="w-full bg-gray-200 rounded-full h-2.5">
+    <div id="xp-bar" class="bg-orange-500 h-2.5 rounded-full" style="width: 0%"></div>
+  </div>
+  <p id="xp-text" class="text-xs text-gray-600 mt-1"></p>
+</div>
+
 </div>
 
           <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
@@ -207,7 +215,7 @@
 document.getElementById("skill-rank").textContent = skill.rank;
 document.getElementById("skill-experience").textContent = `${skill.xpPoints} XP`;
 document.getElementById("skill-rating").textContent = `${skill.rating.toFixed(1)}⭐ (${skill.numberOfRatedJobs} rated jobs)`;
-
+updateXPBar(skill.xpPoints);
           }
         } else {
           console.warn("⚠️ No skills found for this craftsman");
@@ -376,7 +384,8 @@ document.getElementById("skill-rating").textContent = `${skill.rating.toFixed(1)
       </select>
       <div class="flex justify-end gap-2">
         <button id="cancel-invite" class="px-4 py-2 bg-gray-200 rounded">Cancel</button>
-        <button id="send-invite" class="px-4 py-2 bg-orange-600 text-white rounded">Send Invite</button>
+        <button id="send-invite" class="px-4 py-2 bg-orange-600 text-white rounded" disabled>Send Invite</button>
+
       </div>
     </div>
   </div>
@@ -398,12 +407,14 @@ document.getElementById("skill-rating").textContent = `${skill.rating.toFixed(1)
           const res = await fetch(`/api/jobs/posted/${userId}`);
           const jobs = await res.json();
           jobSelect.innerHTML = "";
-          jobs.forEach((job) => {
-            const option = document.createElement("option");
-            option.value = job._id;
-            option.textContent = job.title;
-            jobSelect.appendChild(option);
-          });
+        jobs
+  .filter(job => job.status === "open") // ✅ just to be extra sure
+  .forEach((job) => {
+    const option = document.createElement("option");
+    option.value = job._id;
+    option.textContent = job.title;
+    jobSelect.appendChild(option);
+  });
         } catch (err) {
           console.error("❌ Failed to load jobs", err);
           jobSelect.innerHTML = `<option disabled>Unable to load jobs</option>`;
@@ -413,38 +424,81 @@ document.getElementById("skill-rating").textContent = `${skill.rating.toFixed(1)
       cancelInvite.addEventListener("click", () => {
         inviteModal.classList.add("hidden");
       });
+      jobSelect.addEventListener("change", () => {
+  sendInvite.disabled = !jobSelect.value;
+});
 
       sendInvite.addEventListener("click", async () => {
-        try {
-          const jobId = jobSelect.value;
-          const res = await fetch("/api/invite", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ jobId, craftsmanId, clientId: userId }),
-          });
+  const jobId = jobSelect.value;
 
-          const result = await res.json();
+  try {
+    const res = await fetch("/api/invite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jobId, craftsmanId, clientId: userId }),
+    });
 
-          if (!res.ok) {
-            throw new Error(result.error || "Failed to send invite");
-          }
+    const result = await res.json();
 
-          Swal.fire({
-            icon: 'success',
-            title: '✅ Invite Sent',
-            text: result.message,
-          });
-          inviteModal.classList.add("hidden");
+    if (!res.ok) {
+      if (res.status === 409) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Already Invited',
+          text: 'You have already invited this craftsman to the selected job.',
+        });
+        return;
+      }
+      if (res.status === 403) {
+        sendInvite.disabled = true;
+  Swal.fire({
+    icon: 'warning',
+    title: 'Invite Blocked',
+    text: 'A craftsman has already been accepted for this job.',
+  });
+  return;
+}
+      throw new Error(result.error || "Failed to send invite");
+    }
 
-        } catch (err) {
-          Swal.fire({
-            icon: 'error',
-            title: '❌ Failed',
-            text: err.message,
-          });
-          console.error("Invite error:", err);
-        }
-      });
+    Swal.fire({
+      icon: 'success',
+      title: '✅ Invite Sent',
+      text: result.message,
+    });
+    inviteModal.classList.add("hidden");
+
+  }catch (err) {
+  if (err.message === "A craftsman has already been accepted for this job.") {
+    Swal.fire({
+      icon: "info",
+      title: "Job Already Assigned",
+      text: "You’ve already accepted a craftsman for this job. You cannot invite another.",
+      confirmButtonColor: "#ef4444"
+    });
+  } else if (err.message === "Invite already sent to this craftsman for this job.") {
+    sendInvite.disabled = true;
+    Swal.fire({
+      icon: "warning",
+      title: "Duplicate Invite",
+      text: "This craftsman has already been invited for this job.",
+      confirmButtonColor: "#ef4444"
+    });
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: '❌ Failed',
+      text: err.message,
+      confirmButtonColor: "#ef4444"
+    });
+  }
+
+  console.error("Invite error:", err);
+}
+
+});
+
+
     });
 
   </script>
@@ -460,6 +514,20 @@ document.getElementById("skill-rating").textContent = `${skill.rating.toFixed(1)
       document.querySelector('.hire-btn')?.classList.add("hidden");
     }
   });
+  function updateXPBar(xp) {
+  const xpBar = document.getElementById("xp-bar");
+  const xpText = document.getElementById("xp-text");
+
+  let maxXP = 100;
+  if (xp > 100 && xp <= 300) maxXP = 300;
+  else if (xp > 300 && xp <= 600) maxXP = 600;
+  else if (xp > 600) maxXP = 1000;
+
+  const percent = Math.min((xp / maxXP) * 100, 100);
+  xpBar.style.width = `${percent}%`;
+  xpText.textContent = `${xp} XP / ${maxXP}`;
+}
+
 </script>
 
 </body>

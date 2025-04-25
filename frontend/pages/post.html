@@ -556,14 +556,6 @@
             document.querySelector("input[placeholder='What do you need help with?']").value = data.prompt || "Chair repair needed";
             document.querySelector("textarea").value = data.aiResponse || "AI did not return content.";
 
-            Swal.fire({
-              icon: "success",
-              title: "AI Post Generated",
-              text: "You can now edit and post it!",
-              confirmButtonColor: "#22c55e",
-              background: "#ecfdf5",
-              backdrop: "rgba(34,197,94,0.2)"
-            });
           } catch (error) {
             console.error("Error generating post:", error);
             Swal.fire({

@@ -58,6 +58,15 @@ app.use("/api/dashboard", dashboardStatsRoutes);
 app.use("/api", require("./routes/rateJob"));
 app.use("/api/categories", categoriesRoutes);
 
+// Make uploads folder publicly accessible
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static("public/uploads"));
+
+// Your existing category route
+
+// Add this new upload route
+app.use("/api/upload", require("./routes/upload"));
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB connected!"))
