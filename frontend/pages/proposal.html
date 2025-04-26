@@ -257,6 +257,20 @@
       </div>
       <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
       <script>
+         document.addEventListener("DOMContentLoaded", () => {
+          connectSocketIO();
+          loadApplications();
+          loadJobInvites(); // Add this line
+
+          loadCurrentJobs(); // Add this
+
+          // Update profile picture
+          const profilePic = document.getElementById("profile-pic");
+          const userData = JSON.parse(localStorage.getItem("user"));
+          if (userData?.profileImage) {
+            profilePic.style.backgroundImage = `url('${userData.profileImage}')`;
+          }
+        });
         let socket;
 
         function connectSocketIO() {
@@ -435,20 +449,7 @@
           }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-          connectSocketIO();
-          loadApplications();
-          loadJobInvites(); // Add this line
-
-  loadCurrentJobs(); // Add this
-
-          // Update profile picture
-          const profilePic = document.getElementById("profile-pic");
-          const userData = JSON.parse(localStorage.getItem("user"));
-          if (userData?.profileImage) {
-            profilePic.style.backgroundImage = `url('${userData.profileImage}')`;
-          }
-        });
+       
 
 
         async function loadJobInvites() {
@@ -568,118 +569,82 @@ async function respondToInvite(button, inviteId, response) {
   }
 }
 
-        async function loadApplications() {
-          const userId = localStorage.getItem("userId");
-          if (!userId) return;
+      async function loadApplications() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) return;
 
-          const containerNoBid = document.querySelector(".submitted-proposals-list-no-bid");
-          const containerBid = document.querySelector(".submitted-proposals-list-bid");
+  const containerNoBid = document.querySelector(".submitted-proposals-list-no-bid");
+  const containerBid = document.querySelector(".submitted-proposals-list-bid");
 
-          try {
-            const response = await fetch(`/api/applications/craftsman/${userId}`);
-            const applications = await response.json();
+  try {
+    const response = await fetch(`/api/applications/craftsman/${userId}`);
+    const applications = await response.json();
 
-            if (!applications.length) {
-              containerNoBid.innerHTML = `
-        // In the HTML template within loadApplications()
-<div class="flex flex-col items-end gap-2">
-  <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)} status-badge">
-    ${(app.status || 'pending').charAt(0).toUpperCase() + (app.status || 'pending').slice(1)}
-  </span>
-  <span class="text-sm font-medium text-[#9a784c]">${job.jobRank || ''}</span>
-  <div class="action-buttons mt-2"></div> <!-- Add this empty container -->
-</div>
+    // Clear containers first
+    containerNoBid.innerHTML = '';
+    containerBid.innerHTML = '';
 
+    if (!applications.length) {
+      containerNoBid.innerHTML = `
+        <div class="p-4 text-center text-gray-500">
+          You haven't submitted any proposals yet.
+        </div>
       `;
-              return;
-            }
+      return;
+    }
 
-            containerNoBid.innerHTML = "";
-            containerBid.innerHTML = "";
-
-            applications.forEach((app) => {
-              const job = app.jobId;
-              // Update the HTML template in the loadApplications function
-              const html = `
-  <div id="proposal-${app._id}" class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
-    <div class="flex justify-between items-start">
-      <div>
-        <h3 class="text-lg font-bold text-[#1b150d] mb-1">${job.title || 'Untitled Job'}</h3>
-        <p class="text-sm text-[#9a784c]">Skills: <span class="text-[#1b150d] font-medium">${job.skillsRequired?.join(", ") || "None"}</span></p>
-      </div>
-      <div class="text-right text-sm text-[#9a784c] whitespace-nowrap">
-        ${app.appliedAt ? `Submitted ${timeAgo(app.appliedAt)}` : ''}
-      </div>
-    </div>
-    <div class="text-sm text-[#1b150d]">
-      <span class="font-semibold">Cover Letter:</span>
-      <p class="mt-1 whitespace-pre-line">${app.coverLetter || "No cover letter provided."}</p>
-    </div>
-    <div class="flex flex-wrap justify-between items-center pt-2 border-t border-[#eee]">
-      <div class="text-sm space-y-1 text-[#1b150d]">
-        <p><span class="font-semibold">Original Budget:</span> $${job.budget || '0'}</p>
-        ${app.bidAmount ? `<p><span class="font-semibold">Your Bid:</span> <span class="your-bid">$${app.bidAmount}</span></p>` : ""}
-        
-        ${app.status === "pending" && app.bidAmount ? `
-          <p class="text-yellow-600 font-medium mt-2">Waiting for client response</p>
-        ` : ""}
-        
-        ${app.status === "rejected" && app.bidAmount ? `
-          <div class="mt-2">
-            <input type="number" min="1" placeholder="Enter new bid amount" class="border rounded px-2 py-1 w-full mb-2" id="newBid-${app._id}" />
-            <button onclick="resendBid('${app._id}')" class="bg-[#9a784c] text-white px-3 py-1 rounded text-sm">Resend Bid</button>
+    applications.forEach((app) => {
+      const job = app.jobId || {}; // Handle case where jobId might be null
+      
+      const html = `
+        <div id="proposal-${app._id}" class="flex flex-col bg-white shadow-sm border border-[#e7ddcf] rounded-xl p-5 space-y-4 transition-shadow hover:shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-lg font-bold text-[#1b150d] mb-1">${job.title || 'Untitled Job'}</h3>
+              <p class="text-sm text-[#9a784c]">Skills: <span class="text-[#1b150d] font-medium">${job.skillsRequired?.join(", ") || "None"}</span></p>
+            </div>
+            <div class="text-right text-sm text-[#9a784c] whitespace-nowrap">
+              ${app.appliedAt ? `Submitted ${timeAgo(app.appliedAt)}` : ''}
+            </div>
           </div>
-        ` : ""}
+          <div class="text-sm text-[#1b150d]">
+            <span class="font-semibold">Cover Letter:</span>
+            <p class="mt-1 whitespace-pre-line">${app.coverLetter || "No cover letter provided."}</p>
+          </div>
+          <div class="flex flex-wrap justify-between items-center pt-2 border-t border-[#eee]">
+            <div class="text-sm space-y-1 text-[#1b150d]">
+              <p><span class="font-semibold">Original Budget:</span> $${job.budget || '0'}</p>
+              ${app.bidAmount ? `<p><span class="font-semibold">Your Bid:</span> <span class="your-bid">$${app.bidAmount}</span></p>` : ""}
+              
+              ${app.status === "pending" && app.bidAmount ? `
+                <p class="text-yellow-600 font-medium mt-2">Waiting for client response</p>
+              ` : ""}
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)} status-badge">
+                ${(app.status || 'pending').charAt(0).toUpperCase() + (app.status || 'pending').slice(1)}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (app.bidAmount) {
+        containerBid.insertAdjacentHTML("beforeend", html);
+      } else {
+        containerNoBid.insertAdjacentHTML("beforeend", html);
+      }
+    });
+
+  } catch (error) {
+    console.error("❌ Error loading applications:", error);
+    containerNoBid.innerHTML = `
+      <div class="p-4 text-center text-red-500">
+        Failed to load proposals. Please try again later.
       </div>
-      <div class="flex flex-col items-end gap-2">
-        <span class="text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(app.status)} status-badge">
-          ${(app.status || 'pending').charAt(0).toUpperCase() + (app.status || 'pending').slice(1)}
-        </span>
-        <span class="text-sm font-medium text-[#9a784c]">${job.jobRank || ''}</span>
-      </div>
-    </div>
-  </div>
-`;
-
-
-
-
-              if (app.bidAmount) {
-                containerBid.insertAdjacentHTML("beforeend", html);
-              } else {
-                containerNoBid.insertAdjacentHTML("beforeend", html);
-              }
-            });
-          } catch (error) {
-            console.error("❌ Error loading applications:", error);
-          }
-        }
-        function resendBid(appId) {
-          const newBidValue = document.getElementById(`newBid-${appId}`).value;
-
-          if (!newBidValue || isNaN(newBidValue) || newBidValue <= 0) {
-            alert("Please enter a valid bid amount.");
-            return;
-          }
-
-          // Example: POST request to update bid
-          fetch(`/api/applications/${appId}/update-bid`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ bidAmount: newBidValue })
-          })
-            .then(res => res.json())
-            .then(data => {
-              alert("Bid updated successfully!");
-              location.reload(); // or update UI without reload
-            })
-            .catch(err => {
-              console.error(err);
-              alert("Failed to resend bid.");
-            });
-        }
+    `;
+  }
+}
 
       </script>
       <script>
